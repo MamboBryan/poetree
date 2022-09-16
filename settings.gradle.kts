@@ -14,5 +14,12 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Poetree"
-include(":android")
+
+// common module
 include(":common")
+
+// android
+include(":android")
+
+// desktop
+include(":desktop")

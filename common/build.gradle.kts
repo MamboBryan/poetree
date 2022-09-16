@@ -4,6 +4,8 @@ plugins {
     id("com.android.library")
 }
 
+version = "1.0"
+
 kotlin {
     android()
     iosX64()
@@ -13,7 +15,7 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
-        version = "1.0"
+        //version = "1.0"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../ios/Podfile")
         framework {
