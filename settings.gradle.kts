@@ -23,3 +23,7 @@ include(":android")
 
 // desktop
 include(":desktop")
+
+// web
+include(":web")
+

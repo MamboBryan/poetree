@@ -6,7 +6,3 @@ plugins {
     kotlin("android").version("1.6.10").apply(false)
     kotlin("multiplatform").version("1.6.10").apply(false)
 }
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
