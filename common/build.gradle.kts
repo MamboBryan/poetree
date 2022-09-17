@@ -7,6 +7,8 @@ plugins {
 version = "1.0"
 
 kotlin {
+
+    jvm()
     android()
     iosX64()
     iosArm64()
@@ -15,7 +17,6 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
-        //version = "1.0"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../ios/Podfile")
         framework {
@@ -24,14 +25,20 @@ kotlin {
     }
     
     sourceSets {
+
+        // COMMON
         val commonMain by getting
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
+
+        // ANDROID
         val androidMain by getting
         val androidTest by getting
+
+        // iOS
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -50,6 +57,11 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+
+        // DESKTOP
+        val jvmMain by getting
+        val jvmTest by getting
+
     }
 }
 

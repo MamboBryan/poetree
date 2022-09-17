@@ -2,10 +2,11 @@ import SwiftUI
 import common
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
+    
+    let name = PoetreeApp().name()
 
 	var body: some View {
-		Text("Poetree iOS")
+		Text(name)
 	}
 }
 

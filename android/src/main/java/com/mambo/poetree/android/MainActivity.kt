@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mambo.poetree.Greeting
+import com.mambo.poetree.PoetreeApp
 
 @Composable
 fun MyApplicationTheme(
@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Poetree Android")
+                    Greeting(PoetreeApp().name())
                 }
             }
         }
