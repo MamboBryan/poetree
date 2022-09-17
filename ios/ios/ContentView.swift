@@ -7,7 +7,10 @@ struct ContentView: View {
 
 	var body: some View {
 		Text(name)
+            .background(Color("Background"))
+            .foregroundColor(Color("OnBackground"))
 	}
+
 }
 
 struct ContentView_Previews: PreviewProvider {
