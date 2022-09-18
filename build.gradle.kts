@@ -1,3 +1,10 @@
+buildscript {
+    dependencies {
+        classpath("io.realm.kotlin:gradle-plugin:1.0.2")
+        classpath(kotlin("serialization", version = "1.6.10"))
+    }
+}
+
 plugins {
     //trick: for the same plugin versions in all sub-modules
     id("com.android.application").version("7.3.0").apply(false)
@@ -5,4 +12,5 @@ plugins {
     id("org.jetbrains.compose") version "1.1.1" apply false
     kotlin("android").version("1.6.10").apply(false)
     kotlin("multiplatform").version("1.6.10").apply(false)
+    kotlin("plugin.serialization").version("1.6.10").apply(false)
 }

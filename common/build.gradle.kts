@@ -1,7 +1,9 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
+    id("io.realm.kotlin")
 }
 
 version = "1.0"
@@ -23,11 +25,21 @@ kotlin {
             baseName = "common"
         }
     }
-    
+
     sourceSets {
 
         // COMMON
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Multiplatform.napier)
+                implementation(Kotlinx.serialization)
+
+                implementation(KtorDependencies.core)
+                implementation(KtorDependencies.logging)
+                implementation(KtorDependencies.contentNegotiation)
+                implementation(KtorDependencies.json)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
