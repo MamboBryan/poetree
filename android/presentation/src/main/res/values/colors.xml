@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary">#0842ee</color>
+    <color name="primary_50">#e6ecfd</color>
+    <color name="primary_100">#b5c6fa</color>
+    <color name="primary_200">#84a1f7</color>
+    <color name="primary_300">#527bf3</color>
+    <color name="primary_400">#2155f0</color>
+    <color name="primary_500">#073bd6</color>
+    <color name="primary_600">#062ea7</color>
+    <color name="primary_700">#042177</color>
+    <color name="primary_800">#021447</color>
+    <color name="primary_900">#010718</color>
+
+    <color name="secondary">#f75c03</color>
+    <color name="secondary_50">#feefe6</color>
+    <color name="secondary_100">#fdceb3</color>
+    <color name="secondary_200">#fbae81</color>
+    <color name="secondary_300">#f98d4f</color>
+    <color name="secondary_400">#f86c1c</color>
+    <color name="secondary_500">#de5303</color>
+    <color name="secondary_600">#ad4002</color>
+    <color name="secondary_700">#7c2e02</color>
+    <color name="secondary_800">#4a1c01</color>
+    <color name="secondary_900">#190900</color>
+
+    <color name="white_100">#ffffff</color>
+    <color name="white_200">#e6e6e6</color>
+    <color name="white_300">#cccccc</color>
+    <color name="white_400">#b3b3b3</color>
+    <color name="white_500">#999999</color>
+    <color name="white_600">#808080</color>
+    <color name="white_700">#666666</color>
+    <color name="white_800">#4c4c4c</color>
+    <color name="white_900">#333333</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--LIGHT THEME COLORS-->
+    <color name="splash_background">#0842ee</color>
+    <color name="error">#d91a1a</color>
+    <color name="loading">#e6c100</color>
+
+    <color name="success">#64dd17</color>
+    <color name="color_on_success">#000000</color>
+
+    <color name="color_background">#f5f5f5</color>
+    <color name="color_on_background">#424242</color>
+
+    <color name="color_surface">#ffffff</color>
+    <color name="color_on_surface">#000000</color>
+
+    <color name="color_primary">#073bd6</color>
+    <color name="color_on_primary">#ffffff</color>
+
+</resources>

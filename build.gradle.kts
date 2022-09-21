@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
 //        classpath("io.realm.kotlin:gradle-plugin:1.0.2")
+//        classpath("https://jitpack.io")
     }
 }
 
