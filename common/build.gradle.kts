@@ -31,13 +31,22 @@ kotlin {
         // COMMON
         val commonMain by getting {
             dependencies {
-                implementation(Multiplatform.napier)
+
+                // kotlinx
+                implementation(Kotlinx.dateTime)
+                implementation(Kotlinx.coroutines)
                 implementation(Kotlinx.serialization)
 
+                // ktor
                 implementation(KtorDependencies.core)
+                implementation(KtorDependencies.json)
                 implementation(KtorDependencies.logging)
                 implementation(KtorDependencies.contentNegotiation)
-                implementation(KtorDependencies.json)
+
+                // other
+                implementation(Multiplatform.napier)
+                implementation(Multiplatform.realm)
+
             }
         }
         val commonTest by getting {
