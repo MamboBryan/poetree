@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("com.google.devtools.ksp")
     kotlin("android")
 }
 
@@ -42,7 +43,20 @@ android {
     }
 }
 
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
+}
+
 dependencies {
+
+    implementation(project(Modules.common))
 
     implementation(Libraries.core)
     implementation(Libraries.kotlin)
@@ -50,6 +64,12 @@ dependencies {
     implementation(Libraries.materialDesign)
     implementation(Libraries.splashScreen)
 
+    implementation(Accompanist.systemUi)
+
     jetpackCompose()
+
+    // compose destinations
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.4.2-beta")
+    implementation("io.github.raamcosta.compose-destinations:core:1.4.2-beta")
 
 }

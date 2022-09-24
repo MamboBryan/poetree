@@ -3,10 +3,10 @@ import common
 
 struct ContentView: View {
     
-    let name = PoetreeApp().name()
+    // let name = PoetreeApp().name()
 
 	var body: some View {
-		Text(name)
+		Text("Poetree")
             .background(Color("Background"))
             .foregroundColor(Color("OnBackground"))
 	}

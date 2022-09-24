@@ -6,6 +6,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = PrimaryDark,
@@ -35,17 +36,16 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun PoetreeTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit
+    content: @Composable () -> Unit
 ) {
+
+    val isDarkTheme = isSystemInDarkTheme()
+    val systemUiController = rememberSystemUiController()
 
     SideEffect {
         when (isDarkTheme) {
-            true -> {
-//                systemUiController.setStatusBarColor(color = DarkSurface)
-            }
-            false -> {
-//                systemUiController.setStatusBarColor(color = Surface)
-            }
+            true -> systemUiController.setStatusBarColor(color = SurfaceDark)
+            false -> systemUiController.setStatusBarColor(color = Surface)
         }
     }
 
@@ -54,8 +54,6 @@ fun PoetreeTheme(
         false -> LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors, typography = Typography, shapes = Shapes, content = content
-    )
+    MaterialTheme(colors = colors, typography = Typography, shapes = Shapes, content = content)
 
 }
