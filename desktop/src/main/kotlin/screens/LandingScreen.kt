@@ -1,14 +1,42 @@
 package com.mambo.poetree.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Snackbar
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.mambo.poetree.PoetreeApp
+import com.mambo.poetree.data.repositories.PoetreeRepository
+import com.mambo.poetree.navigation.NavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-@Destination(start = true)
 @Composable
 fun LandingScreen(
-    navController: DestinationsNavigator
+    navController: NavController?
 ) {
+
+    var response by remember { mutableStateOf("") }
+    var visible by remember { mutableStateOf(response.isNotBlank()) }
+
+    GlobalScope.launch {
+        val res = PoetreeRepository().goofy()
+        CoroutineScope(Dispatchers.Unconfined).launch {
+            response = res.message
+        }
+    }
+
+    AnimatedVisibility(modifier = Modifier.padding(16.dp), visible = response.isNotBlank()) {
+        Snackbar {
+            Text(text = response)
+        }
+    }
 
     Column(
         modifier = Modifier.padding(24.dp),
@@ -32,12 +60,11 @@ fun LandingScreen(
         Row {
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {
-                    navigateToAuth(navController)
-                }) {
+                onClick = {}) {
                 Text(text = "Get Started")
             }
         }
+
     }
 }
 
@@ -45,10 +72,6 @@ fun LandingScreen(
 @Composable
 fun LandingScreenPreview() {
 
-    LandingScreen(navController = EmptyDestinationsNavigator)
+    LandingScreen(null)
 
-}
-
-private fun navigateToAuth(navController: DestinationsNavigator) {
-    navController.navigate(AuthScreenDestination)
 }

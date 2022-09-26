@@ -16,6 +16,9 @@ dependencies {
     commonModule()
 
     implementation(compose.desktop.currentOs)
+    implementation(Multiplatform.napier)
+
+    implementation("ch.qos.logback:logback-classic:1.2.11")
 
 }
 

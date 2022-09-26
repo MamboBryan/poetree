@@ -1,6 +1,5 @@
 package com.mambo.poetree.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -35,7 +34,9 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun PoetreeTheme(
-    isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit
+//    isDarkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean = true,
+    content: @Composable () -> Unit
 ) {
 
     SideEffect {

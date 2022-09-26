@@ -84,7 +84,11 @@ kotlin {
         }
 
         // DESKTOP
-        val jvmMain by getting
+        val jvmMain by getting  {
+            dependencies {
+                implementation(KtorDependencies.android)
+            }
+        }
         val jvmTest by getting
 
     }
