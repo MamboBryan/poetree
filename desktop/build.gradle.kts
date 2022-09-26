@@ -14,9 +14,9 @@ repositories {
 
 dependencies {
     commonModule()
+
     implementation(compose.desktop.currentOs)
-    implementation(Libraries.materialDesign)
-    jetpackCompose()
+
 }
 
 compose.desktop {

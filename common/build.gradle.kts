@@ -56,7 +56,11 @@ kotlin {
         }
 
         // ANDROID
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(KtorDependencies.android)
+            }
+        }
         val androidTest by getting
 
         // iOS

@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.asFlow
 
 class TopicsRepository() {
 
-    private val poemsClient = PoemsClient()
-    private val poemsApi = PoemsApi(poemsClient.client())
+    private val poemsApi = PoemsApi()
 
     private val realm = PoetreeDatabase().realm
 

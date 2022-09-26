@@ -14,3 +14,11 @@ data class TokenResponse(
     val accessToken: String,
     val refreshToken: String
 )
+
+@Serializable
+data class GoofyResponse(
+    val artist: String,
+    val message: String,
+    val tip: String,
+    val why: List<String>
+)

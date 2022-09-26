@@ -38,7 +38,7 @@ fun MainScreen(
                     modifier = Modifier
                         .background(MaterialTheme.colors.error)
                         .fillMaxWidth()
-                        .padding(all = 8.dp),
+                        .padding(all = 2.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {

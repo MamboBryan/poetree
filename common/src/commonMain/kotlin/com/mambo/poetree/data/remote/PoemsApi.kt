@@ -6,14 +6,51 @@ import com.mambo.poetree.data.remote.dto.*
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 class PoemsApi(
-    private val client: HttpClient
+    private val httpClient: HttpClient? = null
 ) {
 
-    enum class Endpoints {
+    private val client = HttpClient {
 
+//        engine {
+//            this.addInterceptor(networkInterceptor)
+//            this.addInterceptor(authInterceptor)
+//            this.addInterceptor(loggingInterceptor)
+//        }
+
+        install(ContentNegotiation) {
+            json(json = Json {
+                encodeDefaults = false
+                explicitNulls = false
+            })
+        }
+
+        install(Logging) {
+            level = LogLevel.BODY
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Napier.i(message)
+                }
+            }
+        }
+
+        install(DefaultRequest) {
+            header(HttpHeaders.Accept, ContentType.Application.Json)
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
+        }
+
+    }
+
+    enum class Endpoints {
+        HOME,
         SIGN_IN,
         SIGN_UP,
         REFRESH_TOKEN,
@@ -49,6 +86,7 @@ class PoemsApi(
                 USER_ME -> "users/me"
                 COMMENT -> "comments/comment"
                 COMMENTS -> "comments"
+                else -> ""
             }
 
     }
@@ -63,6 +101,15 @@ class PoemsApi(
             Napier.e(message = message)
             NetworkResult(isSuccessful = false, message = message)
         }
+    }
+
+    /**
+     * DUMMY
+     */
+
+    suspend fun goofy() = safeApiCall<GoofyResponse> {
+        val response = client.get(Endpoints.HOME.url)
+        response.body()
     }
 
     /**
