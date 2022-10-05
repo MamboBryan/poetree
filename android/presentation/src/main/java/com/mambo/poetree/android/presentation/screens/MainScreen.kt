@@ -36,7 +36,7 @@ fun MainScreen(
             ) {
                 Row(
                     modifier = Modifier
-                        .background(MaterialTheme.colors.error)
+                        .background(MaterialTheme.colors.primary)
                         .fillMaxWidth()
                         .padding(all = 2.dp),
                     horizontalArrangement = Arrangement.Center,
@@ -48,9 +48,9 @@ fun MainScreen(
                         modifier = Modifier
                             .size(24.dp)
                             .padding(end = 8.dp),
-                        tint = MaterialTheme.colors.onError
+                        tint = MaterialTheme.colors.onPrimary
                     )
-                    Text(text = "No Internet Connection", color = MaterialTheme.colors.onError)
+                    Text(text = "No Internet Connection", color = MaterialTheme.colors.onPrimary)
                 }
             }
 

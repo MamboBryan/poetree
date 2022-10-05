@@ -1,10 +1,14 @@
 package com.mambo.poetree.android.presentation.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mambo.poetree.PoetreeApp
@@ -23,30 +27,40 @@ fun LandingScreen(
         modifier = Modifier.padding(24.dp),
     ) {
 
-        Text(text = PoetreeApp().name())
+        Text(
+            modifier = Modifier.padding(top = 24.dp),
+            text = PoetreeApp().name(),
+            style = MaterialTheme.typography.h3,
+            fontWeight = FontWeight.Bold,
+        )
 
         Column(
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
         ) {
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = PoetreeApp().dummyPoem(),
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight.Medium,
             )
             Text(
                 modifier = Modifier.padding(top = 16.dp),
-                text = PoetreeApp().dummyPoet()
+                text = PoetreeApp().dummyPoet(),
+                style = MaterialTheme.typography.body2,
+                fontWeight = FontWeight.SemiBold,
             )
         }
 
-        Row {
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {
-                    navigateToAuth(navController)
-                }) {
-                Text(text = "Get Started")
-            }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                navigateToAuth(navController)
+            }) {
+            Text(modifier = Modifier.padding(vertical = 4.dp), text = "Get Started")
         }
+
     }
 }
 
