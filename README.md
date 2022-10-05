@@ -33,9 +33,9 @@ Poetree provides the following features for users
 
 ## ScreenShots
 
-| Android                                                                    |                                  desktop                                   |                                                                    iOS |
-|:---------------------------------------------------------------------------|:--------------------------------------------------------------------------:|-----------------------------------------------------------------------:|
-| <img src="images/android.png" width="150" hspace="2" alt="Landing Page" /> | <img src="images/desktop.png" width="150" hspace="2" alt="Landing Page" /> | <img src="images/iOS.png" width="150" hspace="2" alt="Landing Page" /> |
+| Android                                                               |                          desktop                          |                                                           iOS |
+|:----------------------------------------------------------------------|:---------------------------------------------------------:|--------------------------------------------------------------:|
+| <img src="images/android.png" width="150" hspace="2" alt="android" /> | <img src="images/desktop.png" hspace="2" alt="desktop" /> | <img src="images/iOS.png" width="150" hspace="2" alt="iOS" /> |
 
 
 ## Contributing
