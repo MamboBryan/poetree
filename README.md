@@ -11,6 +11,8 @@
 [Contributing](#contributing) •
 [Sponsor](#sponsor)
 
+</div>
+
 ## Overview
 
 The open community built for poetry lovers.
@@ -18,8 +20,6 @@ The open community built for poetry lovers.
 Poetree is a minimalistic poetry app that helps people freely access art from a global community full of poetry lovers. Whether a reader or a composer, we can all benefit from the beautiful and diverse library of poems and composers.
 
 Why don't you give it a try?
-
-</div>
 
 ## Features
 
@@ -33,9 +33,9 @@ Poetree provides the following features for users
 
 ## ScreenShots
 
-| Android                                                               |                                                            iOS |
-|:----------------------------------------------------------------------|---------------------------------------------------------------:|
-| <img src="images/android.png" width="150" hspace="2" alt="android" /> |  <img src="images/iOS.png" width="150" hspace="2" alt="iOS" /> |
+| Android                                                               |                                                           iOS |
+|:----------------------------------------------------------------------|--------------------------------------------------------------:|
+| <img src="images/android.png" width="200" hspace="2" alt="android" /> | <img src="images/iOS.png" width="200" hspace="2" alt="iOS" /> |
 
 |                          desktop                          |
 |:---------------------------------------------------------:|
