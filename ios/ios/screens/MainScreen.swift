@@ -21,7 +21,7 @@ struct MainScreen: View {
         VStack(alignment: .leading){
             Text("\(app.name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
             Text("\(app.dummyPoem())").padding([.top], 8).padding([.bottom], 24)
-            Text("\(app.dummyPoet())").font(.body.weight(.medium).italic())
+            Text("\(app.dummyPoet())").font(.body.weight(.medium))
             
             Spacer()
             
