@@ -1,14 +1,10 @@
-
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform")
+    kotlin("jvm")
     id("org.jetbrains.compose")
 }
-
-group = "com.mambo.poetree"
-version = "1.0.0"
 
 repositories {
     google()
@@ -16,30 +12,33 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
-kotlin {
-    jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "11"
-        }
-        withJava()
-    }
-    sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
-        }
-        val jvmTest by getting
-    }
+dependencies {
+    commonModule()
+
+    implementation(compose.desktop.currentOs)
+    implementation(Multiplatform.napier)
+    implementation(ComposeDependencies.icons)
+
 }
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "DesktopAppKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "poetree"
             packageVersion = "1.0.0"
+
+            macOS {
+                iconFile.set(project.file("icons/logo.icns"))
+            }
+            windows{
+                iconFile.set(project.file("icons/logo.ico"))
+            }
+            linux {
+                iconFile.set(project.file("icons/logo.png"))
+            }
+
         }
     }
 }

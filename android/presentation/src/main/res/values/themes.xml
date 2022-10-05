@@ -1,0 +1,12 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Poetree" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
+    <!-- Splash screen theme. -->
+    <style name="Theme.PoetreeSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/color_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.Poetree</item>
+    </style>
+
+</resources>

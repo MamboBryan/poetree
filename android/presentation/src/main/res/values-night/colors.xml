@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--DARK THEME COLORS-->
+    <color name="splash_background">@color/color_primary</color>
+
+    <color name="color_background">#111524</color>
+    <color name="color_on_background">#FFFFFFFF</color>
+
+    <color name="color_surface">#212842</color>
+    <color name="color_on_surface">#FFFFFFFF</color>
+
+    <color name="color_primary">#527bf3</color>
+    <color name="color_on_primary">#ffffff</color>
+
+
+</resources>

@@ -20,6 +20,8 @@ include(":common")
 
 // android
 include(":android")
+include(":android:app")
+include(":android:presentation")
 
 // desktop
 include(":desktop")

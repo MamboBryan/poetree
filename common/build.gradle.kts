@@ -1,12 +1,16 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
+    id("io.realm.kotlin")
 }
 
 version = "1.0"
 
 kotlin {
+
+    jvm()
     android()
     iosX64()
     iosArm64()
@@ -15,23 +19,54 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
-        //version = "1.0"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../ios/Podfile")
         framework {
             baseName = "common"
         }
     }
-    
+
     sourceSets {
-        val commonMain by getting
+
+        // COMMON
+        val commonMain by getting {
+            dependencies {
+
+                // kotlinx
+                implementation(Kotlinx.dateTime)
+                implementation(Kotlinx.coroutines)
+                implementation(Kotlinx.serialization)
+
+                // ktor
+                implementation(KtorDependencies.core)
+                //implementation(KtorDependencies.json)
+                implementation(KtorDependencies.logging)
+                implementation(KtorDependencies.contentNegotiation)
+
+                // coroutines
+                implementation(Kotlinx.coroutines)
+
+                // other
+                implementation(Multiplatform.napier)
+                implementation(Multiplatform.realm)
+
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+
+        // ANDROID
+        val androidMain by getting {
+            dependencies {
+                implementation(KtorDependencies.android)
+            }
+        }
         val androidTest by getting
+
+        // iOS
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -40,6 +75,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(KtorDependencies.darwin)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -50,6 +88,21 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+
+        // DESKTOP
+        val jvmMain by getting  {
+            dependencies {
+                implementation(KtorDependencies.android)
+            }
+        }
+        val jvmTest by getting
+
+        targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+            binaries.all {
+                binaryOptions["memoryModel"] = "experimental"
+            }
+        }
+
     }
 }
 
