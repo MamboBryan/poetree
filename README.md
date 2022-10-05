@@ -2,8 +2,8 @@
 
 <p align="center"><img width=12% src="images/logo.png"></p>
 
-# Poetree ![GitHub tag (latest by date)](https://img.shields.io:/github/v/tag/MamboBryan/poetree?style=for-the-badge)
-![GitHub Repo stars](https://img.shields.io:/github/stars/MamboBryan/poetree?style=for-the-badge) ![JitPack](https://img.shields.io/jitpack/v/github/MamboBryan/poetree?style=for-the-badge) ![GitHub branch checks state](https://img.shields.io:/github/checks-status/MamboBryan/poetree/main?style=for-the-badge)
+# Poetree
+![GitHub Repo stars](https://img.shields.io:/github/stars/MamboBryan/poetree?style=for-the-badge) ![GitHub tag (latest by date)](https://img.shields.io:/github/v/tag/MamboBryan/poetree?style=for-the-badge) ![GitHub branch checks state](https://img.shields.io:/github/checks-status/MamboBryan/poetree/main?style=for-the-badge)
 
 [Overview](#overview) •
 [Features](#features) •
@@ -33,10 +33,13 @@ Poetree provides the following features for users
 
 ## ScreenShots
 
-| Android                                                               |                          desktop                          |                                                           iOS |
-|:----------------------------------------------------------------------|:---------------------------------------------------------:|--------------------------------------------------------------:|
-| <img src="images/android.png" width="150" hspace="2" alt="android" /> | <img src="images/desktop.png" hspace="2" alt="desktop" /> | <img src="images/iOS.png" width="150" hspace="2" alt="iOS" /> |
+| Android                                                               |                                                            iOS |
+|:----------------------------------------------------------------------|---------------------------------------------------------------:|
+| <img src="images/android.png" width="150" hspace="2" alt="android" /> |  <img src="images/iOS.png" width="150" hspace="2" alt="iOS" /> |
 
+|                          desktop                          |
+|:---------------------------------------------------------:|
+| <img src="images/desktop.png" hspace="2" alt="desktop" /> |
 
 ## Contributing
 
