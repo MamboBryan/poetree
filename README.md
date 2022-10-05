@@ -1,8 +1,8 @@
-<div align="center">
+<div align="center"> 
 
-<p align="center"><img width=12% src="/images/logo.png"></p>
+<p align="center"><img width=12% src="images/logo.png"></p>
 
-# Poetree [![](https://jitpack.io/v/MamboBryan/poetree.svg)](https://jitpack.io/#MamboBryan/poetree)
+# Poetree ![GitHub tag (latest by date)](https://img.shields.io:/github/v/tag/MamboBryan/poetree?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io:/github/stars/MamboBryan/poetree?style=for-the-badge) ![JitPack](https://img.shields.io/jitpack/v/github/MamboBryan/poetree?style=for-the-badge) ![GitHub branch checks state](https://img.shields.io:/github/checks-status/MamboBryan/poetree/main?style=for-the-badge)
 
 [Overview](#overview) •
@@ -40,7 +40,6 @@ Poetree provides the following features for users
 
 ## Contributing
 
-![GitHub tag (latest by date)](https://img.shields.io:/github/v/tag/MamboBryan/poetree?style=for-the-badge)
 ![GitHub contributors](https://img.shields.io:/github/contributors/MamboBryan/poetree?style=for-the-badge) ![GitHub last commit](https://img.shields.io:/github/last-commit/MamboBryan/poetree?style=for-the-badge) [![Good first issues](https://img.shields.io/github/issues/MamboBryan/poetree/good%20first%20issue?style=for-the-badge)](https://github.com/MamboBryan/poetree/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) ![GitHub](https://img.shields.io:/github/license/MamboBryan/poetree?style=for-the-badge) ![GitHub issues](https://img.shields.io:/github/issues-raw/MamboBryan/poetree?style=for-the-badge) ![GitHub pull requests](https://img.shields.io:/github/issues-pr/MamboBryan/poetree?style=for-the-badge)
 
 Your contributions are especially welcome.
