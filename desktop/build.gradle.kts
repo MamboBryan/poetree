@@ -17,6 +17,7 @@ dependencies {
 
     implementation(compose.desktop.currentOs)
     implementation(Multiplatform.napier)
+    implementation(ComposeDependencies.icons)
 
 }
 
@@ -27,6 +28,17 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "poetree"
             packageVersion = "1.0.0"
+
+            macOS {
+                iconFile.set(project.file("icons/logo.icns"))
+            }
+            windows{
+                iconFile.set(project.file("icons/logo.ico"))
+            }
+            linux {
+                iconFile.set(project.file("icons/logo.png"))
+            }
+
         }
     }
 }

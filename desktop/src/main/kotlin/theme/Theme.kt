@@ -35,7 +35,7 @@ private val LightColorPalette = lightColors(
 @Composable
 fun PoetreeTheme(
 //    isDarkTheme: Boolean = isSystemInDarkTheme(),
-    isDarkTheme: Boolean = true,
+    isDarkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
 

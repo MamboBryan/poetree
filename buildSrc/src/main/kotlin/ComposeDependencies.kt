@@ -1,6 +1,7 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object ComposeDependencies {
+    val icons = "org.jetbrains.compose.material:material-icons-extended-desktop:1.1.1"
 
 }
 
