@@ -39,9 +39,12 @@ kotlin {
 
                 // ktor
                 implementation(KtorDependencies.core)
-                implementation(KtorDependencies.json)
+                //implementation(KtorDependencies.json)
                 implementation(KtorDependencies.logging)
                 implementation(KtorDependencies.contentNegotiation)
+
+                // coroutines
+                implementation(Kotlinx.coroutines)
 
                 // other
                 implementation(Multiplatform.napier)
@@ -72,6 +75,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(KtorDependencies.darwin)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -90,6 +96,12 @@ kotlin {
             }
         }
         val jvmTest by getting
+
+        targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+            binaries.all {
+                binaryOptions["memoryModel"] = "experimental"
+            }
+        }
 
     }
 }

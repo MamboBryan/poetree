@@ -18,8 +18,6 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(Multiplatform.napier)
 
-    implementation("ch.qos.logback:logback-classic:1.2.11")
-
 }
 
 compose.desktop {

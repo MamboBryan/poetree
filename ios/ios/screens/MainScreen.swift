@@ -7,28 +7,42 @@
 //
 
 import SwiftUI
+import common
 
 struct MainScreen: View {
     
+    var metric: GeometryProxy
+    
+    @State private var text = "No Internet Connection"
+    let app = PoetreeApp()
+    
     var body: some View {
-        VStack{
+        
+        VStack(alignment: .leading){
+            Text("\(app.name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
+            Text("\(app.dummyPoem())").padding([.top], 8).padding([.bottom], 24)
+            Text("\(app.dummyPoet())").font(.body.weight(.medium).italic())
             
-            HStack{
-                Image(systemName: "pencil")
-                Text("No Internet Connection")
-            }
-            .background(Color(.red))
+            Spacer()
             
-            HStack {
-                
-            }
-            
-        }
+            Button(action: {}, label: {
+                HStack{
+                    Spacer()
+                    Text("Get Started")
+                    Spacer()
+                }
+            }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
+        }.padding()
+        
+        
     }
+    
 }
 
 struct MainScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MainScreen()
+        GeometryReader{metric in
+            MainScreen(metric: metric)
+        }
     }
 }

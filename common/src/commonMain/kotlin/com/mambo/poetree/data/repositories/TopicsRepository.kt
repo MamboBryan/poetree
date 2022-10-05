@@ -3,7 +3,6 @@ package com.mambo.poetree.data.repositories
 import com.mambo.poetree.data.local.PoetreeDatabase
 import com.mambo.poetree.data.local.entity.TopicEntity
 import com.mambo.poetree.data.remote.PoemsApi
-import com.mambo.poetree.data.remote.PoemsClient
 import com.mambo.poetree.data.remote.TopicRequest
 import kotlinx.coroutines.flow.asFlow
 
