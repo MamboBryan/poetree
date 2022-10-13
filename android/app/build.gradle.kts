@@ -34,4 +34,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":android:presentation"))
 
+    implementation(Libraries.timber)
+
 }

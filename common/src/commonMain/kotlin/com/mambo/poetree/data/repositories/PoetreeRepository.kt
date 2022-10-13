@@ -8,5 +8,4 @@ class PoetreeRepository {
 
     suspend fun goofy() = api.goofy()
 
-
 }

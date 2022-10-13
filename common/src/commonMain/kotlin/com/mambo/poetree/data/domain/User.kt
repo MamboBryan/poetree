@@ -1,5 +1,8 @@
 package com.mambo.poetree.data.domain
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class User(
     val id: String? = null,
     val createdAt: String? = null,
@@ -13,4 +16,6 @@ data class User(
     val reads: Long? = null,
     val likes: Long? = null,
     val bookmarks: Long? = null
-)
+){
+    val isSetup = name != null && dateOfBirth != null
+}

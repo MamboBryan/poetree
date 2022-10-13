@@ -11,17 +11,22 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CloudOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mambo.poetree.android.presentation.MainViewModel
+import com.ramcosta.composedestinations.DestinationsNavHost
 
 @Composable
 fun MainScreen(
-    content: @Composable () -> Unit
+    mainViewModel: MainViewModel = viewModel(),
 ) {
 
-    var isConnected by remember { mutableStateOf(true) }
+    val isConnected by mainViewModel.hasNetworkConnection.collectAsState(initial = true)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -30,7 +35,7 @@ fun MainScreen(
         Column(modifier = Modifier.fillMaxSize()) {
 
             AnimatedVisibility(
-                visible = isConnected,
+                visible = isConnected.not(),
                 enter = slideInVertically(),
                 exit = slideOutVertically()
             ) {
@@ -54,7 +59,7 @@ fun MainScreen(
                 }
             }
 
-            content()
+            DestinationsNavHost(navGraph = NavGraphs.root)
 
         }
     }

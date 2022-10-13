@@ -61,11 +61,12 @@ dependencies {
     implementation(Libraries.core)
     implementation(Libraries.kotlin)
     implementation(Libraries.appCompat)
-    implementation(Libraries.materialDesign)
     implementation(Libraries.splashScreen)
-
+    implementation(Libraries.materialDesign)
     implementation(Accompanist.systemUi)
 
+    implementation(Libraries.timber)
+    
     jetpackCompose()
 
     // compose destinations

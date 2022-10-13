@@ -1,4 +1,4 @@
-package com.mambo.poetree.data
+package com.mambo.poetree.data.remote
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
