@@ -7,12 +7,13 @@ import com.russhwolf.settings.Settings
 import com.russhwolf.settings.coroutines.getBooleanFlow
 import com.russhwolf.settings.get
 import io.github.aakira.napier.Napier
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 
-@OptIn(ExperimentalSettingsApi::class)
+@OptIn(ExperimentalSettingsApi::class, ExperimentalCoroutinesApi::class)
 class UserPreferences {
 
     private val settings = Settings() as ObservableSettings
@@ -44,10 +45,10 @@ class UserPreferences {
 
     val imageUrl = settings.getStringOrNull(PreferencesKeys.IMAGE_URL)
 
-    suspend fun getUserData(): User?{
+    suspend fun getUserData(): User? {
         return try {
             Json.decodeFromString<User>(settings[PreferencesKeys.USER_DETAILS, ""])
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Napier.e(e.message ?: "Error getting user")
             null
         }
@@ -97,18 +98,18 @@ class UserPreferences {
 
     suspend fun signOut() {
         settings.apply {
-           putString(PreferencesKeys.IMAGE_URL, "")
-           putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
-           putBoolean(PreferencesKeys.IS_SETUP, false)
-           putBoolean(PreferencesKeys.IS_SIGNED_OUT, false)
-           putBoolean(PreferencesKeys.IS_SETUP, false)
-           putString(PreferencesKeys.ACCESS_TOKEN, "")
-           putString(PreferencesKeys.REFRESH_TOKEN, "")
-           putString(PreferencesKeys.USER_DETAILS, "json")
+            putString(PreferencesKeys.IMAGE_URL, "")
+            putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
+            putBoolean(PreferencesKeys.IS_SETUP, false)
+            putBoolean(PreferencesKeys.IS_SIGNED_OUT, false)
+            putBoolean(PreferencesKeys.IS_SETUP, false)
+            putString(PreferencesKeys.ACCESS_TOKEN, "")
+            putString(PreferencesKeys.REFRESH_TOKEN, "")
+            putString(PreferencesKeys.USER_DETAILS, "json")
         }
     }
 
-    suspend fun clear(){
+    suspend fun clear() {
         settings.clear()
     }
 
