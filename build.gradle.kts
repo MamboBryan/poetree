@@ -1,7 +1,5 @@
 buildscript {
     dependencies {
-//        classpath("io.realm.kotlin:gradle-plugin:1.0.2")
-//        classpath("https://jitpack.io")
     }
 }
 
@@ -15,5 +13,5 @@ plugins {
 
     kotlin("android").version("1.6.10").apply(false)
     kotlin("multiplatform").version("1.6.10").apply(false)
-    kotlin("plugin.serialization").version("1.6.10").apply(false)
+    kotlin("plugin.serialization") .version("1.6.10").apply(false)
 }
