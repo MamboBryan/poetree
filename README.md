@@ -50,11 +50,12 @@ Whether it comes in the form of code patches, ideas, discussion, bug reports, en
 
 For any further question or any reference please reach out to any platform lead or open a discussion.
 
-- (Looking for one) ![Project Lead]()
-- (Not yet decided) ![Android Lead]()
-- Mike Ndiritu ![iOS Lead](https://github.com/ndiritumichael)
-- (Not yet decided) ![Web Lead]()
-- (Not yet decided) ![Desktop Lead]()
+- Project [None](https://github.com/MamboBryan/poetree)
+- Android) [None](https://github.com/MamboBryan/poetree)
+- iOS [Mike Ndiritu](https://github.com/ndiritumichael)
+- Web [None](https://github.com/MamboBryan/poetree)
+- Desktop Lead [None](https://github.com/MamboBryan/poetree)
+- Backend [None](https://github.com/MamboBryan/poetree)
 
 ## Sponsor
 
