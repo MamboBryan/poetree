@@ -1,17 +1,21 @@
 package com.mambo.poetree.data.local
 
-import com.mambo.poetree.data.local.entity.TopicEntity
+import com.mambo.poetree.data.local.entity.*
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 
-class PoetreeDatabase {
+internal object PoetreeDatabase {
 
     private val config = RealmConfiguration.Builder(
-        schema = setOf(
+        setOf(
+            Drafted::class,
+            Bookmarked::class,
+            Searched::class,
+            Published::class,
             TopicEntity::class
         )
     ).build()
 
-    val realm: Realm = Realm.open(config)
+    fun realm() = Realm.open(config)
 
 }

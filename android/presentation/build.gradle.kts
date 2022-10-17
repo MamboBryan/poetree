@@ -28,7 +28,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.3.0"
     }
 
     compileOptions {
@@ -61,11 +61,12 @@ dependencies {
     implementation(Libraries.core)
     implementation(Libraries.kotlin)
     implementation(Libraries.appCompat)
-    implementation(Libraries.materialDesign)
     implementation(Libraries.splashScreen)
-
+    implementation(Libraries.materialDesign)
     implementation(Accompanist.systemUi)
 
+    implementation(Libraries.timber)
+    
     jetpackCompose()
 
     // compose destinations

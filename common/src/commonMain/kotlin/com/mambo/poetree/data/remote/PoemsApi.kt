@@ -1,7 +1,5 @@
 package com.mambo.poetree.data.remote
 
-import com.mambo.poetree.data.NetworkResult
-import com.mambo.poetree.data.PagedResult
 import com.mambo.poetree.data.remote.dto.*
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -11,10 +9,12 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 
-class PoemsApi(
-    private val httpClient: HttpClient? = null
-) {
+@OptIn(ExperimentalSerializationApi::class)
+class PoemsApi {
 
     private val client = HttpClient {
 
@@ -25,10 +25,10 @@ class PoemsApi(
 //        }
 
         install(ContentNegotiation) {
-//            json(json = Json {
-//                encodeDefaults = false
-//                explicitNulls = false
-//            })
+            json(json = Json {
+                encodeDefaults = false
+                explicitNulls = false
+            })
         }
 
         install(Logging) {

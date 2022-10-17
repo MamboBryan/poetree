@@ -7,12 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.mambo.poetree.android.presentation.screens.LandingScreen
 import com.mambo.poetree.android.presentation.screens.MainScreen
-import com.mambo.poetree.android.presentation.screens.NavGraphs
 import com.mambo.poetree.android.presentation.theme.PoetreeTheme
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 
 class MainActivity : ComponentActivity() {
 
@@ -26,9 +22,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             PoetreeTheme {
-                MainScreen {
-                    DestinationsNavHost(navGraph = NavGraphs.root)
-                }
+                MainScreen()
             }
         }
     }
@@ -38,8 +32,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     PoetreeTheme {
-        MainScreen {
-            LandingScreen(navController = EmptyDestinationsNavigator)
-        }
+        MainScreen()
     }
 }

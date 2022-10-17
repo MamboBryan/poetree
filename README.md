@@ -48,7 +48,14 @@ Poetree provides the following features for users
 Your contributions are especially welcome.
 Whether it comes in the form of code patches, ideas, discussion, bug reports, encouragement or criticism, your input is needed.
 
-[//]: # (Visit [wiki]&#40;https://github.com/MamboBryan/poetree/wiki&#41; to get started.)
+For any further question or any reference please reach out to any platform lead or open a discussion.
+
+- Project [None](https://github.com/MamboBryan/poetree)
+- Android) [None](https://github.com/MamboBryan/poetree)
+- iOS [Mike Ndiritu](https://github.com/ndiritumichael)
+- Web [None](https://github.com/MamboBryan/poetree)
+- Desktop Lead [None](https://github.com/MamboBryan/poetree)
+- Backend [None](https://github.com/MamboBryan/poetree)
 
 ## Sponsor
 

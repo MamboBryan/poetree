@@ -39,7 +39,7 @@ kotlin {
 
                 // ktor
                 implementation(KtorDependencies.core)
-                //implementation(KtorDependencies.json)
+                implementation(KtorDependencies.json)
                 implementation(KtorDependencies.logging)
                 implementation(KtorDependencies.contentNegotiation)
 
@@ -47,6 +47,8 @@ kotlin {
                 implementation(Kotlinx.coroutines)
 
                 // other
+                implementation(Multiplatform.coroutineSettings)
+                implementation(Multiplatform.settings)
                 implementation(Multiplatform.napier)
                 implementation(Multiplatform.realm)
 
