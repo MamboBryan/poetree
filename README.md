@@ -51,11 +51,11 @@ Whether it comes in the form of code patches, ideas, discussion, bug reports, en
 For any further question or any reference please reach out to any platform lead or open a discussion.
 
 - Project [None](https://github.com/MamboBryan/poetree)
-- Android) [None](https://github.com/MamboBryan/poetree)
-- iOS [Mike Ndiritu](https://github.com/ndiritumichael)
-- Web [None](https://github.com/MamboBryan/poetree)
-- Desktop Lead [None](https://github.com/MamboBryan/poetree)
-- Backend [None](https://github.com/MamboBryan/poetree)
+  - Android &#8594; [None](https://github.com/MamboBryan/poetree)
+  - iOS &#8594; [Mike Ndiritu](https://github.com/ndiritumichael)
+  - Web &#8594; [None](https://github.com/MamboBryan/poetree)
+  - Desktop &#8594; [None](https://github.com/MamboBryan/poetree)
+  - Backend &#8594; [None](https://github.com/MamboBryan/poetree)
 
 ## Sponsor
 
