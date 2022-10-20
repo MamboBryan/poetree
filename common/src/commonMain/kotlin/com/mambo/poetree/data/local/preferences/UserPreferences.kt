@@ -34,7 +34,7 @@ class UserPreferences {
     val hasNetworkConnection = settings.getBooleanFlow(PreferencesKeys.HAS_NETWORK_CONNECTION, true)
     val darkMode = settings.getBooleanFlow(PreferencesKeys.DARK_MODE, false)
 
-    val isOnBoarded = settings[PreferencesKeys.IS_ON_BOARDED, false]
+    val isOnBoarded = settings.getBooleanFlow(PreferencesKeys.IS_ON_BOARDED, false)
 
     val signedIn = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_IN, false)
     val signedOut = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_OUT, false)
@@ -70,8 +70,8 @@ class UserPreferences {
         settings.putBoolean(PreferencesKeys.IS_ON_BOARDED, true)
     }
 
-    suspend fun signedIn() {
-        settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, true)
+    suspend fun signedIn(bool: Boolean) {
+        settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, bool)
     }
 
     suspend fun userHasSetup() {
