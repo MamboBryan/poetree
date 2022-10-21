@@ -63,11 +63,12 @@ dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.splashScreen)
     implementation(Libraries.materialDesign)
-    implementation(Accompanist.systemUi)
 
     implementation(Libraries.timber)
     
     jetpackCompose()
+
+    accompanist()
 
     // compose destinations
     ksp("io.github.raamcosta.compose-destinations:ksp:1.4.2-beta")
