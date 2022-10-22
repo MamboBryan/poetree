@@ -9,19 +9,21 @@
 import SwiftUI
 import common
 
+enum Section {
+    case started, authentication, setup
+}
+
 struct MainScreen: View {
     
-    var metric: GeometryProxy
-    
-    @State private var text = "No Internet Connection"
-    let app = PoetreeApp()
+    let section = Section.started
     
     var body: some View {
         
         VStack(alignment: .leading){
-            Text("\(app.name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
-            Text("\(app.dummyPoem())").padding([.top], 8).padding([.bottom], 24)
-            Text("\(app.dummyPoet())").font(.body.weight(.medium))
+            
+            Text("\(PoetreeApp().name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
+            Text("\(PoetreeApp().dummyPoem())").padding([.top], 8).padding([.bottom], 24)
+            Text("\(PoetreeApp().dummyPoet())").font(.body.weight(.medium))
             
             Spacer()
             
@@ -41,8 +43,6 @@ struct MainScreen: View {
 
 struct MainScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader{metric in
-            MainScreen(metric: metric)
-        }
+        MainScreen()
     }
 }

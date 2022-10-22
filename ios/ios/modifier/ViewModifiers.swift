@@ -16,3 +16,15 @@ extension View {
             .position(x: metric.size.width/2, y: metric.size.height/2)
     }
 }
+
+extension Image {
+    func centerCropped() -> some View {
+        GeometryReader { geo in
+           return self
+            .resizable()
+            .scaledToFill()
+            .frame(width: geo.size.width, height: geo.size.height)
+            .clipped()
+        }
+    }
+}
