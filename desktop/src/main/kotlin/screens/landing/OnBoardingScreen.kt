@@ -1,4 +1,4 @@
-package com.mambo.poetree.screens
+package com.mambo.poetree.screens.landing
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background

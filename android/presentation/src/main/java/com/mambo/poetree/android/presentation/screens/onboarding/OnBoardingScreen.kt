@@ -1,4 +1,4 @@
-package com.mambo.poetree.android.presentation.screens
+package com.mambo.poetree.android.presentation.screens.onboarding
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -21,6 +21,7 @@ import com.google.accompanist.pager.*
 import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.android.R
 import com.mambo.poetree.android.presentation.composables.OnBoardItem
+import com.mambo.poetree.android.presentation.screens.NavGraphs
 import com.mambo.poetree.android.presentation.screens.destinations.LandingScreenDestination
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.ramcosta.composedestinations.annotation.Destination
