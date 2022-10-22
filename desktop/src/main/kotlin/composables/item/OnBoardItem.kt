@@ -1,4 +1,4 @@
-package com.mambo.poetree.composables
+package com.mambo.poetree.composables.item
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image

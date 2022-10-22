@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mambo.poetree.PoetreeApp
-import com.mambo.poetree.composables.OnBoardItem
+import com.mambo.poetree.composables.item.OnBoardItem
 
 @Composable
 fun OnBoardingScreen() {
