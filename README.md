@@ -35,7 +35,7 @@ Poetree provides the following features for users
 
 | Android                                                               |                                                           iOS |
 |:----------------------------------------------------------------------|--------------------------------------------------------------:|
-| <img src="images/android.png" width="200" hspace="2" alt="android" /> | <img src="images/iOS.png" width="200" hspace="2" alt="iOS" /> |
+| <img src="images/android.png" width="200" hspace="2" alt="android" /> | <img src="images/ios.png" width="200" hspace="2" alt="iOS" /> |
 
 |                          desktop                          |
 |:---------------------------------------------------------:|
