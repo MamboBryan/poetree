@@ -2,4 +2,5 @@ target 'ios' do
   use_frameworks!
   platform :ios, '14.1'
   pod 'common', :path => '../common'
+  pod 'KMPNativeCoroutinesAsync', '0.13.0'
 end

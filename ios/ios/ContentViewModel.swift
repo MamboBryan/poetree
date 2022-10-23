@@ -8,13 +8,29 @@
 
 import Foundation
 import common
+import KMPNativeCoroutinesAsync
 
 @MainActor
 class ContentViewModel : ObservableObject {
     
-    var isSignedIn = UserPreferences().signedIn
-    var hasOnBoarded = UserPreferences().isOnBoarded
-    var userHasSetup  = UserPreferences().isUserSetup
+    
+    private let preference = UserPreferences()
+    
+    var isSignedIn = preference.signedIn
+    var hasOnBoarded = preference.isOnBoarded
+    var userHasSetup  = preference.isUserSetup
+    
+    init (){
+        let handle = Task {
+            do {
+                let onBoarded = try await asyncFunction(for: preference.isOnBoardedNative)
+                print("User has onBoarded: \(onBoarded)")
+                
+            } catch {
+                print("Failed with error : \(error)")
+            }
+        }
+    }
     
     func setUserIsAuthenticated() {
         UserPreferences().signedIn(bool: true)

@@ -17,5 +17,5 @@ data class User(
     val likes: Long? = null,
     val bookmarks: Long? = null
 ){
-    val isSetup = name != null && dateOfBirth != null
+    val isSetup: Boolean = name != null && dateOfBirth != null
 }
