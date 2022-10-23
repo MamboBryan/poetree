@@ -15,25 +15,37 @@ enum Section {
 
 struct MainScreen: View {
     
-    let section = Section.started
+    @State var section = Section.started
     
     var body: some View {
         
-        VStack(alignment: .leading){
+        ZStack {
             
-            Text("\(PoetreeApp().name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
-            Text("\(PoetreeApp().dummyPoem())").padding([.top], 8).padding([.bottom], 24)
-            Text("\(PoetreeApp().dummyPoet())").font(.body.weight(.medium))
-            
-            Spacer()
-            
-            Button(action: {}, label: {
-                HStack{
+            if section == Section.started {
+                VStack (alignment: .leading) {
+                    Text("\(PoetreeApp().name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
+                    Text("\(PoetreeApp().dummyPoem())").padding([.top], 8).padding([.bottom], 24)
+                    Text("\(PoetreeApp().dummyPoet())").font(.body.weight(.medium))
+                    
                     Spacer()
-                    Text("Get Started")
-                    Spacer()
+                    
+                    Button(action: { section = .authentication }, label: {
+                        HStack{
+                            Spacer()
+                            Text("Get Started")
+                            Spacer()
+                        }
+                    }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
                 }
-            }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
+            }
+            
+            if section == Section.authentication {
+                VStack {
+                    Text("Auth")
+                }
+            }
+            
+            
         }.padding()
         
         

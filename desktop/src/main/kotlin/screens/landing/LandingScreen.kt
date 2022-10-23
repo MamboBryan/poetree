@@ -1,8 +1,6 @@
 package com.mambo.poetree.screens.landing
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,6 +15,12 @@ import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.composables.section.AccountSection
 import com.mambo.poetree.composables.section.AuthSection
 import com.mambo.poetree.composables.section.GetStartedSection
+import com.mambo.poetree.composables.section.OnBoardingSection
+import com.mambo.poetree.data.local.preferences.UserPreferences
+import com.mambo.poetree.extensions.slideInLeft
+import com.mambo.poetree.extensions.slideInRight
+import com.mambo.poetree.extensions.slideOutLeft
+import com.mambo.poetree.extensions.slideOutRight
 import com.mambo.poetree.navigation.NavController
 
 private enum class Landing {
@@ -31,6 +35,8 @@ fun LandingScreen(
 ) {
 
     var section by remember { mutableStateOf(Landing.GET_STARTED) }
+    val signedIn = UserPreferences().signedIn.collectAsState(initial = false)
+    val hasSetup = UserPreferences().isUserSetup.collectAsState(initial = false)
 
     Row {
 
@@ -42,7 +48,7 @@ fun LandingScreen(
             verticalArrangement = Arrangement.Center
 
         ) {
-            OnBoardingScreen()
+            OnBoardingSection()
         }
 
         Column(
@@ -66,24 +72,24 @@ fun LandingScreen(
 
                 AnimatedVisibility(
                     visible = section == Landing.GET_STARTED,
-                    enter = slideInVertically(),
-                    exit = slideOutVertically()
+                    enter = slideInLeft(),
+                    exit = slideOutLeft()
                 ) {
                     GetStartedSection { section = Landing.AUTHENTICATION }
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.AUTHENTICATION,
-                    enter = slideInVertically(),
-                    exit = slideOutVertically()
+                    enter = slideInRight(),
+                    exit = slideOutLeft()
                 ) {
                     AuthSection(navController = navController)
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.SETUP,
-                    enter = slideInVertically(),
-                    exit = slideOutVertically()
+                    enter = slideInRight(),
+                    exit = slideOutRight()
                 ) {
                     AccountSection(navController = navController)
                 }

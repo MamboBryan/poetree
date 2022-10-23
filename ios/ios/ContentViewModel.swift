@@ -13,23 +13,39 @@ import KMPNativeCoroutinesAsync
 @MainActor
 class ContentViewModel : ObservableObject {
     
-    
-    private let preference = UserPreferences()
-    
-    var isSignedIn =  UserPreferences().signedIn
-    var hasOnBoarded =  UserPreferences().isOnBoarded
-    var userHasSetup  =  UserPreferences().isUserSetup
+    @Published var hasOnBoarded:Bool?
+    @Published var isSignedIn : Bool?
+    @Published var hasSetup : Bool?
     
     init (){
        Task {
             do {
                 let onBoardedStream = asyncStream(for: UserPreferences().isOnBoardedNative)
                 for try await onBoarded in onBoardedStream{
-                    print("User has onBoarded: \(onBoarded)")
+                    hasOnBoarded = onBoarded as? Bool
                 }
             } catch {
-                print("Failed with error : \(error)")
+                print("OnBoarding Failed with error : \(error)")
             }
+           
+           do {
+               let signedInStream = asyncStream(for: UserPreferences().signedInNative)
+               for try await signedIn in signedInStream {
+                   isSignedIn = signedIn as? Bool
+               }
+           } catch {
+               print("SignedIn Failed with error : \(error)")
+           }
+           
+           do {
+               let setupStream = asyncStream(for: UserPreferences().isUserSetupNative)
+               for try await isSetup in setupStream {
+                   hasSetup = isSetup as? Bool
+               }
+           } catch {
+               print("OnBoarding Failed with error : \(error)")
+           }
+           
         }
     }
     

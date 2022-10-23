@@ -4,9 +4,8 @@ import common
 struct ContentView: View {
     
     @StateObject var viewModel : ContentViewModel = ContentViewModel()
-    
-    var isOnBoarded : Bool = false
-    let isAuthenticated: Bool = true
+
+    let isAuthenticated: Bool = false
     let userHasSetup : Bool = false
     
     var body: some View {
@@ -26,9 +25,9 @@ struct ContentView: View {
                 .foregroundColor(Color("OnPrimary"))
                 
                 ZStack{
-                    if isOnBoarded == true {
-                        if isAuthenticated == true {
-                            if userHasSetup == true {
+                    if viewModel.hasOnBoarded == true {
+                        if viewModel.isSignedIn == true {
+                            if viewModel.hasSetup == true {
                                 NavigationView{ HomeScreen() }
                             } else {
                                 AccountScreen(isSettingUp: true)
@@ -37,9 +36,7 @@ struct ContentView: View {
                             MainScreen()
                         }
                     } else {
-                        OnBoardingScreen{
-                            // TODO : update isOnboarded state to true
-                        }
+                        OnBoardingScreen { viewModel.setUserHasOnBoarded() }
                     }
                 }
                 

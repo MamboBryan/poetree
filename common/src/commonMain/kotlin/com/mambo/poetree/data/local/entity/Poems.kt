@@ -18,7 +18,7 @@ class Bookmarked : Poem(), RealmObject {
     override var type: Type = Type.BOOKMARK
 }
 
-class Published : Poem(), RealmObject {
+class PoemFeed : Poem(), RealmObject {
     @PrimaryKey
     override var id: String = RealmStorageType.UUID.toString()
     override var type: Type = Type.BOOKMARK

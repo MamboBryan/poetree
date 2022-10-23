@@ -1,4 +1,4 @@
-package com.mambo.poetree.screens.landing
+package com.mambo.poetree.composables.section
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
@@ -17,7 +17,7 @@ import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.composables.item.OnBoardItem
 
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingSection() {
 
     var page by remember { mutableStateOf(0) }
 
@@ -82,5 +82,5 @@ fun OnBoardingScreen() {
 @Preview
 @Composable
 fun OnBoardingScreenPreview() {
-    OnBoardingScreen()
+    OnBoardingSection()
 }
