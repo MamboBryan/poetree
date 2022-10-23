@@ -19,9 +19,9 @@ data class UserCompleteDto(
     val bookmarks: Long? = null
 ) {
 
-    val isSetup = name != null && dateOfBirth != null
+    val isSetup: Boolean = name != null && dateOfBirth != null
 
-    fun toUser() = User(
+    fun toUser(): User = User(
         id,
         createdAt,
         updatedAt,
@@ -44,7 +44,7 @@ data class UserMinimalDto(
     val name: String?,
     val image: String?
 ) {
-    fun toUser() = User(
+    fun toUser(): User = User(
         id = id, createdAt = createdAt, name = name, image = image
     )
 }
@@ -61,7 +61,7 @@ data class UserDto(
     val dateOfBirth: String? = null,
     val gender: Int? = null
 ) {
-    fun toUser() = User(
+    fun toUser(): User = User(
         id = id,
         createdAt = createdAt,
         updatedAt = updatedAt,

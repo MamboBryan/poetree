@@ -16,16 +16,17 @@ class ContentViewModel : ObservableObject {
     
     private let preference = UserPreferences()
     
-    var isSignedIn = preference.signedIn
-    var hasOnBoarded = preference.isOnBoarded
-    var userHasSetup  = preference.isUserSetup
+    var isSignedIn =  UserPreferences().signedIn
+    var hasOnBoarded =  UserPreferences().isOnBoarded
+    var userHasSetup  =  UserPreferences().isUserSetup
     
     init (){
-        let handle = Task {
+       Task {
             do {
-                let onBoarded = try await asyncFunction(for: preference.isOnBoardedNative)
-                print("User has onBoarded: \(onBoarded)")
-                
+                let onBoardedStream = asyncStream(for: UserPreferences().isOnBoardedNative)
+                for try await onBoarded in onBoardedStream{
+                    print("User has onBoarded: \(onBoarded)")
+                }
             } catch {
                 print("Failed with error : \(error)")
             }
