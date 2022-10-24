@@ -16,7 +16,12 @@ object JetpackCompose {
 }
 
 object Accompanist{
-    val systemUi by lazy { "com.google.accompanist:accompanist-systemuicontroller:0.26.3-beta"}
+
+    private const val VERSION = "0.26.3-beta"
+
+    val pager by lazy { "com.google.accompanist:accompanist-pager:$VERSION"}
+    val systemUi by lazy { "com.google.accompanist:accompanist-systemuicontroller:$VERSION"}
+    val pagerIndicators by lazy { "com.google.accompanist:accompanist-pager-indicators:$VERSION"}
 }
 
 fun DependencyHandler.jetpackCompose() {
@@ -29,7 +34,8 @@ fun DependencyHandler.jetpackCompose() {
     implementation(JetpackCompose.icons)
 }
 
-fun DependencyHandler.composeUi() {
-//    implementation(compose.web.core)
-//    implementation(compose.runtime)
+fun DependencyHandler.accompanist(){
+    implementation(Accompanist.systemUi)
+    implementation(Accompanist.pager)
+    implementation(Accompanist.pagerIndicators)
 }

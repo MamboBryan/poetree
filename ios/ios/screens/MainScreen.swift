@@ -9,29 +9,43 @@
 import SwiftUI
 import common
 
+enum Section {
+    case started, authentication, setup
+}
+
 struct MainScreen: View {
     
-    var metric: GeometryProxy
-    
-    @State private var text = "No Internet Connection"
-    let app = PoetreeApp()
+    @State var section = Section.started
     
     var body: some View {
         
-        VStack(alignment: .leading){
-            Text("\(app.name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
-            Text("\(app.dummyPoem())").padding([.top], 8).padding([.bottom], 24)
-            Text("\(app.dummyPoet())").font(.body.weight(.medium))
+        ZStack {
             
-            Spacer()
-            
-            Button(action: {}, label: {
-                HStack{
+            if section == Section.started {
+                VStack (alignment: .leading) {
+                    Text("\(PoetreeApp().name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
+                    Text("\(PoetreeApp().dummyPoem())").padding([.top], 8).padding([.bottom], 24)
+                    Text("\(PoetreeApp().dummyPoet())").font(.body.weight(.medium))
+                    
                     Spacer()
-                    Text("Get Started")
-                    Spacer()
+                    
+                    Button(action: { section = .authentication }, label: {
+                        HStack{
+                            Spacer()
+                            Text("Get Started")
+                            Spacer()
+                        }
+                    }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
                 }
-            }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
+            }
+            
+            if section == Section.authentication {
+                VStack {
+                    Text("Auth")
+                }
+            }
+            
+            
         }.padding()
         
         
@@ -41,8 +55,6 @@ struct MainScreen: View {
 
 struct MainScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader{metric in
-            MainScreen(metric: metric)
-        }
+        MainScreen()
     }
 }

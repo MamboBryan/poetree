@@ -34,7 +34,7 @@ class UserPreferences {
     val hasNetworkConnection = settings.getBooleanFlow(PreferencesKeys.HAS_NETWORK_CONNECTION, true)
     val darkMode = settings.getBooleanFlow(PreferencesKeys.DARK_MODE, false)
 
-    val isOnBoarded = settings[PreferencesKeys.IS_ON_BOARDED, false]
+    val isOnBoarded = settings.getBooleanFlow(PreferencesKeys.IS_ON_BOARDED, false)
 
     val signedIn = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_IN, false)
     val signedOut = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_OUT, false)
@@ -45,7 +45,7 @@ class UserPreferences {
 
     val imageUrl = settings.getStringOrNull(PreferencesKeys.IMAGE_URL)
 
-    suspend fun getUserData(): User? {
+     fun getUserData(): User? {
         return try {
             Json.decodeFromString<User>(settings[PreferencesKeys.USER_DETAILS, ""])
         } catch (e: Exception) {
@@ -54,49 +54,49 @@ class UserPreferences {
         }
     }
 
-    suspend fun updateNetworkConnection(isConnected: Boolean) {
+     fun updateNetworkConnection(isConnected: Boolean) {
         settings.putBoolean(PreferencesKeys.HAS_NETWORK_CONNECTION, isConnected)
     }
 
-    suspend fun updateImageUrl(url: String) {
+     fun updateImageUrl(url: String) {
         settings.putString(PreferencesKeys.IMAGE_URL, url)
     }
 
-    suspend fun updateDarkMode(isDarkModeEnabled: Boolean) {
+     fun updateDarkMode(isDarkModeEnabled: Boolean) {
         settings.putBoolean(PreferencesKeys.DARK_MODE, isDarkModeEnabled)
     }
 
-    suspend fun onBoarded() {
+     fun userHasOnBoarded() {
         settings.putBoolean(PreferencesKeys.IS_ON_BOARDED, true)
     }
 
-    suspend fun signedIn() {
-        settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, true)
+     fun signedIn(bool: Boolean) {
+        settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, bool)
     }
 
-    suspend fun userHasSetup() {
+     fun userHasSetup() {
         settings.putBoolean(PreferencesKeys.IS_SETUP, true)
     }
 
-    suspend fun signedOut() {
+     fun signedOut() {
         settings.putBoolean(PreferencesKeys.IS_SIGNED_OUT, true)
     }
 
-    suspend fun updateIsUserSetup(isSetup: Boolean) {
+     fun updateIsUserSetup(isSetup: Boolean) {
         settings.putBoolean(PreferencesKeys.IS_SETUP, isSetup)
     }
 
-    suspend fun updateTokens(access: String, refresh: String) {
+     fun updateTokens(access: String, refresh: String) {
         settings.putString(PreferencesKeys.ACCESS_TOKEN, access)
         settings.putString(PreferencesKeys.REFRESH_TOKEN, refresh)
     }
 
-    suspend fun saveUserDetails(details: User) {
+     fun saveUserDetails(details: User) {
         val json = Json.encodeToString(details)
         settings.putString(PreferencesKeys.USER_DETAILS, json)
     }
 
-    suspend fun signOut() {
+     fun signOut() {
         settings.apply {
             putString(PreferencesKeys.IMAGE_URL, "")
             putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
@@ -109,7 +109,7 @@ class UserPreferences {
         }
     }
 
-    suspend fun clear() {
+     fun clear() {
         settings.clear()
     }
 

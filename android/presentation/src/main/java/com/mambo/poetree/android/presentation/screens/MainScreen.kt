@@ -19,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.android.presentation.MainViewModel
+import com.mambo.poetree.android.presentation.screens.destinations.AuthScreenDestination
+import com.mambo.poetree.android.presentation.screens.destinations.HomeScreenDestination
+import com.mambo.poetree.android.presentation.screens.destinations.OnBoardingScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 
 @Composable
@@ -26,16 +29,24 @@ fun MainScreen(
     mainViewModel: MainViewModel = viewModel(),
 ) {
 
-    val isConnected by mainViewModel.hasNetworkConnection.collectAsState(initial = true)
+    val hasInternetConnection by mainViewModel.hasNetworkConnection.collectAsState(initial = true)
+    val isLoggedIn by mainViewModel.isSignedIn.collectAsState(initial = true)
+    val isOnBoarded by mainViewModel.isOnBoarded.collectAsState(initial = true)
+
+    val startRoute = when {
+        isOnBoarded.not() -> OnBoardingScreenDestination
+        isLoggedIn.not() -> AuthScreenDestination
+        else -> HomeScreenDestination
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = MaterialTheme.colors.surface
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
             AnimatedVisibility(
-                visible = isConnected.not(),
+                visible = hasInternetConnection,
                 enter = slideInVertically(),
                 exit = slideOutVertically()
             ) {
@@ -59,7 +70,10 @@ fun MainScreen(
                 }
             }
 
-            DestinationsNavHost(navGraph = NavGraphs.root)
+            DestinationsNavHost(
+                navGraph = NavGraphs.root,
+                startRoute = startRoute
+            )
 
         }
     }

@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CloudOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,12 +30,12 @@ fun MainScreen(
 ) {
 
     // TODO: update connection status
-    var isConnected by remember { mutableStateOf(true) }
-    var title by remember { mutableStateOf(PoetreeApp().name()) }
-    var state = rememberWindowState(
+    val isConnected by remember { mutableStateOf(true) }
+    val title by remember { mutableStateOf(PoetreeApp().name()) }
+    val state = rememberWindowState(
         position = WindowPosition.Aligned(Alignment.Center),
         placement = WindowPlacement.Floating,
-        width = 1280.dp,
+        width = 980.dp,
         height = 720.dp,
     )
 
@@ -63,7 +66,7 @@ fun MainScreen(
             Column(modifier = Modifier.fillMaxSize()) {
 
                 AnimatedVisibility(
-                    visible = isConnected,
+                    visible = isConnected.not(),
                     enter = slideInVertically(),
                     exit = slideOutVertically()
                 ) {

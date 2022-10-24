@@ -13,6 +13,11 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7B39D5A228DC242E006A84E8 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B39D5A128DC242E006A84E8 /* MainScreen.swift */; };
+		7B790F592903AD0A00C6A608 /* OnBoardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B790F582903AD0A00C6A608 /* OnBoardingScreen.swift */; };
+		7B790F5B2903AEAC00C6A608 /* Pager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B790F5A2903AEAC00C6A608 /* Pager.swift */; };
+		7B790F5D2903C14B00C6A608 /* OnBoardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B790F5C2903C14B00C6A608 /* OnBoardItem.swift */; };
+		7B790F5F2903D17800C6A608 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B790F5E2903D17800C6A608 /* AccountScreen.swift */; };
+		7B790F642903D49D00C6A608 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B790F632903D49D00C6A608 /* ContentViewModel.swift */; };
 		7BCBA02328ED8690009ED00E /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCBA02228ED8690009ED00E /* ViewModifiers.swift */; };
 		7BCC871528ED74B300DE1646 /* AuthScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC871428ED74B300DE1646 /* AuthScreen.swift */; };
 		7BCC871728ED753A00DE1646 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC871628ED753A00DE1646 /* HomeScreen.swift */; };
@@ -29,6 +34,11 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B39D5A128DC242E006A84E8 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
+		7B790F582903AD0A00C6A608 /* OnBoardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreen.swift; sourceTree = "<group>"; };
+		7B790F5A2903AEAC00C6A608 /* Pager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pager.swift; sourceTree = "<group>"; };
+		7B790F5C2903C14B00C6A608 /* OnBoardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardItem.swift; sourceTree = "<group>"; };
+		7B790F5E2903D17800C6A608 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
+		7B790F632903D49D00C6A608 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		7BCBA02228ED8690009ED00E /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		7BCC871428ED74B300DE1646 /* AuthScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScreen.swift; sourceTree = "<group>"; };
 		7BCC871628ED753A00DE1646 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
@@ -86,9 +96,11 @@
 		7555FF7D242A565900829871 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				7B790F572903AA7200C6A608 /* views */,
 				7BCC871828ED7C2200DE1646 /* modifier */,
 				7B39D5A028DC2414006A84E8 /* screens */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+				7B790F632903D49D00C6A608 /* ContentViewModel.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
@@ -103,8 +115,19 @@
 				7B39D5A128DC242E006A84E8 /* MainScreen.swift */,
 				7BCC871428ED74B300DE1646 /* AuthScreen.swift */,
 				7BCC871628ED753A00DE1646 /* HomeScreen.swift */,
+				7B790F582903AD0A00C6A608 /* OnBoardingScreen.swift */,
+				7B790F5E2903D17800C6A608 /* AccountScreen.swift */,
 			);
 			path = screens;
+			sourceTree = "<group>";
+		};
+		7B790F572903AA7200C6A608 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				7B790F5A2903AEAC00C6A608 /* Pager.swift */,
+				7B790F5C2903C14B00C6A608 /* OnBoardItem.swift */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		7BCC871828ED7C2200DE1646 /* modifier */ = {
@@ -135,6 +158,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				01A6E3566E91D90BAEEFC4D8 /* Frameworks */,
+				8B7C38BF7B5515F151E82248 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,6 +215,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8B7C38BF7B5515F151E82248 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ios/Pods-ios-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ios/Pods-ios-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ios/Pods-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BC69CB90393F663FF14FC998 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,10 +261,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B790F5B2903AEAC00C6A608 /* Pager.swift in Sources */,
 				7BCC871A28ED7C3900DE1646 /* ButtonModifiers.swift in Sources */,
+				7B790F5D2903C14B00C6A608 /* OnBoardItem.swift in Sources */,
 				7BCBA02328ED8690009ED00E /* ViewModifiers.swift in Sources */,
 				7B39D5A228DC242E006A84E8 /* MainScreen.swift in Sources */,
 				7BCC871728ED753A00DE1646 /* HomeScreen.swift in Sources */,
+				7B790F5F2903D17800C6A608 /* AccountScreen.swift in Sources */,
+				7B790F592903AD0A00C6A608 /* OnBoardingScreen.swift in Sources */,
+				7B790F642903D49D00C6A608 /* ContentViewModel.swift in Sources */,
 				7BCC871528ED74B300DE1646 /* AuthScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,

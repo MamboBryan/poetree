@@ -11,7 +11,7 @@ internal object PoetreeDatabase {
             Drafted::class,
             Bookmarked::class,
             Searched::class,
-            Published::class,
+            PoemFeed::class,
             TopicEntity::class
         )
     ).build()

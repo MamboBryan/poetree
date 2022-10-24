@@ -29,9 +29,9 @@ open class Poem {
         REMOTE
     }
 
-    fun isLocal() = user == null
+    fun isLocal(): Boolean = user == null
 
-    fun isMine(userId: String?) = user?.id == userId
+    fun isMine(userId: String?): Boolean = user?.id == userId
 
     fun copy(
         mTitle: String? = null,
@@ -52,7 +52,7 @@ open class Poem {
         }
     }
 
-    fun toDraft() = Drafted().apply {
+    fun toDraft(): Drafted = Drafted().apply {
         id = this@Poem.id
         title = this@Poem.title
         content = this@Poem.content

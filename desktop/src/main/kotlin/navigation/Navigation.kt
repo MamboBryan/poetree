@@ -2,7 +2,7 @@ package com.mambo.poetree.navigation
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import com.mambo.poetree.screens.LandingScreen
+import com.mambo.poetree.screens.landing.LandingScreen
 
 @ExperimentalMaterialApi
 @Composable

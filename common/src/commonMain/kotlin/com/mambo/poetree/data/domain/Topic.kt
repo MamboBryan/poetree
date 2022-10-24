@@ -13,7 +13,7 @@ data class Topic(
     val updatedAt: String?,
 ) {
 
-    fun toEntity() = TopicEntity().apply {
+    fun toEntity(): TopicEntity = TopicEntity().apply {
         id = this@Topic.id
         name = this@Topic.name
         color = this@Topic.color
@@ -21,7 +21,7 @@ data class Topic(
         updatedAt = this@Topic.updatedAt
     }
 
-    fun toDto() = TopicDto(
+    fun toDto(): TopicDto = TopicDto(
         id = id, name = name, color = color, createdAt = createdAt, updatedAt = updatedAt
     )
 

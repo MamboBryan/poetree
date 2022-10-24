@@ -3,7 +3,10 @@ import common
 
 struct ContentView: View {
     
-    let isAuth: Bool = false
+    @StateObject var viewModel : ContentViewModel = ContentViewModel()
+
+    let isAuthenticated: Bool = false
+    let userHasSetup : Bool = false
     
     var body: some View {
         
@@ -22,13 +25,18 @@ struct ContentView: View {
                 .foregroundColor(Color("OnPrimary"))
                 
                 ZStack{
-                    switch isAuth {
-                    case true :
-                        NavigationView{
-                            HomeScreen()
+                    if viewModel.hasOnBoarded == true {
+                        if viewModel.isSignedIn == true {
+                            if viewModel.hasSetup == true {
+                                NavigationView{ HomeScreen() }
+                            } else {
+                                AccountScreen(isSettingUp: true)
+                            }
+                        } else {
+                            MainScreen()
                         }
-                    case false:
-                        MainScreen(metric: metric)
+                    } else {
+                        OnBoardingScreen { viewModel.setUserHasOnBoarded() }
                     }
                 }
                 
