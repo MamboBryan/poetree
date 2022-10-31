@@ -29,3 +29,6 @@ include(":desktop")
 // web
 include(":web")
 
+// backend
+include(":backend")
+
