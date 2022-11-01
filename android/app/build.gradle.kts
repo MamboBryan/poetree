@@ -35,5 +35,6 @@ dependencies {
     implementation(project(":android:presentation"))
 
     implementation(Libraries.timber)
+    implementation(Multiplatform.napier)
 
 }

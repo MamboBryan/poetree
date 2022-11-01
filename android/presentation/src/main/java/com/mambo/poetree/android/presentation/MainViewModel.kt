@@ -13,5 +13,6 @@ class MainViewModel : ViewModel() {
 
     val isSignedIn by mutableStateOf(preferences.signedIn)
     val isOnBoarded by mutableStateOf(preferences.isOnBoarded)
+    val isSetup by mutableStateOf(preferences.isUserSetup)
 
 }

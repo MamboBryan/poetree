@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.android.presentation.MainViewModel
+import com.mambo.poetree.android.presentation.screens.destinations.AccountScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.AuthScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.HomeScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.OnBoardingScreenDestination
@@ -30,12 +31,14 @@ fun MainScreen(
 ) {
 
     val hasInternetConnection by mainViewModel.hasNetworkConnection.collectAsState(initial = true)
-    val isLoggedIn by mainViewModel.isSignedIn.collectAsState(initial = true)
-    val isOnBoarded by mainViewModel.isOnBoarded.collectAsState(initial = true)
+    val isLoggedIn by mainViewModel.isSignedIn.collectAsState(initial = false)
+    val isOnBoarded by mainViewModel.isOnBoarded.collectAsState(initial = false)
+    val isSetUp by mainViewModel.isSetup.collectAsState(initial = false)
 
     val startRoute = when {
         isOnBoarded.not() -> OnBoardingScreenDestination
         isLoggedIn.not() -> AuthScreenDestination
+        isSetUp.not() -> AccountScreenDestination
         else -> HomeScreenDestination
     }
 
@@ -46,7 +49,7 @@ fun MainScreen(
         Column(modifier = Modifier.fillMaxSize()) {
 
             AnimatedVisibility(
-                visible = hasInternetConnection,
+                visible = hasInternetConnection.not(),
                 enter = slideInVertically(),
                 exit = slideOutVertically()
             ) {

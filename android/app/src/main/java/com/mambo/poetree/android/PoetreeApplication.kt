@@ -1,6 +1,8 @@
 package com.mambo.poetree.android
 
 import android.app.Application
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import timber.log.Timber
 
 class PoetreeApplication : Application() {
@@ -11,8 +13,10 @@ class PoetreeApplication : Application() {
     }
 
     private fun initTimber() {
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            Napier.base(DebugAntilog())
+        }
     }
 
 }
