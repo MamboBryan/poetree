@@ -1,29 +1,39 @@
 package com.mambo.poetree.android.presentation.screens.auth
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.mambo.poetree.PoetreeApp
-import com.mambo.poetree.android.presentation.extensions.slideInLeft
-import com.mambo.poetree.android.presentation.extensions.slideInRight
-import com.mambo.poetree.android.presentation.extensions.slideOutLeft
-import com.mambo.poetree.android.presentation.extensions.slideOutRight
+import com.mambo.poetree.android.R
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 
 enum class Section {
-    STARTED, AUTHENTICATION
+    STARTED, SIGN_IN, SIGN_UP
 }
 
+@OptIn(ExperimentalUnitApi::class)
 @Destination
 @Composable
 fun AuthScreen(
@@ -34,10 +44,20 @@ fun AuthScreen(
         mutableStateOf(Section.STARTED)
     }
 
+    val (title, message, action) = when (section) {
+        Section.STARTED -> Triple("", "", "")
+        Section.SIGN_IN -> Triple("Welcome \nBack", "Oh no, you don't have an account?", "sign up")
+        Section.SIGN_UP -> Triple("Create \nAccount", "Wait, ain't you a veteran?", "sign in")
+    }
+
+    var password by rememberSaveable { mutableStateOf("") }
+    var passwordIsVisible by rememberSaveable { mutableStateOf(false) }
+
+    var confirmPassword by rememberSaveable { mutableStateOf("") }
+    var confirmPassWordIsVisible by rememberSaveable { mutableStateOf(false) }
+
     AnimatedVisibility(
         visible = section == Section.STARTED,
-        enter = slideInLeft(),
-        exit = slideOutLeft()
     ) {
         Column(
             modifier = Modifier.padding(24.dp),
@@ -72,7 +92,7 @@ fun AuthScreen(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    section = Section.AUTHENTICATION
+                    section = Section.SIGN_IN
                 }) {
                 Text(modifier = Modifier.padding(vertical = 4.dp), text = "Get Started")
             }
@@ -81,16 +101,136 @@ fun AuthScreen(
     }
 
     AnimatedVisibility(
-        visible = section == Section.AUTHENTICATION,
-        enter = slideInRight(),
-        exit = slideOutRight()
+        visible = section != Section.STARTED,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(text = "Auth")
+            Card(
+                modifier = Modifier.padding(16.dp),
+                shape = MaterialTheme.shapes.medium,
+            ) {
+                Column(modifier = Modifier.background(MaterialTheme.colors.primary)) {
+                    Image(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(48.dp),
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = "app icon"
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.h4,
+                        fontSize = TextUnit(24f, TextUnitType.Sp)
+                    )
+                    TextField(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        value = "",
+                        label = { Text("Email") },
+                        onValueChange = {
+
+                        })
+                    TextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        value = password,
+                        onValueChange = { password = it },
+                        label = { Text("Password") },
+                        singleLine = true,
+                        placeholder = { Text("********") },
+                        visualTransformation = if (passwordIsVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        trailingIcon = {
+                            val image = if (passwordIsVisible) Icons.Filled.Visibility
+                            else Icons.Filled.VisibilityOff
+
+                            val description =
+                                if (passwordIsVisible) "Hide password" else "Show password"
+
+                            IconButton(onClick = { passwordIsVisible = !passwordIsVisible }) {
+                                Icon(imageVector = image, description)
+                            }
+                        }
+                    )
+
+                    AnimatedVisibility(
+                        visible = section == Section.SIGN_UP,
+                    ) {
+
+                        TextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp),
+                            value = confirmPassword,
+                            onValueChange = { confirmPassword = it },
+                            label = { Text("Confirm Password") },
+                            singleLine = true,
+                            placeholder = { Text("********") },
+                            visualTransformation = if (confirmPassWordIsVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            trailingIcon = {
+                                val image = if (confirmPassWordIsVisible) Icons.Filled.Visibility
+                                else Icons.Filled.VisibilityOff
+
+                                val description =
+                                    if (confirmPassWordIsVisible) "Hide password" else "Show password"
+
+                                IconButton(onClick = {
+                                    confirmPassWordIsVisible = !confirmPassWordIsVisible
+                                }) {
+                                    Icon(imageVector = image, description)
+                                }
+                            }
+                        )
+                    }
+
+                    Button(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        onClick = { }) {
+                        Text(modifier = Modifier.padding(4.dp), text = "Sign in")
+                    }
+                }
+
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(message)
+                TextButton(
+                    modifier = Modifier.padding(start = 16.dp),
+                    onClick = {
+                        section = when (section) {
+                            Section.SIGN_IN -> Section.SIGN_UP
+                            else -> Section.SIGN_IN
+                        }
+                        password = ""
+                        confirmPassword = ""
+                    }) {
+                    Text(modifier = Modifier.padding(4.dp), text = action)
+                }
+            }
         }
     }
 
