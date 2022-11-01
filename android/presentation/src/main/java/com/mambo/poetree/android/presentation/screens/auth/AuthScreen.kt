@@ -287,7 +287,7 @@ fun AuthScreen(
                                 )
                             }
                         }) {
-                        Text(modifier = Modifier.padding(4.dp), text = "Sign in")
+                        Text(modifier = Modifier.padding(4.dp), text = (if(section == Section.SIGN_IN) "Sign in" else "sign up").uppercase())
                     }
                 }
 
