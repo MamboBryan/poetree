@@ -37,11 +37,17 @@ struct LineTextField: View {
     }
     
     func getColor() -> Color {
-        if !text.isEmpty && isError(text) {
-            return Color.red
+        
+        if text.isEmpty {
+            return Color.gray
         } else {
-            return Color("Primary")
+            if isError(text) {
+                return Color.red
+            } else {
+                return Color("Primary")
+            }
         }
+        
     }
     
 }
@@ -50,7 +56,6 @@ struct SecureLineTextField: View {
     
     var hint: String = ""
     var error: String = ""
-    var textCase: Text.Case = .lowercase
     var capitalization: UITextAutocapitalizationType = .none
     
     var isError : (String) -> Bool
@@ -75,21 +80,17 @@ struct SecureLineTextField: View {
     }
     
     func getColor() -> Color {
-        if !text.isEmpty && isError(text) {
-            return Color.red
+        
+        if text.isEmpty {
+            return Color.gray
         } else {
-            return Color("Primary")
+            if isError(text) {
+                return Color.red
+            } else {
+                return Color("Primary")
+            }
         }
+        
     }
     
 }
-
-//struct LineField_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        LineTextField(isError: { text in
-//            text.isEmpty
-//        }, text: Binding<String>(projectedValue: Binding.init(get: "Strng", set: "String", )))
-//
-//    }
-//}

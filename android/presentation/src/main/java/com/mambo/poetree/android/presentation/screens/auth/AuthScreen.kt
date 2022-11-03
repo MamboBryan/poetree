@@ -52,8 +52,8 @@ fun AuthScreen(
 
     val (title, message, action) = when (section) {
         Section.STARTED -> Triple("", "", "")
-        Section.SIGN_IN -> Triple("Welcome \nBack", "Oh no, you don't have an account?", "sign up")
-        Section.SIGN_UP -> Triple("Create \nAccount", "Wait, ain't you a veteran?", "sign in")
+        Section.SIGN_IN -> Triple("Welcome \nBack", "Oh no, you don't have an account?", "Sign Up")
+        Section.SIGN_UP -> Triple("Create \nAccount", "Wait, ain't you a veteran?", "Sign In")
     }
 
     var email by rememberSaveable { mutableStateOf("") }
@@ -162,7 +162,7 @@ fun AuthScreen(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
                 Column(

@@ -47,7 +47,8 @@ struct AuthScreen: View {
                     
                     Text(getData().0).font(Font.largeTitle)
                     
-                    LineTextField(hint: "Email", error: "Invalid Email", isError: {email in
+                    LineTextField(hint: "Email", error: "Invalid Email", textCase: .lowercase,
+                                  isError: {email in
                         !email.isValidEmail()
                     }, text: $email).padding(.top)
                     
@@ -82,7 +83,6 @@ struct AuthScreen: View {
                 
             }
             
-            Spacer()
             HStack{
                 Text(getData().1)
                 Button(getData().2) {
