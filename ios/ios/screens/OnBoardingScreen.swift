@@ -21,7 +21,7 @@ struct OnBoardingScreen: View {
                 Spacer()
                 Button(action: finish){
                     Text("Skip")
-                }.modifier(Clear())
+                }.clear()
             }
 
             TabView(selection: $currentPage){
@@ -35,15 +35,14 @@ struct OnBoardingScreen: View {
                 if(currentPage != 0){
                     Button(action: back){
                         Text("Back")
-                    }.modifier(Outlined()).padding(.leading)
+                    }.outlined().padding(.leading)
                 }
                 
                 Spacer()
                 
                 Button(action: next){
                     Text("\(getTitle())")
-                }.modifier(Filled())
-                    .padding(.trailing)
+                }.filled().padding(.trailing)
             }
         }
     }

@@ -9,19 +9,19 @@
 import SwiftUI
 import common
 
-enum Section {
+enum MainScreenSection {
     case started, authentication, setup
 }
 
 struct MainScreen: View {
     
-    @State var section = Section.started
+    @State var section = MainScreenSection.started
     
     var body: some View {
         
         ZStack {
             
-            if section == Section.started {
+            if section == MainScreenSection.started {
                 VStack (alignment: .leading) {
                     Text("\(PoetreeApp().name())").font(Font.largeTitle.weight(.bold)).padding([.top], 24)
                     Text("\(PoetreeApp().dummyPoem())").padding([.top], 8).padding([.bottom], 24)
@@ -35,14 +35,13 @@ struct MainScreen: View {
                             Text("Get Started")
                             Spacer()
                         }
-                    }).modifier(Filled(background: Color("Primary"), foreground: Color("OnPrimary")))
+                    }).filled()
+                       
                 }
             }
             
-            if section == Section.authentication {
-                VStack {
-                    Text("Auth")
-                }
+            if section == MainScreenSection.authentication {
+                AuthScreen()
             }
             
             
