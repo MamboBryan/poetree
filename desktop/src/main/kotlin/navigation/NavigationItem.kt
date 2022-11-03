@@ -6,4 +6,5 @@ sealed class NavigationItem(
     val icon: String?
 ) {
     object Landing : NavigationItem("landing", "Landing", null)
+    object Home : NavigationItem("home", "Home", null)
 }

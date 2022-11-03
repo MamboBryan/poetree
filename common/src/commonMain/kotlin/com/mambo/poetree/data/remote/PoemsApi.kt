@@ -65,7 +65,7 @@ class PoemsApi {
         ;
 
         private val BASE_URL = when (true) {
-            true -> "http://192.168.43.251:8080/v1/" // run the server and build and change the link to your IP address
+            true -> "http://192.168.0.103:8080/v1/" // run the server and build and change the link to your IP address
             false -> "https://mambo-poetree.herokuapp.com/v1/"
         }
 

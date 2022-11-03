@@ -1,13 +1,10 @@
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+
 import kotlinx.coroutines.flow.MutableStateFlow
 
 object AppController {
 
     var isLoading = MutableStateFlow<Boolean>(false)
-
-    var dialog by mutableStateOf<Pair<String, String>?>(null)
+    var dialog = MutableStateFlow<Pair<String, String>?>(null)
 
     fun showLoading() {
         isLoading.value = true
@@ -18,11 +15,11 @@ object AppController {
     }
 
     fun showDialog(title: String, message: String) {
-        dialog = Pair(title, message)
+        dialog.value = Pair(title, message)
     }
 
     fun hideDialog() {
-        dialog = null
+        dialog.value = null
     }
 
 }

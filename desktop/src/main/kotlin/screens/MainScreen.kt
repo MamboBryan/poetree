@@ -12,6 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import com.mambo.poetree.PoetreeApp
@@ -20,7 +24,9 @@ import com.mambo.poetree.extensions.setMinimumSize
 import com.mambo.poetree.navigation.Navigation
 import com.mambo.poetree.navigation.NavigationItem
 import com.mambo.poetree.navigation.rememberNavController
+import utils.noRippleClickable
 
+@OptIn(ExperimentalUnitApi::class)
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(
@@ -29,6 +35,15 @@ fun MainScreen(
 
     val isConnected by UserPreferences().hasNetworkConnection.collectAsState(true)
     val isLoading by AppController.isLoading.collectAsState(initial = false)
+    val myDialog by AppController.dialog.collectAsState(initial = null)
+
+    val signedIn by UserPreferences().signedIn.collectAsState(initial = false)
+    val hasSetup by UserPreferences().isUserSetup.collectAsState(initial = false)
+
+    val start = when{
+        signedIn && hasSetup -> NavigationItem.Home.route
+        else -> NavigationItem.Landing.route
+    }
 
     val title by remember { mutableStateOf(PoetreeApp().name()) }
     val state = rememberWindowState(
@@ -56,7 +71,7 @@ fun MainScreen(
 
         setMinimumSize()
 
-        val navController by rememberNavController(startDestination = NavigationItem.Landing.route)
+        val navController by rememberNavController(startDestination = start)
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -105,12 +120,52 @@ fun MainScreen(
                 ) {
                     Column(
                         modifier = Modifier.background(Color.Black.copy(alpha = 0.25f))
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .noRippleClickable { },
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
                         Card {
                             CircularProgressIndicator(modifier = Modifier.padding(48.dp))
+                        }
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = myDialog != null,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    Column(
+                        modifier = Modifier.background(Color.Black.copy(alpha = 0.25f))
+                            .fillMaxSize()
+                            .noRippleClickable { },
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Card(
+                            modifier = Modifier.defaultMinSize(200.dp, 150.dp).fillMaxWidth(0.4f),
+                            elevation = 4.dp
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(top = 16.dp),
+                                    text = myDialog?.first ?: "Title",
+                                    fontSize = TextUnit(24f, TextUnitType.Sp)
+                                )
+                                Text(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = myDialog?.second ?: "Message",
+                                    textAlign = TextAlign.Center
+                                )
+                                TextButton(onClick = { AppController.hideDialog() }) {
+                                    Text("dismiss")
+                                }
+                            }
+
                         }
                     }
                 }

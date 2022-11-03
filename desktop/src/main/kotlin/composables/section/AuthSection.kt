@@ -1,5 +1,6 @@
 package com.mambo.poetree.composables.section
 
+import AppController
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
@@ -8,11 +9,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,13 +20,17 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.mambo.poetree.data.repositories.AuthRepository
 import com.mambo.poetree.navigation.NavController
 import com.mambo.poetree.utils.isValidEmail
 import com.mambo.poetree.utils.isValidPassword
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
+
+    val scope = rememberCoroutineScope()
 
     var isSigningIn by rememberSaveable { mutableStateOf(true) }
 
@@ -51,9 +53,25 @@ fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
         true -> email.isValidEmail() and password.isValidPassword()
     }
 
-    fun signIn() {}
+    fun signIn() {
+        scope.launch {
+            AppController.showLoading()
+            val response = AuthRepository().signIn(email, password)
+            AppController.hideLoading()
+            if (!response.isSuccessful)
+                AppController.showDialog(title = "Error", message = response.message)
+        }
+    }
 
-    fun signUp() {}
+    fun signUp() {
+        scope.launch {
+            AppController.showLoading()
+            val response = AuthRepository().signUp(email, password)
+            AppController.hideLoading()
+            if (!response.isSuccessful)
+                AppController.showDialog(title = "Error", message = response.message)
+        }
+    }
 
     Column {
         Column(
@@ -179,7 +197,10 @@ fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
                             false -> signUp()
                         }
                     }) {
-                    Text(modifier = Modifier.padding(4.dp), text = (if(isSigningIn) "Sign in" else "sign up").uppercase())
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = (if (isSigningIn) "Sign in" else "sign up").uppercase()
+                    )
                 }
             }
 

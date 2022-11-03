@@ -1,6 +1,5 @@
-package com.mambo.poetree.composables.section
+package screens
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,18 +10,12 @@ import androidx.compose.ui.Modifier
 import com.mambo.poetree.navigation.NavController
 
 @Composable
-fun AccountSection(navController: NavController, modifier: Modifier = Modifier) {
+fun HomeScreen(navigator: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Account")
+        Text("Home")
     }
-}
-
-@Preview
-@Composable
-fun AccountSectionPreview() {
-    AccountSection(navController = NavController(""))
 }
