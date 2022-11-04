@@ -10,11 +10,12 @@ import Foundation
 import SwiftUI
 
 extension View {
+    
     func frameLayout(metric: GeometryProxy)-> some View{
-        self
-            .frame(width: metric.size.width, height: metric.size.height)
+        self.frame(width: metric.size.width, height: metric.size.height)
             .position(x: metric.size.width/2, y: metric.size.height/2)
     }
+    
 }
 
 extension Image {

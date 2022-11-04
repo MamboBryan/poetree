@@ -9,46 +9,27 @@
 import Foundation
 import SwiftUI
 
-struct Filled : ViewModifier {
+extension Button {
     
-    var background: Color = Color("Primary")
-    var foreground: Color = Color("OnPrimary")
-    var radius: CGFloat = 10
-    
-    func body(content: Content) -> some View {
-        return content
-            .padding(.vertical, 10)
-            .padding(.horizontal, 16)
-            .foregroundColor(foreground)
-            .background(RoundedRectangle(cornerRadius: radius).foregroundColor(background))
+    func filled(background: Color = Color("Primary"), foreground : Color = Color("OnPrimary"), radius: CGFloat = 10, enabled: Bool = true) -> some View {
+        self.padding(.vertical, 12)
+         .padding(.horizontal, 16)
+         .disabled(!enabled)
+         .foregroundColor(enabled ? foreground : Color.black).background(RoundedRectangle(cornerRadius: radius).foregroundColor(enabled ? background : Color.gray))
+        
     }
     
-}
-
-struct Outlined : ViewModifier {
-    
-    var radius: CGFloat = 10
-    
-    func body(content: Content) -> some View {
-        return content
-            .padding(.vertical, 10)
+    func outlined(background: Color = Color("Primary"), foreground : Color = Color("OnPrimary"), radius: CGFloat = 10) -> some View {
+        self.padding(.vertical, 12)
             .padding(.horizontal, 16)
             .foregroundColor(Color("Primary"))
             .background(RoundedRectangle(cornerRadius: radius).stroke(Color("Primary"), lineWidth: 1))
             .animation(.easeInOut(duration: 0.15))
     }
     
-}
-
-struct Clear : ViewModifier {
-    
-    var radius: CGFloat = 10
-    
-    func body(content: Content) -> some View {
-        return content
-            .padding(.vertical, 10)
+    func clear(radius: CGFloat = 10) -> some View {
+        self.padding(.vertical, 12)
             .padding(.horizontal, 16)
             .foregroundColor(Color("Primary"))
     }
-    
 }

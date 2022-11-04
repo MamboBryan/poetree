@@ -65,8 +65,8 @@ class PoemsApi {
         ;
 
         private val BASE_URL = when (true) {
-            false -> "http://192.168.1.87:8080/v1/"
-            true -> "https://mambo-poetree.herokuapp.com/v1/"
+            true -> "http://192.168.0.103:8080/v1/" // run the server and build and change the link to your IP address
+            false -> "https://mambo-poetree.herokuapp.com/v1/"
         }
 
         val url: String
@@ -90,8 +90,8 @@ class PoemsApi {
     }
 
     private suspend fun <T> safeApiCall(
-        block: suspend () -> NetworkResult<T?>
-    ): NetworkResult<T?> {
+        block: suspend () -> NetworkResult<T>
+    ): NetworkResult<T> {
         return try {
             return block()
         } catch (e: Exception) {

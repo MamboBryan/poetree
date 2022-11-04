@@ -99,13 +99,12 @@ class UserPreferences {
      fun signOut() {
         settings.apply {
             putString(PreferencesKeys.IMAGE_URL, "")
-            putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
-            putBoolean(PreferencesKeys.IS_SETUP, false)
-            putBoolean(PreferencesKeys.IS_SIGNED_OUT, false)
-            putBoolean(PreferencesKeys.IS_SETUP, false)
             putString(PreferencesKeys.ACCESS_TOKEN, "")
             putString(PreferencesKeys.REFRESH_TOKEN, "")
-            putString(PreferencesKeys.USER_DETAILS, "json")
+            putString(PreferencesKeys.USER_DETAILS, "")
+            putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
+            putBoolean(PreferencesKeys.IS_SETUP, false)
+            putBoolean(PreferencesKeys.IS_SETUP, false)
         }
     }
 

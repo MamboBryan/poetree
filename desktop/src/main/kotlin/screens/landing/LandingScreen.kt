@@ -17,10 +17,6 @@ import com.mambo.poetree.composables.section.AuthSection
 import com.mambo.poetree.composables.section.GetStartedSection
 import com.mambo.poetree.composables.section.OnBoardingSection
 import com.mambo.poetree.data.local.preferences.UserPreferences
-import com.mambo.poetree.extensions.slideInLeft
-import com.mambo.poetree.extensions.slideInRight
-import com.mambo.poetree.extensions.slideOutLeft
-import com.mambo.poetree.extensions.slideOutRight
 import com.mambo.poetree.navigation.NavController
 
 private enum class Landing {
@@ -31,12 +27,16 @@ private enum class Landing {
 
 @Composable
 fun LandingScreen(
-    navController: NavController
+    navigator: NavController
 ) {
 
     var section by remember { mutableStateOf(Landing.GET_STARTED) }
-    val signedIn = UserPreferences().signedIn.collectAsState(initial = false)
-    val hasSetup = UserPreferences().isUserSetup.collectAsState(initial = false)
+    val isSignedIn by UserPreferences().signedIn.collectAsState(initial = false)
+    val hasSetup by UserPreferences().isUserSetup.collectAsState(initial = false)
+
+    if(isSignedIn && hasSetup.not()){
+        section = Landing.SETUP
+    }
 
     Row {
 
@@ -72,26 +72,20 @@ fun LandingScreen(
 
                 AnimatedVisibility(
                     visible = section == Landing.GET_STARTED,
-                    enter = slideInLeft(),
-                    exit = slideOutLeft()
                 ) {
                     GetStartedSection { section = Landing.AUTHENTICATION }
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.AUTHENTICATION,
-                    enter = slideInRight(),
-                    exit = slideOutLeft()
                 ) {
-                    AuthSection(navController = navController)
+                    AuthSection(navController = navigator)
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.SETUP,
-                    enter = slideInRight(),
-                    exit = slideOutRight()
                 ) {
-                    AccountSection(navController = navController)
+                    AccountSection(navController = navigator)
                 }
 
             }
@@ -99,10 +93,11 @@ fun LandingScreen(
         }
 
     }
+
 }
 
 @Preview
 @Composable
 fun LandingScreenPreview() {
-    LandingScreen(navController = NavController(""))
+    LandingScreen(navigator = NavController(""))
 }
