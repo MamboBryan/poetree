@@ -71,7 +71,7 @@ fun MainScreen(
 
         setMinimumSize()
 
-        val navController by rememberNavController(startDestination = start)
+        val navigator by rememberNavController(startDestination = start)
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -109,7 +109,7 @@ fun MainScreen(
                         }
                     }
 
-                    Navigation(navController = navController)
+                    Navigation(navController = navigator)
 
                 }
 
