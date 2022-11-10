@@ -2,9 +2,9 @@ package com.mambo.poetree.android.presentation.composables
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,13 +31,13 @@ fun PoetreeDialog(
             if (onConfirm != null)
                 OutlinedButton(
                     onClick = {
-
+                        onConfirm.invoke()
                     }) {
                     Text(text = "confirm", modifier = Modifier.padding(4.dp))
                 }
         },
         dismissButton = {
-            Button(
+            TextButton(
                 onClick = {
                     onDismiss?.invoke()
                 }) {
