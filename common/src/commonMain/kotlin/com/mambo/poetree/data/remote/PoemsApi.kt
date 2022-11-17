@@ -47,45 +47,30 @@ class PoemsApi {
 
     }
 
-    enum class Endpoints {
-        HOME,
-        SIGN_IN,
-        SIGN_UP,
-        REFRESH_TOKEN,
-        RESET,
-        USERS,
-        USER,
-        USER_ME,
-        TOPICS,
-        TOPIC,
-        POEMS,
-        POEM,
-        COMMENTS,
-        COMMENT,
+    enum class Endpoints(val path: String) {
+        HOME("/"),
+        SIGN_IN("auth/signin"),
+        SIGN_UP("auth/signup"),
+        REFRESH_TOKEN("auth/refresh"),
+        RESET("auth/reset"),
+        USERS("users"),
+        USER("users/user"),
+        USER_ME( "users/me"),
+        TOPICS("topics"),
+        TOPIC("topics/topic"),
+        POEMS("poems"),
+        POEM("poems/poem"),
+        COMMENTS("comments"),
+        COMMENT("comments/comment"),
         ;
 
         private val BASE_URL = when (true) {
-            true -> "http://192.168.0.103:8080/v1/" // run the server and build and change the link to your IP address
+            true -> "http://192.168.0.102:8080/v1/" // run the server and build and change the link to your IP address
             false -> "https://mambo-poetree.herokuapp.com/v1/"
         }
 
         val url: String
-            get() = BASE_URL + when (this) {
-                SIGN_IN -> "auth/signin"
-                SIGN_UP -> "auth/signup"
-                REFRESH_TOKEN -> "auth/refresh"
-                RESET -> "auth/reset"
-                TOPIC -> "topics/topic"
-                TOPICS -> "topics"
-                POEM -> "poems/poem"
-                POEMS -> "poems"
-                USER -> "users/user"
-                USERS -> "users"
-                USER_ME -> "users/me"
-                COMMENT -> "comments/comment"
-                COMMENTS -> "comments"
-                else -> ""
-            }
+            get() = BASE_URL + this.path
 
     }
 
