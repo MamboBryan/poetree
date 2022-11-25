@@ -8,8 +8,10 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.util.reflect.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
@@ -55,7 +57,7 @@ class PoemsApi {
         RESET("auth/reset"),
         USERS("users"),
         USER("users/user"),
-        USER_ME( "users/me"),
+        USER_ME("users/me"),
         TOPICS("topics"),
         TOPIC("topics/topic"),
         POEMS("poems"),
@@ -210,7 +212,7 @@ class PoemsApi {
     }
 
     suspend fun updateTopic(topicId: Int, request: TopicRequest) = safeApiCall<TopicDto> {
-        val url = Endpoints.TOPICS.url.plus("/$topicId")
+        val url = Endpoints.TOPIC.url.plus("/$topicId")
         val response = client.put(url) { setBody(request) }
         response.body()
     }
@@ -405,6 +407,26 @@ class PoemsApi {
         val url = Endpoints.COMMENT.url.plus("/unlike")
         val response = client.delete(url) {
             setBody(mapOf("commentId" to commentId))
+        }
+        response.body()
+    }
+
+    /**
+     * IMAGE
+     */
+
+    suspend fun uploadImage(form: MultiPartFormDataContent) = safeApiCall<String> {
+        val url = "https://us-central1-poetree-254.cloudfunctions.net/uploadProfile"
+        val response = client.post(url){
+            setBody(form)
+        }
+        response.body()
+    }
+
+    suspend fun deleteImage(userId: String) = safeApiCall<Boolean> {
+        val url = "https://us-central1-poetree-254.cloudfunctions.net/deleteProfile"
+        val response = client.post(url){
+            setBody(Pair("userId", userId))
         }
         response.body()
     }
