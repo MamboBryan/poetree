@@ -13,8 +13,8 @@ import io.ktor.client.request.forms.*
  * Fri 25 Nov 2022
  */
 class ImageRepositoryImpl(
-    val api: PoemsApi = PoemsApi(),
-    val preferences: UserPreferences = UserPreferences()
+    private val api: PoemsApi = PoemsApi(),
+    private val preferences: UserPreferences = UserPreferences()
 ) : ImageRepository {
 
     override suspend fun upload(form: MultiPartFormDataContent): NetworkResult<String> {
