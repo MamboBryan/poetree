@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.android.R
 import com.mambo.poetree.android.presentation.composables.LoadingDialog
-import com.mambo.poetree.android.presentation.composables.PoetreeDialog
 import com.mambo.poetree.utils.isValidEmail
 import com.mambo.poetree.utils.isValidPassword
 import com.ramcosta.composedestinations.annotation.Destination
@@ -46,9 +45,7 @@ fun AuthScreen(
     viewModel: AuthViewModel = viewModel()
 ) {
 
-    var section by remember {
-        mutableStateOf(Section.STARTED)
-    }
+    var section by remember { mutableStateOf(Section.STARTED) }
 
     val (title, message, action) = when (section) {
         Section.STARTED -> Triple("", "", "")
@@ -65,9 +62,7 @@ fun AuthScreen(
     var confirmPassWordIsVisible by rememberSaveable { mutableStateOf(false) }
 
     val isEnabled = when (section) {
-        Section.SIGN_UP -> email.isValidEmail() and password.isValidPassword() and password.equals(
-            confirmPassword
-        )
+        Section.SIGN_UP -> email.isValidEmail() and password.isValidPassword() and (password == confirmPassword)
         Section.SIGN_IN -> email.isValidEmail() and password.isValidPassword()
         else -> false
     }
@@ -78,17 +73,17 @@ fun AuthScreen(
         LoadingDialog()
     }
 
-    if (viewModel.error != null) {
-        PoetreeDialog(title = "Error", message = viewModel.error ?: "", onDismiss = {
-            viewModel.error = null
-        })
-    }
-
-    if (viewModel.success != null) {
-        PoetreeDialog(title = "Success", message = viewModel.success ?: "", onDismiss = {
-            viewModel.success = null
-        })
-    }
+//    if (viewModel.error != null) {
+//        PoetreeDialog(title = "Error", message = viewModel.error ?: "", onDismiss = {
+//            viewModel.error = null
+//        })
+//    }
+//
+//    if (viewModel.success != null) {
+//        PoetreeDialog(title = "Success", message = viewModel.success ?: "", onDismiss = {
+//            viewModel.success = null
+//        })
+//    }
 
 
     AnimatedVisibility(
@@ -287,7 +282,10 @@ fun AuthScreen(
                                 )
                             }
                         }) {
-                        Text(modifier = Modifier.padding(4.dp), text = (if(section == Section.SIGN_IN) "Sign in" else "sign up").uppercase())
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = (if (section == Section.SIGN_IN) "Sign in" else "sign up").uppercase()
+                        )
                     }
                 }
 

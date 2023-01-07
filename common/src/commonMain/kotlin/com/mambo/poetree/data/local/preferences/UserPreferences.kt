@@ -1,13 +1,17 @@
 package com.mambo.poetree.data.local.preferences
 
 import com.mambo.poetree.data.domain.User
+import com.mambo.poetree.utils.DialogData
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.coroutines.getBooleanFlow
+import com.russhwolf.settings.coroutines.getStringOrNullFlow
 import com.russhwolf.settings.get
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -29,10 +33,13 @@ class UserPreferences {
         const val IS_SIGNED_OUT = "logged_out"
         const val IMAGE_URL = "image_url"
         const val HAS_NETWORK_CONNECTION = "has_network_connection"
+        const val IS_LOADING = "is_loading"
+        const val DIALOG_DATA = "dialog_data"
     }
 
     val hasNetworkConnection = settings.getBooleanFlow(PreferencesKeys.HAS_NETWORK_CONNECTION, true)
     val darkMode = settings.getBooleanFlow(PreferencesKeys.DARK_MODE, false)
+    val isLoading = settings.getBooleanFlow(PreferencesKeys.IS_LOADING, false)
 
     val isOnBoarded = settings.getBooleanFlow(PreferencesKeys.IS_ON_BOARDED, false)
 
@@ -45,7 +52,7 @@ class UserPreferences {
 
     val imageUrl = settings.getStringOrNull(PreferencesKeys.IMAGE_URL)
 
-     fun getUserData(): User? {
+    fun getUserData(): User? {
         return try {
             Json.decodeFromString<User>(settings[PreferencesKeys.USER_DETAILS, ""])
         } catch (e: Exception) {
@@ -54,49 +61,82 @@ class UserPreferences {
         }
     }
 
-     fun updateNetworkConnection(isConnected: Boolean) {
+    fun startLoading() {
+        toggleLoading(true)
+    }
+
+    fun stopLoading() {
+        toggleLoading(false)
+    }
+
+    private fun toggleLoading(bool: Boolean) {
+        settings.putBoolean(PreferencesKeys.IS_LOADING, bool)
+    }
+
+    fun getDialog(): Flow<DialogData?> {
+        return settings.getStringOrNullFlow(PreferencesKeys.DIALOG_DATA)
+            .map { it?.let { if (it.isNotBlank()) Json.decodeFromString<DialogData>(it) else null } }
+    }
+
+    fun showDialog(data: DialogData) {
+        updateDialogData(data = data)
+    }
+
+    fun hideDialog() {
+        updateDialogData(data = null)
+    }
+
+    private fun updateDialogData(data: DialogData?) {
+        val string = when (data == null) {
+            true -> ""
+            false -> Json.encodeToString(data)
+        }
+        settings.putString(PreferencesKeys.DIALOG_DATA, string)
+    }
+
+    fun updateNetworkConnection(isConnected: Boolean) {
         settings.putBoolean(PreferencesKeys.HAS_NETWORK_CONNECTION, isConnected)
     }
 
-     fun updateImageUrl(url: String) {
+    fun updateImageUrl(url: String) {
         settings.putString(PreferencesKeys.IMAGE_URL, url)
     }
 
-     fun updateDarkMode(isDarkModeEnabled: Boolean) {
+    fun updateDarkMode(isDarkModeEnabled: Boolean) {
         settings.putBoolean(PreferencesKeys.DARK_MODE, isDarkModeEnabled)
     }
 
-     fun userHasOnBoarded() {
+    fun userHasOnBoarded() {
         settings.putBoolean(PreferencesKeys.IS_ON_BOARDED, true)
     }
 
-     fun signedIn(bool: Boolean) {
+    fun signedIn(bool: Boolean) {
         settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, bool)
     }
 
-     fun userHasSetup() {
+    fun userHasSetup() {
         settings.putBoolean(PreferencesKeys.IS_SETUP, true)
     }
 
-     fun signedOut() {
+    fun signedOut() {
         settings.putBoolean(PreferencesKeys.IS_SIGNED_OUT, true)
     }
 
-     fun updateIsUserSetup(isSetup: Boolean) {
+    fun updateIsUserSetup(isSetup: Boolean) {
         settings.putBoolean(PreferencesKeys.IS_SETUP, isSetup)
     }
 
-     fun updateTokens(access: String, refresh: String) {
+    fun updateTokens(access: String, refresh: String) {
         settings.putString(PreferencesKeys.ACCESS_TOKEN, access)
         settings.putString(PreferencesKeys.REFRESH_TOKEN, refresh)
     }
 
-     fun saveUserDetails(details: User) {
+    fun saveUserDetails(details: User) {
         val json = Json.encodeToString(details)
         settings.putString(PreferencesKeys.USER_DETAILS, json)
     }
 
-     fun signOut() {
+    fun signOut() {
         settings.apply {
             putString(PreferencesKeys.IMAGE_URL, "")
             putString(PreferencesKeys.ACCESS_TOKEN, "")
@@ -108,7 +148,7 @@ class UserPreferences {
         }
     }
 
-     fun clear() {
+    fun clear() {
         settings.clear()
     }
 

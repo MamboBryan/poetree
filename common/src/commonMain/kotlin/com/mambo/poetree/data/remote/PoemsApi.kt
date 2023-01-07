@@ -1,9 +1,11 @@
 package com.mambo.poetree.data.remote
 
+import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.data.remote.dto.*
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
@@ -17,6 +19,40 @@ import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalSerializationApi::class)
 class PoemsApi {
+
+    enum class Endpoints(val path: String) {
+        HOME("/"),
+        SIGN_IN("auth/signin"),
+        SIGN_UP("auth/signup"),
+        REFRESH_TOKEN("auth/refresh"),
+        RESET("auth/reset"),
+        USERS("users"),
+        USER("users/user"),
+        USER_ME("users/me"),
+        TOPICS("topics"),
+        TOPIC("topics/topic"),
+        POEMS("poems"),
+        POEM("poems/poem"),
+        COMMENTS("comments"),
+        COMMENT("comments/comment"),
+        ;
+
+        /**
+         * To get the local server testing port
+         * 1. Run the server
+         * 2. Run `ifconfig | grep "inet " | grep -v 127.0.0.1` in your terminal
+         * 3. change the return value of true below to the value retrieved in step 2
+         */
+
+        private val BASE_URL = when (true) {
+            true -> "http://192.168.88.253:8080/v1/" // change here
+            false -> "https://mambo-poetree.herokuapp.com/v1/"
+        }
+
+        val url: String
+            get() = BASE_URL + this.path
+
+    }
 
     private val client = HttpClient {
 
@@ -45,36 +81,11 @@ class PoemsApi {
         install(DefaultRequest) {
             header(HttpHeaders.Accept, ContentType.Application.Json)
             header(HttpHeaders.ContentType, ContentType.Application.Json)
+            header(HttpHeaders.Authorization, "Bearer ${UserPreferences().accessToken}")
         }
 
     }
 
-    enum class Endpoints(val path: String) {
-        HOME("/"),
-        SIGN_IN("auth/signin"),
-        SIGN_UP("auth/signup"),
-        REFRESH_TOKEN("auth/refresh"),
-        RESET("auth/reset"),
-        USERS("users"),
-        USER("users/user"),
-        USER_ME("users/me"),
-        TOPICS("topics"),
-        TOPIC("topics/topic"),
-        POEMS("poems"),
-        POEM("poems/poem"),
-        COMMENTS("comments"),
-        COMMENT("comments/comment"),
-        ;
-
-        private val BASE_URL = when (true) {
-            true -> "http://192.168.0.102:8080/v1/" // run the server and build and change the link to your IP address
-            false -> "https://mambo-poetree.herokuapp.com/v1/"
-        }
-
-        val url: String
-            get() = BASE_URL + this.path
-
-    }
 
     private suspend fun <T> safeApiCall(
         block: suspend () -> NetworkResult<T>
