@@ -97,7 +97,7 @@ struct AuthScreen: View {
         if isSigningIn {
            return email.isValidEmail() && password.isValidPassword()
        } else {
-          return  email.isValidEmail() && password.isValidEmail() && password == confirmPassword
+          return  email.isValidEmail() && password.isValidPassword() && password == confirmPassword
        }
     }
     

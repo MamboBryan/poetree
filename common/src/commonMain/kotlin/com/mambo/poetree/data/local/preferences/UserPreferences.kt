@@ -44,7 +44,6 @@ class UserPreferences {
     val isOnBoarded = settings.getBooleanFlow(PreferencesKeys.IS_ON_BOARDED, false)
 
     val signedIn = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_IN, false)
-    val signedOut = settings.getBooleanFlow(PreferencesKeys.IS_SIGNED_OUT, false)
     val isUserSetup = settings.getBooleanFlow(PreferencesKeys.IS_SETUP, false)
 
     val accessToken = settings.getStringOrNull(PreferencesKeys.ACCESS_TOKEN)
@@ -119,7 +118,7 @@ class UserPreferences {
     }
 
     fun signedOut() {
-        settings.putBoolean(PreferencesKeys.IS_SIGNED_OUT, true)
+        settings.putBoolean(PreferencesKeys.IS_SIGNED_IN, false)
     }
 
     fun updateIsUserSetup(isSetup: Boolean) {

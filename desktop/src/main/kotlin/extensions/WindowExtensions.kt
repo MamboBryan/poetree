@@ -1,4 +1,4 @@
-package com.mambo.poetree.extensions
+package extensions
 
 import androidx.compose.ui.window.FrameWindowScope
 import java.awt.Dimension

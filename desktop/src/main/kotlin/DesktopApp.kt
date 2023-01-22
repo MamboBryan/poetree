@@ -5,8 +5,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.application
-import com.mambo.poetree.screens.MainScreen
 import com.mambo.poetree.theme.PoetreeTheme
+import screens.MainScreen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

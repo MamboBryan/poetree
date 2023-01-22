@@ -26,6 +26,7 @@ import com.mambo.poetree.android.presentation.screens.destinations.AuthScreenDes
 import com.mambo.poetree.android.presentation.screens.destinations.HomeScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.OnBoardingScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
+import timber.log.Timber
 
 @Composable
 fun MainScreen(
@@ -49,6 +50,8 @@ fun MainScreen(
     AnimatedVisibility(visible = isLoading) {
         LoadingDialog()
     }
+
+    Timber.i("----------> DIALOG IS NULL = ${dialog == null}")
 
     AnimatedVisibility(visible = dialog != null) {
         dialog?.let { PoetreeDialog(it) }
