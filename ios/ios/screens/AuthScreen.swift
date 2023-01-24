@@ -17,7 +17,6 @@ enum Authentication {
 struct AuthScreen: View {
     
     @EnvironmentObject var controller : AppController
-    @StateObject var viewModel : AuthViewModel = AuthViewModel()
 
     @State var isSigningIn = true
     @State var email : String = ""
