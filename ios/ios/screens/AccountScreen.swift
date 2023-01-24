@@ -8,22 +8,29 @@
 
 import SwiftUI
 import common
+import KMPNativeCoroutinesAsync
 
 struct AccountScreen: View {
     
     var isSettingUp : Bool
-    @State var username : String = ""
-    @State var email : String = ""
-    @State var about : String = ""
     
+    @EnvironmentObject var controller : AppController
+    
+    @State var email : String = ""
+    @State var username : String = ""
+    @State var about : String = ""
+   
     let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateStyle = .long
             return formatter
         }()
+    
+     private let youngest = Calendar.current.date(byAdding: .year, value: -15, to: Date()) ?? Date()
+    private let oldest = Calendar.current.date(byAdding: .year, value: -80, to: Date()) ?? Date()
 
-    @State private var birthDate = Date()
-    @State var selectedGender = 0
+    @State private var birthDate = Calendar.current.date(byAdding: .year, value: -7, to: Date()) ?? Date()
+    @State private var selectedGender = "Female"
     let genders = ["Male", "Female", "Other"]
     
     var body: some View {
@@ -40,28 +47,30 @@ struct AccountScreen: View {
             .background(Color("Surface"))
             VStack {
             
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Setup Account").font(.title.bold())
-                        Text("Enter details to finish account setup")
+                if(isSettingUp){
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Setup Account").font(.title.bold())
+                            Text("Enter details to finish account setup")
+                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
             
             VStack {
                 
-                LineTextField(hint: "Email", error: "Invalid Email", textCase: .lowercase,
-                              isError: {email in
-                    !email.isValidEmail()
-                }, text: $email).padding(.top)
+                if(!isSettingUp){
+                    LineTextField(hint: "Email", error: "Invalid Email", textCase: .uppercase, isError: { email in
+                        !email.isValidEmail()
+                    }, text: $email).padding(.top)
+                }
                 
-                LineTextField(hint: "Username", error: "Invalid Username", isError: {name in
+                LineTextField(hint: "Username", error: "Invalid Username", textCase: .uppercase, isError: { name in
                     name.isEmpty
                 }, text: $username).padding(.top)
                 
-                LineTextField(hint: "About", error: "Invalid about", textCase: .lowercase,
-                              isError: {about in
-                    about.isEmpty
+                LineTextField(hint: "About", error: "Invalid about", textCase: .uppercase, isError: {about in
+                     about.isEmpty || about.count > 125
                 }, text: $about).padding(.top)
                 
                 HStack{
@@ -69,14 +78,14 @@ struct AccountScreen: View {
                     Spacer()
                     Picker("Select Gender", selection: $selectedGender) {
                         ForEach(genders, id: \.self) { gender in
-                                        Text(gender)
+                            Text(gender)
                         }
                     }
                 }.padding(.top)
                 
                 VStack {
-                    DatePicker(selection: $birthDate, in: ...Date(), displayedComponents: .date) {
-                                    Text("Select date of birth")
+                    DatePicker(selection: $birthDate, in: oldest...youngest, displayedComponents: .date) {
+                        Text("Select date of birth")
                     }
                 }
             
@@ -84,17 +93,20 @@ struct AccountScreen: View {
                 VStack(alignment: .center){
                 
                     Button {
-                        
+                       update()
                     } label: {
                         Spacer()
                         Text("Finish")
                         Spacer()
-                    }.filled()
+                    }.filled(enabled: isUpdateButtonEnabled())
                         .padding(.vertical)
                     
-                    Button("Sign Out") {
-                        
+                    if(isSettingUp){
+                        Button("Sign Out") {
+                            signOut()
+                        }
                     }
+                    
                 }
                 
                 Spacer()
@@ -103,6 +115,98 @@ struct AccountScreen: View {
         }
         .background(Color("Background"))
     }
+    
+    func isUpdateButtonEnabled() -> Bool {
+        if(isSettingUp){
+            return !username.isEmpty && !about.isEmpty && about.count < 125
+        }else {
+            return email.isValidEmail() && !username.isEmpty && !about.isEmpty && about.count < 125
+        }
+    }
+    
+    func update(){
+        if(isSettingUp){
+            setupAccount()
+        } else {
+            updateAccount()
+        }
+    }
+    
+    func updateAccount(){
+        
+        var gender: Int32 = 0
+        if(selectedGender == "Female"){
+            gender = 1
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        let date = formatter.string(from: birthDate)
+        
+        let request = UserUpdateRequest(username: username, email: email, dateOfBirth: date, gender: gender as? KotlinInt, bio: about)
+        
+        Task {
+            do {
+                
+                controller.showLoading()
+                
+                let response = try await asyncFunction(for: UserRepository().updateUserNative(request: request))
+                
+                controller.hideLoading()
+                
+                if response.isSuccessful {
+                    controller.showDialog(title: "Success", message: response.message)
+                } else {
+                    controller.showDialog(title: "Error", message: response.message)
+                }
+            } catch {
+                controller.hideLoading()
+                controller.showDialog(title: "Error", message: error.localizedDescription)
+            }
+            
+        }
+        
+    }
+    
+    func setupAccount(){
+        var gender: Int32 = 0
+        if(selectedGender == "Female"){
+            gender = 1
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        let date = formatter.string(from: birthDate)
+        
+        let request = SetupRequest(username: username, dateOfBirth: date, gender: gender, bio: about)
+        
+        Task {
+            do {
+                
+                controller.showLoading()
+                
+                let response = try await asyncFunction(for: UserRepository().setupNative(request: request))
+                
+                controller.hideLoading()
+                
+                if response.isSuccessful {
+                    controller.showDialog(title: "Success", message: response.message)
+                } else {
+                    controller.showDialog(title: "Error", message: response.message)
+                }
+            } catch {
+                controller.hideLoading()
+                controller.showDialog(title: "Error", message: error.localizedDescription)
+            }
+            
+        }
+        
+    }
+    
+    func signOut(){
+        UserPreferences().signOut()
+    }
+    
 }
 
 struct AccountScreen_Previews: PreviewProvider {

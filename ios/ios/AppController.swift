@@ -81,7 +81,6 @@ class AppController : ObservableObject {
             do {
                 let signedInStream = asyncStream(for: UserPreferences().signedInNative)
                 for try await signedIn in signedInStream {
-                    print("SIGN IN changed -> \(String(describing: signedIn))")
                     isSignedIn = signedIn as? Bool
                 }
             } catch {
@@ -96,7 +95,6 @@ class AppController : ObservableObject {
             do {
                 let setupStream = asyncStream(for: UserPreferences().isUserSetupNative)
                 for try await isSetup in setupStream {
-                    print("SETUP changed -> \(String(describing: isSetup))")
                     hasSetup = isSetup as? Bool
                 }
             } catch {
