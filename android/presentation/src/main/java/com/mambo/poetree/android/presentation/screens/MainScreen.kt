@@ -19,11 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.android.presentation.MainViewModel
+import com.mambo.poetree.android.presentation.composables.LoadingDialog
+import com.mambo.poetree.android.presentation.composables.PoetreeDialog
 import com.mambo.poetree.android.presentation.screens.destinations.AccountScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.AuthScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.HomeScreenDestination
 import com.mambo.poetree.android.presentation.screens.destinations.OnBoardingScreenDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
+import timber.log.Timber
 
 @Composable
 fun MainScreen(
@@ -34,12 +37,24 @@ fun MainScreen(
     val isLoggedIn by mainViewModel.isSignedIn.collectAsState(initial = false)
     val isOnBoarded by mainViewModel.isOnBoarded.collectAsState(initial = false)
     val isSetUp by mainViewModel.isSetup.collectAsState(initial = false)
+    val isLoading by mainViewModel.isLoading.collectAsState(initial = false)
+    val dialog by mainViewModel.dialogFlow.collectAsState(initial = null)
 
     val startRoute = when {
         isOnBoarded.not() -> OnBoardingScreenDestination
         isLoggedIn.not() -> AuthScreenDestination
         isSetUp.not() -> AccountScreenDestination
         else -> HomeScreenDestination
+    }
+
+    AnimatedVisibility(visible = isLoading) {
+        LoadingDialog()
+    }
+
+    Timber.i("----------> DIALOG IS NULL = ${dialog == null}")
+
+    AnimatedVisibility(visible = dialog != null) {
+        dialog?.let { PoetreeDialog(it) }
     }
 
     Surface(

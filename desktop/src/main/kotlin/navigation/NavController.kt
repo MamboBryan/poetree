@@ -1,9 +1,6 @@
-package com.mambo.poetree.navigation
+package navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 
 class NavController constructor(
@@ -45,9 +42,15 @@ class NavController constructor(
  * Composable to remember the state of the navcontroller
  */
 @Composable
+fun rememberNavigator(
+    calculation: @DisallowComposableCalls () -> MutableState<NavController>
+): MutableState<NavController> = currentComposer.cache(false, calculation)
+
+@Composable
 fun rememberNavController(
     startDestination: String,
     backStackScreens: MutableSet<String> = mutableSetOf()
 ): MutableState<NavController> = rememberSaveable {
+    println("-".repeat(10).plus("> NAVIGATOR REMEMBER => $startDestination"))
     mutableStateOf(NavController(startDestination, backStackScreens))
 }

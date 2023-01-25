@@ -1,4 +1,4 @@
-package com.mambo.poetree.navigation
+package navigation
 
 sealed class NavigationItem(
     val route: String,

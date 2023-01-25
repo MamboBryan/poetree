@@ -1,28 +1,27 @@
-package com.mambo.poetree.composables.section
+package composables.section
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.mambo.poetree.navigation.NavController
+import screens.account.AccountScreen
 
 @Composable
-fun AccountSection(navController: NavController, modifier: Modifier = Modifier) {
+fun AccountSection() {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Text("Account")
+        AccountScreen()
     }
 }
 
 @Preview
 @Composable
 fun AccountSectionPreview() {
-    AccountSection(navController = NavController(""))
+    AccountSection()
 }

@@ -1,5 +1,8 @@
 package com.mambo.poetree.data.repositories
 
+import com.mambo.poetree.data.remote.NetworkResult
+import io.ktor.client.request.forms.*
+
 /**
  * Poetree
  * @author Mambo Bryan
@@ -7,21 +10,10 @@ package com.mambo.poetree.data.repositories
  * Created 4/17/22 at 10:43 PM
  */
 
-class ImageRepository {
+interface ImageRepository {
 
-    // TODO: add implementation to upload and delete image to firebase storage or elsewhere
-//    private val storageRef = Firebase.storage.reference.child("images")
-//
-//    suspend fun upload(id: String, uri: Uri) =
-//        storageRef
-//            .child("$id.jpg")
-//            .putFile(uri)
-//            .await()
-//
-//    suspend fun delete(id: String) =
-//        storageRef
-//            .child("$id.jpg")
-//            .delete()
-//            .await()
+    suspend fun upload(form: MultiPartFormDataContent): NetworkResult<String>
+
+    suspend fun delete(): NetworkResult<Boolean>
 
 }

@@ -2,44 +2,49 @@ package com.mambo.poetree.android.presentation.composables
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mambo.poetree.android.presentation.utils.dismissDialog
+import com.mambo.poetree.utils.DialogData
 
 @Composable
 fun PoetreeDialog(
-    title: String,
-    message: String,
-    modifier: Modifier = Modifier,
-    onConfirm: (() -> Unit)? = null,
-    onDismiss: (() -> Unit)? = null
+    data: DialogData
 ) {
+
+    val dismiss = data.dismiss
+    val confirm = data.confirm
+
     AlertDialog(
-        modifier = modifier,
-        onDismissRequest = { onDismiss?.invoke() },
+        onDismissRequest = {
+            dismiss?.invoke()
+            dismissDialog()
+        },
         title = {
-            Text(text = title)
+            Text(text = data.title)
         },
         text = {
-            Text(text = message)
+            Text(text = data.description)
         },
         confirmButton = {
-            if (onConfirm != null)
-                OutlinedButton(
+            if (confirm != null)
+                TextButton(
                     onClick = {
-
+                        confirm.invoke()
+                        dismissDialog()
                     }) {
                     Text(text = "confirm", modifier = Modifier.padding(4.dp))
                 }
         },
         dismissButton = {
-            Button(
+            TextButton(
                 onClick = {
-                    onDismiss?.invoke()
+                    dismiss?.invoke()
+                    dismissDialog()
                 }) {
                 Text(modifier = Modifier.padding(4.dp), text = "dismiss")
             }
@@ -50,5 +55,5 @@ fun PoetreeDialog(
 @Preview
 @Composable
 fun PoetreeDialogPreview() {
-    PoetreeDialog(title = "Alert", message = "This is an alerting")
+    PoetreeDialog(data = DialogData(description = "This is me alerting"))
 }

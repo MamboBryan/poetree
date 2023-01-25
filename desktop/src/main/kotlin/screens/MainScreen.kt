@@ -1,6 +1,8 @@
-package com.mambo.poetree.screens
+package screens
 
 import AppController
+import AppController.hideDialog
+import AppController.hideWindow
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,10 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.data.local.preferences.UserPreferences
-import com.mambo.poetree.extensions.setMinimumSize
-import com.mambo.poetree.navigation.Navigation
-import com.mambo.poetree.navigation.NavigationItem
-import com.mambo.poetree.navigation.rememberNavController
+import extensions.setMinimumSize
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
+import navigation.*
+import screens.landing.LandingScreen
 import utils.noRippleClickable
 
 @OptIn(ExperimentalUnitApi::class)
@@ -33,16 +37,26 @@ fun MainScreen(
     applicationScope: ApplicationScope,
 ) {
 
+    val preferences = UserPreferences()
+
     val isConnected by UserPreferences().hasNetworkConnection.collectAsState(true)
-    val isLoading by AppController.isLoading.collectAsState(initial = false)
+    val isLoading by UserPreferences().isLoading.collectAsState(initial = false)
     val myDialog by AppController.dialog.collectAsState(initial = null)
+    val windowIsVisible by AppController.windowIsVisible.collectAsState(initial = true)
 
-    val signedIn by UserPreferences().signedIn.collectAsState(initial = false)
-    val hasSetup by UserPreferences().isUserSetup.collectAsState(initial = false)
+    val requiresSetup by preferences.signedIn.combine(preferences.isUserSetup) { signedIn, setup ->
+        signedIn.not() or setup.not()
+    }.collectAsState(initial = true)
 
-    val start = when{
-        signedIn && hasSetup -> NavigationItem.Home.route
-        else -> NavigationItem.Landing.route
+    rememberCoroutineScope().launch {
+        preferences.signedIn.collectLatest {
+            println("-".repeat(10).plus("> SIGNED IN => ${it}"))
+        }
+        preferences.isUserSetup.collectLatest {
+            println("-".repeat(10).plus("> SETUP => ${it}"))
+        }
+
+        println("-".repeat(10).plus("> REQUIRES => ${requiresSetup}"))
     }
 
     val title by remember { mutableStateOf(PoetreeApp().name()) }
@@ -53,6 +67,8 @@ fun MainScreen(
         height = 720.dp,
     )
 
+    val navController by rememberNavController(startDestination = NavigationItem.Home.route)
+
     applicationScope.Tray(
         tooltip = title,
         icon = painterResource("icons/logo_white.svg"),
@@ -62,16 +78,15 @@ fun MainScreen(
     )
 
     Window(
-        onCloseRequest = { applicationScope.exitApplication() },
+        onCloseRequest = { hideWindow() },
         title = title,
         resizable = true,
         state = state,
+        visible = windowIsVisible,
         icon = painterResource("icons/launcher.png")
     ) {
 
         setMinimumSize()
-
-        val navigator by rememberNavController(startDestination = start)
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -109,7 +124,12 @@ fun MainScreen(
                         }
                     }
 
-                    Navigation(navController = navigator)
+                    when{
+                        requiresSetup -> LandingScreen()
+                        else -> Navigation(navController = navController)
+                    }.also {
+                        println("-".repeat(10).plus("> VIEW IS UPDATED"))
+                    }
 
                 }
 
@@ -134,7 +154,6 @@ fun MainScreen(
                 AnimatedVisibility(
                     visible = myDialog != null,
                     enter = fadeIn(),
-                    exit = fadeOut()
                 ) {
                     Column(
                         modifier = Modifier.background(Color.Black.copy(alpha = 0.25f))
@@ -153,15 +172,17 @@ fun MainScreen(
                             ) {
                                 Text(
                                     modifier = Modifier.padding(top = 16.dp),
-                                    text = myDialog?.first ?: "Title",
+                                    text = myDialog?.title ?: "",
                                     fontSize = TextUnit(24f, TextUnitType.Sp)
                                 )
                                 Text(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = myDialog?.second ?: "Message",
+                                    modifier = Modifier.padding(16.dp).padding(vertical = 16.dp),
+                                    text = myDialog?.description ?: "",
                                     textAlign = TextAlign.Center
                                 )
-                                TextButton(onClick = { AppController.hideDialog() }) {
+                                TextButton(
+                                    onClick = { hideDialog() }
+                                ) {
                                     Text("dismiss")
                                 }
                             }

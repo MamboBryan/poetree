@@ -13,9 +13,7 @@ struct HomeScreen: View {
         GeometryReader{ metric in
             VStack{
                 Text("Home")
-            }.frame(width: metric.size.width, height: metric.size.height)
-                .position(x:metric.size.width/2, y: metric.size.height/2)
-                .background(Color(.black))
+            }
         }
     }
 }

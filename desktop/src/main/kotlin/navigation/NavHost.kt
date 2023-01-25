@@ -1,4 +1,4 @@
-package com.mambo.poetree.navigation
+package navigation
 
 import androidx.compose.runtime.Composable
 

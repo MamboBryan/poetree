@@ -21,7 +21,6 @@
 		7BCC871528ED74B300DE1646 /* AuthScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC871428ED74B300DE1646 /* AuthScreen.swift */; };
 		7BCC871728ED753A00DE1646 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC871628ED753A00DE1646 /* HomeScreen.swift */; };
 		7BCC871A28ED7C3900DE1646 /* ButtonModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC871928ED7C3900DE1646 /* ButtonModifiers.swift */; };
-		7BFB8C4F291145AA00FFD73E /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFB8C4E291145AA00FFD73E /* AuthViewModel.swift */; };
 		7BFB8C5329114B5D00FFD73E /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFB8C5229114B5D00FFD73E /* AppController.swift */; };
 		7BFB8C5529114D5A00FFD73E /* LoadingDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFB8C5429114D5A00FFD73E /* LoadingDialog.swift */; };
 		7BFB8C5729115B3D00FFD73E /* LineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFB8C5629115B3D00FFD73E /* LineTextField.swift */; };
@@ -47,7 +46,6 @@
 		7BCC871428ED74B300DE1646 /* AuthScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScreen.swift; sourceTree = "<group>"; };
 		7BCC871628ED753A00DE1646 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		7BCC871928ED7C3900DE1646 /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
-		7BFB8C4E291145AA00FFD73E /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7BFB8C5229114B5D00FFD73E /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		7BFB8C5429114D5A00FFD73E /* LoadingDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDialog.swift; sourceTree = "<group>"; };
 		7BFB8C5629115B3D00FFD73E /* LineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTextField.swift; sourceTree = "<group>"; };
@@ -124,7 +122,7 @@
 		7B39D5A028DC2414006A84E8 /* screens */ = {
 			isa = PBXGroup;
 			children = (
-				7BFB8C4D2911286400FFD73E /* auth */,
+				7BCC871428ED74B300DE1646 /* AuthScreen.swift */,
 				7B39D5A128DC242E006A84E8 /* MainScreen.swift */,
 				7BCC871628ED753A00DE1646 /* HomeScreen.swift */,
 				7B790F582903AD0A00C6A608 /* OnBoardingScreen.swift */,
@@ -151,15 +149,6 @@
 				7BCBA02228ED8690009ED00E /* ViewModifiers.swift */,
 			);
 			path = modifier;
-			sourceTree = "<group>";
-		};
-		7BFB8C4D2911286400FFD73E /* auth */ = {
-			isa = PBXGroup;
-			children = (
-				7BCC871428ED74B300DE1646 /* AuthScreen.swift */,
-				7BFB8C4E291145AA00FFD73E /* AuthViewModel.swift */,
-			);
-			path = auth;
 			sourceTree = "<group>";
 		};
 		7BFB8C5829122A0400FFD73E /* extensions */ = {
@@ -313,7 +302,6 @@
 				7B790F592903AD0A00C6A608 /* OnBoardingScreen.swift in Sources */,
 				7BCC871528ED74B300DE1646 /* AuthScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7BFB8C4F291145AA00FFD73E /* AuthViewModel.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				7BFB8C5329114B5D00FFD73E /* AppController.swift in Sources */,
 				7BFB8C5A29122A1600FFD73E /* StringExtensions.swift in Sources */,

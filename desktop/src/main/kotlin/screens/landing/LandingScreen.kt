@@ -1,4 +1,4 @@
-package com.mambo.poetree.screens.landing
+package screens.landing
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -12,12 +12,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mambo.poetree.PoetreeApp
-import com.mambo.poetree.composables.section.AccountSection
-import com.mambo.poetree.composables.section.AuthSection
 import com.mambo.poetree.composables.section.GetStartedSection
 import com.mambo.poetree.composables.section.OnBoardingSection
 import com.mambo.poetree.data.local.preferences.UserPreferences
-import com.mambo.poetree.navigation.NavController
+import composables.section.AccountSection
+import composables.section.AuthNavigator
+import composables.section.AuthSection
 
 private enum class Landing {
     GET_STARTED,
@@ -26,16 +26,33 @@ private enum class Landing {
 }
 
 @Composable
-fun LandingScreen(
-    navigator: NavController
-) {
+fun LandingScreen() {
 
-    var section by remember { mutableStateOf(Landing.GET_STARTED) }
-    val isSignedIn by UserPreferences().signedIn.collectAsState(initial = false)
-    val hasSetup by UserPreferences().isUserSetup.collectAsState(initial = false)
+    val preferences = UserPreferences()
 
-    if(isSignedIn && hasSetup.not()){
-        section = Landing.SETUP
+    val isSignedIn: Boolean by UserPreferences().signedIn.collectAsState(initial = false)
+    val hasSetup: Boolean by UserPreferences().isUserSetup.collectAsState(initial = false)
+
+//    val section = preferences.signedIn.combine(preferences.isUserSetup){ signedIn, setup ->
+//        mutableStateOf(
+//            when {
+//                !signedIn -> Landing.AUTHENTICATION
+//                !setup -> Landing.SETUP
+//                else -> Landing.GET_STARTED
+//            }
+//        )
+//    }.collectAsState(initial = Landing.GET_STARTED)
+//
+////    var section = sectionFlow
+
+    var section by remember {
+        mutableStateOf(
+            when {
+                !isSignedIn -> Landing.AUTHENTICATION
+                !hasSetup -> Landing.SETUP
+                else -> Landing.GET_STARTED
+            }
+        )
     }
 
     Row {
@@ -46,23 +63,23 @@ fun LandingScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-
         ) {
             OnBoardingSection()
         }
 
         Column(
-            modifier = Modifier.padding(24.dp).weight(1f),
+            modifier = Modifier.padding(if (section == Landing.SETUP) 0.dp else 24.dp).weight(1f),
         ) {
 
-            Row(
-                modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(painter = painterResource("icons/logo.png"), contentDescription = null)
-                Text(text = PoetreeApp().name(), fontWeight = FontWeight.Bold)
+            if (section != Landing.SETUP)
+                Row(
+                    modifier = Modifier,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(painter = painterResource("icons/logo.png"), contentDescription = null)
+                    Text(text = PoetreeApp().name(), fontWeight = FontWeight.Bold)
 
-            }
+                }
 
             Column(
                 modifier = Modifier.weight(1f),
@@ -73,19 +90,26 @@ fun LandingScreen(
                 AnimatedVisibility(
                     visible = section == Landing.GET_STARTED,
                 ) {
-                    GetStartedSection { section = Landing.AUTHENTICATION }
+                    GetStartedSection {
+                        section = Landing.AUTHENTICATION
+                    }
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.AUTHENTICATION,
                 ) {
-                    AuthSection(navController = navigator)
+                    AuthSection(navigator = AuthNavigator(
+                        navigateToHome = {  },
+                        navigateToSetup = {
+                            section = Landing.SETUP
+                        }
+                    ))
                 }
 
                 AnimatedVisibility(
                     visible = section == Landing.SETUP,
                 ) {
-                    AccountSection(navController = navigator)
+                    AccountSection()
                 }
 
             }
@@ -99,5 +123,5 @@ fun LandingScreen(
 @Preview
 @Composable
 fun LandingScreenPreview() {
-    LandingScreen(navigator = NavController(""))
+    LandingScreen()
 }

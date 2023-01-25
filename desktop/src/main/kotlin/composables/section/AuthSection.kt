@@ -1,6 +1,8 @@
-package com.mambo.poetree.composables.section
+package composables.section
 
-import AppController
+import AppController.hideLoading
+import AppController.showDialog
+import AppController.showLoading
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
@@ -20,15 +22,22 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.mambo.poetree.data.remote.NetworkResult
 import com.mambo.poetree.data.repositories.AuthRepository
-import com.mambo.poetree.navigation.NavController
+import com.mambo.poetree.utils.DialogData
+import com.mambo.poetree.utils.DialogType
 import com.mambo.poetree.utils.isValidEmail
 import com.mambo.poetree.utils.isValidPassword
 import kotlinx.coroutines.launch
 
+data class AuthNavigator(
+    val navigateToSetup : () -> Unit,
+    val navigateToHome : () -> Unit
+)
+
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
+fun AuthSection(navigator: AuthNavigator) {
 
     val scope = rememberCoroutineScope()
 
@@ -48,28 +57,44 @@ fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
     var confirmPassWordIsVisible by rememberSaveable { mutableStateOf(false) }
 
     val isEnabled = when (isSigningIn) {
-        false -> email.isValidEmail() and password.isValidPassword() and
-                password.equals(confirmPassword)
+        false -> email.isValidEmail() and password.isValidPassword() and (password == confirmPassword)
         true -> email.isValidEmail() and password.isValidPassword()
+    }
+
+    fun handleResponse(response: NetworkResult<Boolean>) {
+        val type = if (response.isSuccessful) DialogType.SUCCESS else DialogType.ERROR
+        val dialogTitle = if (response.isSuccessful) "Success" else "Error"
+        val dialogMessage = when {
+            !response.isSuccessful -> response.message
+            isSigningIn -> "Signed In Successfully"
+            else -> "Signed Up Successfully"
+        }
+
+        showDialog(data = DialogData(type = type, title = dialogTitle, description = dialogMessage))
+        if (response.isSuccessful){
+            when (response.data) {
+                true -> navigator.navigateToHome.invoke()
+                else -> navigator.navigateToSetup.invoke()
+            }
+        }
+
     }
 
     fun signIn() {
         scope.launch {
-            AppController.showLoading()
+            showLoading()
             val response = AuthRepository().signIn(email, password)
-            AppController.hideLoading()
-            if (!response.isSuccessful)
-                AppController.showDialog(title = "Error", message = response.message)
+            hideLoading()
+            handleResponse(response)
         }
     }
 
     fun signUp() {
         scope.launch {
-            AppController.showLoading()
+            showLoading()
             val response = AuthRepository().signUp(email, password)
-            AppController.hideLoading()
-            if (!response.isSuccessful)
-                AppController.showDialog(title = "Error", message = response.message)
+            hideLoading()
+            handleResponse(response)
         }
     }
 
@@ -173,9 +198,7 @@ fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
                                 }
                             }
                         )
-                        if (confirmPassword.length > 1 && password.equals(confirmPassword)
-                                .not()
-                        )
+                        if (confirmPassword.length > 1 && (password == confirmPassword).not())
                             Text(
                                 text = "Invalid Password (Should be a minimum of 8 characters and contain A-Za-z0-9)",
                                 color = MaterialTheme.colors.error,
@@ -229,5 +252,5 @@ fun AuthSection(navController: NavController, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun AuthSectionPreview() {
-    AuthSection(navController = NavController(""))
+    AuthSection(AuthNavigator({}, {}))
 }

@@ -17,7 +17,6 @@ enum Authentication {
 struct AuthScreen: View {
     
     @EnvironmentObject var controller : AppController
-    @StateObject var viewModel : AuthViewModel = AuthViewModel()
 
     @State var isSigningIn = true
     @State var email : String = ""
@@ -97,7 +96,7 @@ struct AuthScreen: View {
         if isSigningIn {
            return email.isValidEmail() && password.isValidPassword()
        } else {
-          return  email.isValidEmail() && password.isValidEmail() && password == confirmPassword
+          return  email.isValidEmail() && password.isValidPassword() && password == confirmPassword
        }
     }
     

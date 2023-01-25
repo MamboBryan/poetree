@@ -1,32 +1,36 @@
+package com.mambo.poetree.android.presentation.utils
 
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.utils.DialogData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ * @project Poetree
+ * @author mambobryan
+ * @email mambobryan@gmail.com
+ * Fri 06 Jan 2023
+ */
+
 fun showDialog(data: DialogData) {
-    AppController.showDialog(data = data)
+    AppMonitor.showDialog(data = data)
 }
 
 fun dismissDialog() {
-    AppController.hideDialog()
+    AppMonitor.hideDialog()
 }
 
 fun startLoading() {
-    AppController.showLoading()
+    AppMonitor.showLoading()
 }
 
 fun stopLoading() {
-    AppController.hideLoading()
+    AppMonitor.hideLoading()
 }
 
-object AppController {
+object AppMonitor {
 
     private val preferences = UserPreferences()
-
-    private val VISIBLE = MutableStateFlow(true)
-    val windowIsVisible get() = VISIBLE
-
     private val DIALOG = MutableStateFlow<DialogData?>(null)
     val dialog get() : StateFlow<DialogData?> = DIALOG
 
@@ -36,14 +40,6 @@ object AppController {
 
     internal fun hideLoading(){
         preferences.stopLoading()
-    }
-
-    internal fun showWindow(){
-        VISIBLE.value = true
-    }
-
-    internal fun hideWindow(){
-        VISIBLE.value = false
     }
 
     internal fun showDialog(data: DialogData){

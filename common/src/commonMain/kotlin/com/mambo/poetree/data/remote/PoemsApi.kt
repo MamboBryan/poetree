@@ -1,20 +1,58 @@
 package com.mambo.poetree.data.remote
 
+import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.data.remote.dto.*
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.util.reflect.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalSerializationApi::class)
 class PoemsApi {
+
+    enum class Endpoints(val path: String) {
+        HOME("/"),
+        SIGN_IN("auth/signin"),
+        SIGN_UP("auth/signup"),
+        REFRESH_TOKEN("auth/refresh"),
+        RESET("auth/reset"),
+        USERS("users"),
+        USER("users/user"),
+        USER_ME("users/me"),
+        TOPICS("topics"),
+        TOPIC("topics/topic"),
+        POEMS("poems"),
+        POEM("poems/poem"),
+        COMMENTS("comments"),
+        COMMENT("comments/comment"),
+        ;
+
+        /**
+         * To get the local server testing port
+         * 1. Run the server
+         * 2. Run `ifconfig | grep "inet " | grep -v 127.0.0.1` in your terminal
+         * 3. change the return value of true below to the value retrieved in step 2
+         */
+
+        private val BASE_URL = when (true) {
+            true -> "http://192.168.88.253:8080/v1/" // change here
+            false -> "https://mambo-poetree.herokuapp.com/v1/"
+        }
+
+        val url: String
+            get() = BASE_URL + this.path
+
+    }
 
     private val client = HttpClient {
 
@@ -43,51 +81,11 @@ class PoemsApi {
         install(DefaultRequest) {
             header(HttpHeaders.Accept, ContentType.Application.Json)
             header(HttpHeaders.ContentType, ContentType.Application.Json)
+            header(HttpHeaders.Authorization, "Bearer ${UserPreferences().accessToken}")
         }
 
     }
 
-    enum class Endpoints {
-        HOME,
-        SIGN_IN,
-        SIGN_UP,
-        REFRESH_TOKEN,
-        RESET,
-        USERS,
-        USER,
-        USER_ME,
-        TOPICS,
-        TOPIC,
-        POEMS,
-        POEM,
-        COMMENTS,
-        COMMENT,
-        ;
-
-        private val BASE_URL = when (true) {
-            true -> "http://192.168.0.103:8080/v1/" // run the server and build and change the link to your IP address
-            false -> "https://mambo-poetree.herokuapp.com/v1/"
-        }
-
-        val url: String
-            get() = BASE_URL + when (this) {
-                SIGN_IN -> "auth/signin"
-                SIGN_UP -> "auth/signup"
-                REFRESH_TOKEN -> "auth/refresh"
-                RESET -> "auth/reset"
-                TOPIC -> "topics/topic"
-                TOPICS -> "topics"
-                POEM -> "poems/poem"
-                POEMS -> "poems"
-                USER -> "users/user"
-                USERS -> "users"
-                USER_ME -> "users/me"
-                COMMENT -> "comments/comment"
-                COMMENTS -> "comments"
-                else -> ""
-            }
-
-    }
 
     private suspend fun <T> safeApiCall(
         block: suspend () -> NetworkResult<T>
@@ -225,7 +223,7 @@ class PoemsApi {
     }
 
     suspend fun updateTopic(topicId: Int, request: TopicRequest) = safeApiCall<TopicDto> {
-        val url = Endpoints.TOPICS.url.plus("/$topicId")
+        val url = Endpoints.TOPIC.url.plus("/$topicId")
         val response = client.put(url) { setBody(request) }
         response.body()
     }
@@ -420,6 +418,26 @@ class PoemsApi {
         val url = Endpoints.COMMENT.url.plus("/unlike")
         val response = client.delete(url) {
             setBody(mapOf("commentId" to commentId))
+        }
+        response.body()
+    }
+
+    /**
+     * IMAGE
+     */
+
+    suspend fun uploadImage(form: MultiPartFormDataContent) = safeApiCall<String> {
+        val url = "https://us-central1-poetree-254.cloudfunctions.net/uploadProfile"
+        val response = client.post(url){
+            setBody(form)
+        }
+        response.body()
+    }
+
+    suspend fun deleteImage(userId: String) = safeApiCall<Boolean> {
+        val url = "https://us-central1-poetree-254.cloudfunctions.net/deleteProfile"
+        val response = client.post(url){
+            setBody(Pair("userId", userId))
         }
         response.body()
     }
