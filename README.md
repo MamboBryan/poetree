@@ -50,18 +50,6 @@ Whether it comes in the form of code patches, ideas, discussion, bug reports, en
 
 For any further question please reach out or open a discussion.
 
-[//]: # (- Project [None]&#40;https://github.com/MamboBryan/poetree&#41;)
-
-[//]: # (  - Android &#8594; [None]&#40;https://github.com/MamboBryan/poetree&#41;)
-
-[//]: # (  - iOS &#8594; [Mike Ndiritu]&#40;https://github.com/ndiritumichael&#41;)
-
-[//]: # (  - Web &#8594; [None]&#40;https://github.com/MamboBryan/poetree&#41;)
-
-[//]: # (  - Desktop &#8594; [None]&#40;https://github.com/MamboBryan/poetree&#41;)
-
-[//]: # (  - Backend &#8594; [None]&#40;https://github.com/MamboBryan/poetree&#41;)
-
 ## Sponsor
 
 ![GitHub Sponsors](https://img.shields.io:/github/sponsors/MamboBryan?style=for-the-badge)
