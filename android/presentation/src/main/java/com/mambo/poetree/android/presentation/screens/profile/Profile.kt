@@ -13,6 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import com.mambo.poetree.android.presentation.screens.destinations.PoemScreenDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 
 /**
  * @project Poetree
@@ -23,7 +27,7 @@ import androidx.compose.ui.unit.TextUnitType
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun ProfileScreenContent() {
+fun ProfileScreenContent(navigator: DestinationsNavigator) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -45,20 +49,26 @@ fun ProfileScreenContent() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { navigator.popBackStack() }) {
                 Text(text = "back")
+            }
+            Button(onClick = { navigator.navigate(PoemScreenDestination) }) {
+                Text(text = "navigate to poem")
             }
         }
     }
 }
 
+@Destination
 @Composable
-fun ProfileScreen() {
-    ProfileScreenContent()
+fun ProfileScreen(
+    navigator: DestinationsNavigator
+) {
+    ProfileScreenContent(navigator = navigator)
 }
 
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(navigator = EmptyDestinationsNavigator)
 }

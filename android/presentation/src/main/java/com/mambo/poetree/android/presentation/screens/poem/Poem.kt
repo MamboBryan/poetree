@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import com.ramcosta.composedestinations.annotation.Destination
 
 /**
  * @project Poetree
@@ -21,10 +22,6 @@ import androidx.compose.ui.unit.TextUnitType
  * Sun 12 Feb 2023
  */
 
-@Composable
-fun PoemScreen() {
-    PoemScreenContent()
-}
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -58,6 +55,12 @@ fun PoemScreenContent() {
             }
         }
     }
+}
+
+@Destination
+@Composable
+fun PoemScreen() {
+    PoemScreenContent()
 }
 
 @Preview

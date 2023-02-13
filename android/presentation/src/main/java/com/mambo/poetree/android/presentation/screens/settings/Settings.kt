@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import com.ramcosta.composedestinations.annotation.Destination
 
 /**
  * @project Poetree
@@ -51,6 +52,7 @@ fun SettingsScreenContent() {
     }
 }
 
+@Destination
 @Composable
 fun SettingsScreen() {
     SettingsScreenContent()

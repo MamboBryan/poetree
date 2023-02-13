@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import com.ramcosta.composedestinations.annotation.Destination
 
 /**
  * @project Poetree
@@ -20,12 +21,6 @@ import androidx.compose.ui.unit.TextUnitType
  * @email mambobryan@gmail.com
  * Sun 12 Feb 2023
  */
-
-@Composable
-fun ComposeScreen(){
-    ComposeScreenContent()
-}
-
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun ComposeScreenContent(){
@@ -59,6 +54,14 @@ fun ComposeScreenContent(){
         }
     }
 }
+
+@Destination
+@Composable
+fun ComposeScreen(){
+    ComposeScreenContent()
+}
+
+
 
 @Preview
 @Composable
