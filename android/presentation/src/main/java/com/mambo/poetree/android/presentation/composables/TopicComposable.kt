@@ -26,9 +26,13 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun TopicLarge(modifier: Modifier = Modifier, name: String, color: Color) {
+fun TopicLarge(modifier: Modifier = Modifier, isInList: Boolean = false, name: String, color: Color) {
+    
+    val size = if(isInList) 18f else 24f
+    val (width, height) = if(isInList) Pair(200.dp, 125.dp) else Pair(300.dp, 200.dp)
+    
     Card(
-        modifier = modifier.defaultMinSize(minWidth = 300.dp, minHeight = 200.dp),
+        modifier = modifier.defaultMinSize(minWidth = width, minHeight = height),
         backgroundColor = color,
         shape = RoundedCornerShape(10.dp)
     ) {
@@ -36,7 +40,7 @@ fun TopicLarge(modifier: Modifier = Modifier, name: String, color: Color) {
             Text(
                 modifier = Modifier.padding(start = 24.dp, bottom = 24.dp),
                 text = name.replaceFirstChar { it.uppercase() },
-                fontSize = TextUnit(24f, TextUnitType.Sp)
+                fontSize = TextUnit(value = size, TextUnitType.Sp)
             )
         }
     }

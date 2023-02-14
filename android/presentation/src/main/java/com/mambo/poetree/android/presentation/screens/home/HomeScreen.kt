@@ -23,6 +23,7 @@ object HomeNavigation {
     val graph = NavGraph(
         route = "home", startRoute = FeedScreenDestination, destinations = listOf(
             FeedScreenDestination,
+            ExploreScreenDestination,
             SearchScreenDestination,
             BookmarkScreenDestination,
             LibraryScreenDestination,
@@ -64,7 +65,7 @@ fun BottomNavigationBar(
 
     val bottomNavigationIsVisible = when (currentDestination) {
         FeedScreenDestination.route,
-        SearchScreenDestination.route,
+        ExploreScreenDestination.route,
         BookmarkScreenDestination.route,
         LibraryScreenDestination.route -> true
         else -> false

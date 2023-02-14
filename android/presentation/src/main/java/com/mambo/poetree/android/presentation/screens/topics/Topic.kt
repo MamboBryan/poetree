@@ -133,7 +133,7 @@ fun TopicScreenContent(navigator: DestinationsNavigator, viewModel: TopicViewMod
                 onClick = {
                     viewModel.save { navigator.popBackStack() }
                 },
-                enabled = viewModel.name.isNotBlank() or viewModel.name.contains(" ").not()
+                enabled = viewModel.name.isNotBlank() and viewModel.name.contains(" ").not()
             ) {
                 Text(
                     modifier = Modifier.padding(4.dp),
