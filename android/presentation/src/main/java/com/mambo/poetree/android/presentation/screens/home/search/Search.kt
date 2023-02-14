@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mambo.poetree.android.presentation.screens.destinations.TopicScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
@@ -70,17 +71,15 @@ fun SearchScreenContent(
                                 .makeText(context, "Searching", Toast.LENGTH_LONG)
                                 .show()
                         }
-                        .padding(start = 8.dp),
+                        .padding(8.dp),
                     imageVector = Icons.Rounded.Search, contentDescription = "Search Poem"
                 )
                 Image(
                     modifier = Modifier
                         .clickable {
-                            Toast
-                                .makeText(context, "Creating", Toast.LENGTH_LONG)
-                                .show()
+                            navigator.navigate(TopicScreenDestination)
                         }
-                        .padding(start = 8.dp),
+                        .padding(8.dp),
                     imageVector = Icons.Rounded.Add,
                     contentDescription = "Create Topic"
                 )

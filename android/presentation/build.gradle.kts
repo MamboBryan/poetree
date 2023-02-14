@@ -63,6 +63,7 @@ dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.splashScreen)
     implementation(Libraries.materialDesign)
+    implementation(Libraries.material3Design)
 
     implementation(Libraries.timber)
     

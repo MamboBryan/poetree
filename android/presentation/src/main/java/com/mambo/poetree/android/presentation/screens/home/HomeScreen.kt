@@ -30,7 +30,8 @@ object HomeNavigation {
             PoemScreenDestination,
             CommentScreenDestination,
             ProfileScreenDestination,
-            SettingsScreenDestination
+            SettingsScreenDestination,
+            TopicScreenDestination
         )
     )
 }

@@ -5,6 +5,7 @@ object Libraries {
 
     val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}" }
     val materialDesign by lazy { "com.google.android.material:material:${Versions.material}" }
+    val material3Design by lazy { "androidx.compose.material3:material3:${Versions.material3}" }
     val constraintLayout by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}" }
     val fragment by lazy { "androidx.fragment:fragment-ktx:1.5.2" }
     val recyclerview by lazy { "androidx.recyclerview:recyclerview:${Versions.recyclerview}" }
