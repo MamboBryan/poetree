@@ -26,16 +26,9 @@ import kotlinx.coroutines.launch
  */
 class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    /**
-     * GET NAVIGATION ARGUMENTS
-     */
-
-//    private val navArgs: ComposeScreenNavArgs = ComposeScreenDestination.argsFrom(savedStateHandle)
-
     private val poemRepository = PoemRepository()
     private val topicRepository = TopicsRepository()
 
-    //    private var poem by mutableStateOf<Poem?>(navArgs.poemJson?.asPoem())
     private var poem by mutableStateOf<Poem?>(null)
 
     var topics by mutableStateOf<List<Topic>>(emptyList())
