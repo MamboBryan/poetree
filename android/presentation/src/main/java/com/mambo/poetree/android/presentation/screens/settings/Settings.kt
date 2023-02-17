@@ -62,8 +62,8 @@ fun SettingsScreenContent(navigator: DestinationsNavigator) {
             val data = DialogData(
                 title = "Oh No!",
                 description = "We'll miss you and by signing out you'll lose all your saved poems. Are you sure you want to sign out?",
-                confirm = { UserPreferences().signedOut() },
-                dismiss = {}
+                positiveAction = { UserPreferences().signedOut() },
+                negativeAction = {}
             )
             showDialog(data = data)
         }

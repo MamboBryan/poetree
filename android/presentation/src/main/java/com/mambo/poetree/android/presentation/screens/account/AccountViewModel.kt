@@ -102,7 +102,7 @@ class AccountViewModel : ViewModel() {
                 type = type,
                 title = title,
                 description = message,
-                dismiss = {
+                negativeAction = {
                     onComplete.invoke(response.isSuccessful)
                 }
             )

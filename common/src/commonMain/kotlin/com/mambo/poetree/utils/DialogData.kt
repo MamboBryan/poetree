@@ -17,6 +17,8 @@ data class DialogData(
     val type: DialogType = DialogType.NORMAL,
     val title: String = "Alert",
     val description: String,
-    val confirm: (() -> Unit)? = null,
-    val dismiss: (() -> Unit)? = null
+    val positiveText: String = "ok",
+    val negativeText: String = "dismiss",
+    val positiveAction: (() -> Unit)? = null,
+    val negativeAction: (() -> Unit)? = null
 )

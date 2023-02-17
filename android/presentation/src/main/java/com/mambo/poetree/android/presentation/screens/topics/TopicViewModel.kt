@@ -80,7 +80,7 @@ class TopicViewModel : ViewModel() {
                     type = DialogType.SUCCESS,
                     title = "Success",
                     description = response.message,
-                    confirm = success
+                    positiveAction = success
                 )
             )
 
@@ -132,7 +132,7 @@ class TopicViewModel : ViewModel() {
                     type = DialogType.SUCCESS,
                     title = "Success",
                     description = response.message,
-                    confirm = success
+                    positiveAction = success
                 )
             )
         }
@@ -190,7 +190,7 @@ class TopicViewModel : ViewModel() {
                     type = DialogType.SUCCESS,
                     title = "Success",
                     description = response.message,
-                    confirm = onSuccess
+                    positiveAction = onSuccess
                 )
             )
         }

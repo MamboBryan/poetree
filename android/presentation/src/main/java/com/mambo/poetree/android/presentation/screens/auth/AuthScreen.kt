@@ -81,7 +81,7 @@ fun AuthScreen(
             type = DialogType.ERROR,
             title = "Authentication Error",
             description = viewModel.error ?: "Error",
-            dismiss = {
+            negativeAction = {
                 viewModel.error = null
             })
         PoetreeDialog(data = data)
@@ -92,7 +92,7 @@ fun AuthScreen(
             type = DialogType.SUCCESS,
             title = "Authentication Success",
             description = viewModel.success ?: "Success",
-            dismiss = {
+            negativeAction = {
                 viewModel.success = null
             })
         PoetreeDialog(data = data)

@@ -1,7 +1,7 @@
 package com.mambo.poetree.data.repositories
 
 import com.mambo.poetree.data.local.PoetreeDatabase
-import com.mambo.poetree.data.local.entity.TopicEntity
+import com.mambo.poetree.data.local.entity.TopicRealm
 import com.mambo.poetree.data.remote.PoemsApi
 import com.mambo.poetree.data.remote.TopicRequest
 
@@ -18,7 +18,7 @@ class TopicsRepository() {
     suspend fun delete(topicId: Int) = poemsApi.deleteTopic(topicId)
 
     suspend fun deleteAll() = realm.write {
-        val items = query(clazz = TopicEntity::class).find()
+        val items = query(clazz = TopicRealm::class).find()
         delete(items)
     }
 

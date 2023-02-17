@@ -1,6 +1,6 @@
 package com.mambo.poetree.data.domain
 
-import com.mambo.poetree.data.local.entity.TopicEntity
+import com.mambo.poetree.data.local.entity.TopicRealm
 import com.mambo.poetree.data.remote.dto.TopicDto
 import kotlinx.serialization.Serializable
 
@@ -13,13 +13,13 @@ data class Topic(
     val updatedAt: String?,
 ) {
 
-    fun toEntity(): TopicEntity = TopicEntity().apply {
-        id = this@Topic.id
-        name = this@Topic.name
-        color = this@Topic.color
-        createdAt = this@Topic.createdAt
-        updatedAt = this@Topic.updatedAt
-    }
+    fun toEntity(): TopicRealm = TopicRealm(
+        id = id,
+        name = name,
+        color = color,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
 
     fun toDto(): TopicDto = TopicDto(
         id = id, name = name, color = color, createdAt = createdAt, updatedAt = updatedAt

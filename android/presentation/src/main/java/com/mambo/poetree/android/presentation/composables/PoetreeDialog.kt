@@ -16,8 +16,8 @@ fun PoetreeDialog(
     data: DialogData
 ) {
 
-    val dismiss = data.dismiss
-    val confirm = data.confirm
+    val dismiss = data.negativeAction
+    val confirm = data.positiveAction
 
     AlertDialog(
         onDismissRequest = {
@@ -37,17 +37,18 @@ fun PoetreeDialog(
                         confirm.invoke()
                         dismissDialog()
                     }) {
-                    Text(text = "confirm", modifier = Modifier.padding(4.dp))
+                    Text(text = data.positiveText, modifier = Modifier.padding(4.dp))
                 }
         },
         dismissButton = {
-            TextButton(
-                onClick = {
-                    dismiss?.invoke()
-                    dismissDialog()
-                }) {
-                Text(modifier = Modifier.padding(4.dp), text = "dismiss")
-            }
+            if (dismiss != null)
+                TextButton(
+                    onClick = {
+                        dismiss.invoke()
+                        dismissDialog()
+                    }) {
+                    Text(modifier = Modifier.padding(4.dp), text = data.negativeText)
+                }
         }
     )
 }

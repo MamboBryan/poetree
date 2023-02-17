@@ -6,6 +6,7 @@
     <application>
 
         <activity
+                android:windowSoftInputMode="adjustResize"
                 android:name=".presentation.MainActivity"
                 android:exported="true"
                 android:label="Poetree"

@@ -23,10 +23,10 @@ fun HomeScreen(navigator: NavController) {
         val data = DialogData(
             title = "Oh No!",
             description = "We'll miss you and by signing out you'll lose all your saved poems. Are you sure you want to sign out?",
-            confirm = {
+            positiveAction = {
                 UserPreferences().signedOut()
             },
-            dismiss = {}
+            negativeAction = {}
         )
         showDialog(data = data)
     }

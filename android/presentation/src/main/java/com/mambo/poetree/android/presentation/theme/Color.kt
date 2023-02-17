@@ -56,29 +56,16 @@ val OnSecondary = white
 val OnSecondaryDark = black
 
 val Background = gray200
-val BackgroundDark = primary900
 val OnBackground = gray900
-val OnBackgroundDark = white
-
 val Surface = white
-val SurfaceDark = primary800
 val OnSurface = black
+
+val BackgroundDark = primary900
+val OnBackgroundDark = white
+val SurfaceDark = primary800
 val OnSurfaceDark = white
 
 val Error = Color(0xFFd91a1a)
 val ErrorDark = Color(0xFFe66666)
 val OnError = white
 val OnErrorDark = black
-
-/**
- * OTHER THEME COLORS
- */
-val NavItem = Color(0xFF)
-val NavItemDark = Color(0xFF)
-val OnNavItem = Color(0xFF)
-val OnNavItemDark = Color(0xFF)
-
-val NavItemSelected = Color(0xFF)
-val NavItemSelectedDark = Color(0xFF)
-val OnNavItemSelected = Color(0xFF)
-val OnNavItemSelectedDark = Color(0xFF)

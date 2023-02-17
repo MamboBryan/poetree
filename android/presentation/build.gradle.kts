@@ -75,4 +75,10 @@ dependencies {
     ksp("io.github.raamcosta.compose-destinations:ksp:1.4.2-beta")
     implementation("io.github.raamcosta.compose-destinations:core:1.4.2-beta")
 
+    // compose rich text
+    implementation ("com.darkrockstudios:richtexteditor:1.4.1")
+
+    // compose rich text v2
+    implementation ("com.halilibo.compose-richtext:richtext-ui-material:0.16.0")
+
 }

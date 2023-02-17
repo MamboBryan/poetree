@@ -3,7 +3,7 @@ object AndroidSdk {
     const val applicationId = "com.mambo.poetree.android"
     const val namespace = "com.mambo.poetree.android"
 
-    const val minSdk = 24
+    const val minSdk = 26
     const val compileSdk = 33
     const val targetSdk = compileSdk
 

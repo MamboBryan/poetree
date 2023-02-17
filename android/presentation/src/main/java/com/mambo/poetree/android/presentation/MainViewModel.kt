@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mambo.poetree.android.presentation.utils.AppMonitor
+import com.mambo.poetree.android.presentation.utils.AppMonitor.hideLoading
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -24,6 +25,7 @@ class MainViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
+           hideLoading()
             Timber.i("${"".repeat(10).plus("> USER \n")}${preferences.getUserData()}")
         }
     }

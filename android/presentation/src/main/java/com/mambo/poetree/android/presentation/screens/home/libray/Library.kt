@@ -1,18 +1,22 @@
 package com.mambo.poetree.android.presentation.screens.home.libray
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
+import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 
 /**
@@ -28,32 +32,31 @@ fun LibraryScreen() {
     LibraryScreenContent()
 }
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
-fun LibraryScreenContent() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Column(
-            modifier = Modifier.weight(0.5f),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Library",
-                fontSize = TextUnit(24f, TextUnitType.Sp),
-                textAlign = TextAlign.Center
-            )
-        }
-
-        Column(
-            modifier = Modifier.weight(0.5f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "click poem")
+fun LibraryScreenContent(
+    viewModel: LibraryViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(text = "Library") },
+            actions = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Rounded.Search, "search library")
+                }
+            })
+    }) {
+        LazyColumn(modifier = Modifier.padding(it)) {
+            items(items = viewModel.drafts) { poem ->
+                Card(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    colors = CardDefaults.cardColors()
+                ) {
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = poem.title.ifBlank { "Title" }
+                    )
+                }
             }
         }
     }
