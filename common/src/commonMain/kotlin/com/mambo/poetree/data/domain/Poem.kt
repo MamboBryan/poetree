@@ -1,9 +1,12 @@
 package com.mambo.poetree.data.domain
 
 import com.mambo.poetree.data.local.entity.DraftRealm
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@Serializable
 data class Poem(
     val id: String,
     val title: String,
@@ -24,12 +27,19 @@ data class Poem(
     val commented: Boolean = false,
 ) {
 
+    companion object {
+        fun String.asPoem() = Json.decodeFromString<Poem?>(this)
+    }
+
+    @Serializable
     enum class Type {
         REMOTE, BOOKMARK, DRAFT
     }
 
     fun toDraft() =
         DraftRealm(id = id, title = title, content = content, topic = Json.encodeToString(topic))
+
+    fun asJson() = Json.encodeToString(this)
 
 }
 

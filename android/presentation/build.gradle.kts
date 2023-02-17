@@ -81,4 +81,7 @@ dependencies {
     // compose rich text v2
     implementation ("com.halilibo.compose-richtext:richtext-ui-material:0.16.0")
 
+    // compose navigation
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+
 }

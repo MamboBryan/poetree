@@ -3,6 +3,7 @@ package com.mambo.poetree.android.presentation.screens.compose
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.darkrockstudios.richtexteditor.model.RichTextValue
@@ -23,12 +24,21 @@ import kotlinx.coroutines.launch
  * @email mambobryan@gmail.com
  * Wed 15 Feb 2023
  */
-class ComposeViewModel : ViewModel() {
+class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+
+    /**
+     * GET NAVIGATION ARGUMENTS
+     */
+
+//    private val navArgs: ComposeScreenNavArgs = ComposeScreenDestination.argsFrom(savedStateHandle)
 
     private val poemRepository = PoemRepository()
     private val topicRepository = TopicsRepository()
 
+    //    private var poem by mutableStateOf<Poem?>(navArgs.poemJson?.asPoem())
     private var poem by mutableStateOf<Poem?>(null)
+
+    var topics by mutableStateOf<List<Topic>>(emptyList())
 
     var topic by mutableStateOf<Topic?>(null)
         private set
@@ -44,6 +54,15 @@ class ComposeViewModel : ViewModel() {
 
     var isValidPoem by mutableStateOf(getValidPoemDetails())
         private set
+
+    init {
+        viewModelScope.launch {
+            val response = topicRepository.getTopics(page = 1)
+            if (response.isSuccessful) {
+                topics = response.data?.list?.map { it.toDomain() } ?: listOf()
+            }
+        }
+    }
 
     private fun getIsButtonEnabled() = when (poem != null) {
         true -> (poem?.title != title) and (poem?.content != content.value.text) and (poem?.topic != topic)
@@ -66,6 +85,10 @@ class ComposeViewModel : ViewModel() {
         title = poem.title
         content = RichTextValue.fromString(text = poem.content)
         updateStates()
+    }
+
+    fun updateTopic(topic: Topic) {
+        this.topic = topic
     }
 
     fun updateTitle(text: String) {

@@ -51,9 +51,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun ComposeScreenContent(
     navigator: DestinationsNavigator,
-    poem: Poem? = null,
+    poem: Poem?,
     viewModel: ComposeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
+
+    if (poem != null) viewModel.updatePoem(poem = poem)
 
     val scope = rememberCoroutineScope()
     val bringIntoViewRequester = BringIntoViewRequester()
@@ -113,18 +115,10 @@ fun ComposeScreenContent(
             ) {
 
                 this.items(
-                    items = listOf(
-                        "joy",
-                        "happiness",
-                        "love",
-                        "marriage",
-                        "religion",
-                        "truth",
-                        "death"
-                    ).filter { item -> item.contains(topicQuery) }
+                    items = viewModel.topics.filter { item -> item.name.contains(topicQuery) }
                 ) { topic ->
 
-                    val isSelected = topic.equals("religion", true)
+                    val isSelected = topic == viewModel.topic
 
                     val (background, foreground) = when (isSelected) {
                         true -> Pair(MaterialTheme.colors.primary, MaterialTheme.colors.onPrimary)
@@ -132,12 +126,16 @@ fun ComposeScreenContent(
                     }
 
                     Card(
-                        modifier = Modifier.padding(8.dp).clickable { hideSheet() },
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable {
+                                viewModel.updateTopic(topic = topic)
+                                hideSheet() },
                         backgroundColor = background
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = topic.replaceFirstChar { c -> c.uppercase() },
+                            text = topic.name.replaceFirstChar { c -> c.uppercase() },
                             color = foreground
                         )
                     }
@@ -158,20 +156,21 @@ fun ComposeScreenContent(
                     },
                     actions = {
 
-                        if (poem != null) IconButton(onClick = {
-                            showDialog(
-                                data = DialogData(title = "Deleting Poem",
-                                    description = "Are you sure you want to delete this poem?",
-                                    positiveText = "yes",
-                                    negativeText = "no",
-                                    positiveAction = { viewModel.delete() })
-                            )
-                        }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Delete,
-                                contentDescription = "delete poem"
-                            )
-                        }
+                        if (poem != null)
+                            IconButton(onClick = {
+                                showDialog(
+                                    data = DialogData(title = "Deleting Poem",
+                                        description = "Are you sure you want to delete this poem?",
+                                        positiveText = "yes",
+                                        negativeText = "no",
+                                        positiveAction = { viewModel.delete() })
+                                )
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Delete,
+                                    contentDescription = "delete poem"
+                                )
+                            }
 
                         if (viewModel.isValidPoem)
                             IconButton(onClick = {
@@ -199,8 +198,11 @@ fun ComposeScreenContent(
                     FloatingActionButton(
                         shape = RoundedCornerShape(10.dp),
                         onClick = {
-                            if (viewModel.isButtonEnabled) viewModel.save(onSuccess = { navigator.popBackStack() },
-                                onError = {})
+                            if (viewModel.isButtonEnabled)
+                                viewModel.save(
+                                    onSuccess = { navigator.popBackStack() },
+                                    onError = {}
+                                )
                         },
                         backgroundColor = if (viewModel.isButtonEnabled) MaterialTheme.colors.secondary else Color.Gray
                     ) {
@@ -227,7 +229,7 @@ fun ComposeScreenContent(
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = viewModel.topic?.name ?: "Topic"
+                            text = (viewModel.topic?.name ?: "Topic").replaceFirstChar { it.uppercase() }
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(
@@ -250,7 +252,9 @@ fun ComposeScreenContent(
                                 color = MaterialTheme.colors.primary, text = "Title"
                             )
                         },
-                        placeholder = { Text("Title...") },
+                        placeholder = {
+                            Text(text = "Title...")
+                        },
                         onValueChanged = { s -> viewModel.updateTitle(text = s) })
 
                     Divider(modifier = Modifier.fillMaxWidth())
@@ -287,12 +291,19 @@ fun ComposeScreenContent(
 
 }
 
-@Destination
+/**
+ * COMPOSE SCREEN NAVIGATION ARGUMENTS
+ */
+data class ComposeScreenNavArgs(val poemJson: String? = null)
+
+@Destination(
+//    navArgsDelegate = ComposeScreenNavArgs::class
+)
 @Composable
 fun ComposeScreen(
     navigator: DestinationsNavigator,
 ) {
-    ComposeScreenContent(navigator = navigator)
+    ComposeScreenContent(navigator = navigator, poem = null)
 }
 
 

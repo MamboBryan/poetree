@@ -1,5 +1,6 @@
 package com.mambo.poetree.android.presentation.screens.home.libray
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mambo.poetree.android.presentation.screens.destinations.ComposeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 
 /**
  * @project Poetree
@@ -28,12 +32,13 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun LibraryScreen() {
-    LibraryScreenContent()
+fun LibraryScreen(navigator: DestinationsNavigator) {
+    LibraryScreenContent(navigator = navigator)
 }
 
 @Composable
 fun LibraryScreenContent(
+    navigator: DestinationsNavigator,
     viewModel: LibraryViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     Scaffold(topBar = {
@@ -53,7 +58,11 @@ fun LibraryScreenContent(
                     colors = CardDefaults.cardColors()
                 ) {
                     Text(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .clickable {
+                                navigator.navigate(ComposeScreenDestination)
+                            },
                         text = poem.title.ifBlank { "Title" }
                     )
                 }
@@ -65,5 +74,5 @@ fun LibraryScreenContent(
 @Preview
 @Composable
 fun LibraryScreenPreview() {
-    LibraryScreen()
+    LibraryScreen(navigator = EmptyDestinationsNavigator)
 }

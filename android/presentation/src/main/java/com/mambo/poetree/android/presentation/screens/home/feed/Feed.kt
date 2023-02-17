@@ -41,7 +41,7 @@ fun FeedScreen(
         navigateToProfile = navigateToProfile,
         navigateToSettings = navigateToSettings,
         navigateToPoem = navigateToPoem,
-        navigateToCompose = navigateToCompose
+        navigateToCompose = { navigateToCompose.invoke() }
     )
 }
 
