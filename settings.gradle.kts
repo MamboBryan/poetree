@@ -38,3 +38,4 @@ include(":web")
 // backend
 include(":backend")
 
+include(":android:features:authentication")

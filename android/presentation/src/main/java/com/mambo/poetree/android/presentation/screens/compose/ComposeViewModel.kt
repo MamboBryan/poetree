@@ -7,9 +7,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.darkrockstudios.richtexteditor.model.RichTextValue
-import com.mambo.poetree.android.presentation.utils.AppMonitor.hideLoading
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showDialog
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showLoading
+import com.mambo.poetree.AppMonitor.hideLoading
+import com.mambo.poetree.AppMonitor.showDialog
+import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.data.domain.Poem
 import com.mambo.poetree.data.domain.Topic
 import com.mambo.poetree.data.repositories.PoemRepository

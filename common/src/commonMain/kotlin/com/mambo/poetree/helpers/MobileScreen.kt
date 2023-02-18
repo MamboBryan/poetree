@@ -10,6 +10,6 @@ sealed class MobileScreen(val route: String) {
     object GetStarted : MobileScreen(route = "on_boarding")
     object Landing : MobileScreen(route = "landing")
     object Authentication : MobileScreen(route = "authentication")
-    object Setup : MobileScreen(route = "setup")
+    object Profile : MobileScreen(route = "setup")
     object Feed : MobileScreen(route = "feed")
 }

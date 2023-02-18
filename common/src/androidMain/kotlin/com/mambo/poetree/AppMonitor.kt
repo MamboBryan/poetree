@@ -1,4 +1,4 @@
-package com.mambo.poetree.android.presentation.utils
+package com.mambo.poetree
 
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.utils.DialogData
@@ -34,19 +34,19 @@ object AppMonitor {
     private val DIALOG = MutableStateFlow<DialogData?>(null)
     val dialog get() : StateFlow<DialogData?> = DIALOG
 
-    internal fun showLoading(){
+    fun showLoading() {
         preferences.startLoading()
     }
 
-    internal fun hideLoading(){
+    fun hideLoading() {
         preferences.stopLoading()
     }
 
-    internal fun showDialog(data: DialogData){
+    fun showDialog(data: DialogData) {
         DIALOG.value = data
     }
 
-    internal fun hideDialog(){
+    fun hideDialog() {
         DIALOG.value = null
     }
 

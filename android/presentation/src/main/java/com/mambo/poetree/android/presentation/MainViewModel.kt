@@ -3,7 +3,7 @@ package com.mambo.poetree.android.presentation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.mambo.poetree.android.presentation.utils.AppMonitor
+import com.mambo.poetree.AppMonitor
 import com.mambo.poetree.data.local.preferences.UserPreferences
 
 class MainViewModel : ViewModel() {

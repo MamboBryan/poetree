@@ -2,10 +2,10 @@ package com.mambo.poetree.android.presentation.screens.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mambo.poetree.AppMonitor.hideLoading
+import com.mambo.poetree.AppMonitor.showDialog
+import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.android.presentation.extensions.toString
-import com.mambo.poetree.android.presentation.utils.showDialog
-import com.mambo.poetree.android.presentation.utils.startLoading
-import com.mambo.poetree.android.presentation.utils.stopLoading
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.data.remote.NetworkResult
 import com.mambo.poetree.data.remote.SetupRequest
@@ -70,9 +70,9 @@ class AccountViewModel : ViewModel() {
         onComplete: (success: Boolean) -> Unit
     ) {
         viewModelScope.launch {
-            startLoading()
+            showLoading()
             val response = repository.setup(request = request)
-            stopLoading()
+            hideLoading()
             handleResponse(response, onComplete)
         }
     }
@@ -82,9 +82,9 @@ class AccountViewModel : ViewModel() {
         onComplete: (success: Boolean) -> Unit
     ) {
         viewModelScope.launch {
-            startLoading()
+            showLoading()
             val response = repository.updateUser(request = request)
-            stopLoading()
+            hideLoading()
             handleResponse(response, onComplete)
         }
     }
