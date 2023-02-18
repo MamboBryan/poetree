@@ -8,6 +8,14 @@ object Modules {
     const val desktop = ":desktop"
 }
 
+object Features {
+    const val GET_STARTED = ":android:features:getstarted"
+}
+
 fun DependencyHandler.commonModule(){
     implementation(project(Modules.common))
+}
+
+fun DependencyHandler.features(){
+    implementation(project(Features.GET_STARTED))
 }

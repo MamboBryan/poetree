@@ -422,24 +422,4 @@ class PoemsApi {
         response.body()
     }
 
-    /**
-     * IMAGE
-     */
-
-    suspend fun uploadImage(form: MultiPartFormDataContent) = safeApiCall<String> {
-        val url = "https://us-central1-poetree-254.cloudfunctions.net/uploadProfile"
-        val response = client.post(url){
-            setBody(form)
-        }
-        response.body()
-    }
-
-    suspend fun deleteImage(userId: String) = safeApiCall<Boolean> {
-        val url = "https://us-central1-poetree-254.cloudfunctions.net/deleteProfile"
-        val response = client.post(url){
-            setBody(Pair("userId", userId))
-        }
-        response.body()
-    }
-
 }

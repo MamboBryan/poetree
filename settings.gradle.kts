@@ -23,6 +23,7 @@ include(":common")
 include(":android")
 include(":android:app")
 include(":android:presentation")
+include(":android:features:getstarted")
 
 // desktop
 include(":desktop")
