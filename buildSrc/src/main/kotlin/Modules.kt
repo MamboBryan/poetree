@@ -13,6 +13,10 @@ object Features {
     const val LANDING = ":android:features:landing"
     const val AUTHENTICATION = ":android:features:authentication"
     const val ACCOUNT = ":android:features:account"
+    const val FEED = ":android:features:feed"
+    const val EXPLORE = ":android:features:explore"
+    const val BOOKMARKS = ":android:features:bookmarks"
+    const val LIBRARY = ":android:features:library"
 }
 
 fun DependencyHandler.commonModule(){
@@ -24,4 +28,8 @@ fun DependencyHandler.features(){
     implementation(project(Features.LANDING))
     implementation(project(Features.AUTHENTICATION))
     implementation(project(Features.ACCOUNT))
+    implementation(project(Features.FEED))
+    implementation(project(Features.EXPLORE))
+    implementation(project(Features.BOOKMARKS))
+    implementation(project(Features.LIBRARY))
 }

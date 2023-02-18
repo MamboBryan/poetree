@@ -29,6 +29,7 @@ include(":android:features:getstarted")
 include(":android:features:landing")
 include(":android:features:authentication")
 include(":android:features:account")
+include(":android:features:feed")
 
 
 // desktop
@@ -41,3 +42,6 @@ include(":web")
 include(":backend")
 
 
+include(":android:features:explore")
+include(":android:features:bookmarks")
+include(":android:features:library")

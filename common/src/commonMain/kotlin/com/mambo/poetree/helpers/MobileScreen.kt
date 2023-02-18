@@ -12,4 +12,7 @@ sealed class MobileScreen(val route: String) {
     object Authentication : MobileScreen(route = "authentication")
     object Account : MobileScreen(route = "setup")
     object Feed : MobileScreen(route = "feed")
+    object Explore : MobileScreen(route = "explore")
+    object Bookmarks : MobileScreen(route = "bookmarks")
+    object Library : MobileScreen(route = "library")
 }
