@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mambo.poetree.android.landing.LandingScreen
 import com.mambo.poetree.features.getstarted.GetStartedScreen
 import com.mambo.poetree.helpers.MobileScreen
 
@@ -31,8 +32,11 @@ fun Navigation(
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = MobileScreen.GetStarted.route) {
-        composable(MobileScreen.GetStarted.route) {
+        composable(route = MobileScreen.GetStarted.route) {
             GetStartedScreen(navController = navController)
+        }
+        composable(route = MobileScreen.Landing.route){
+            LandingScreen(navController = navController)
         }
     }
 
