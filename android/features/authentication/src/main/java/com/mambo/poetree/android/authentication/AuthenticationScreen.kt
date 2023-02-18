@@ -69,8 +69,8 @@ fun AuthenticationScreenContent(
                 }
             }
             false -> {
-                navController.navigate(route = MobileScreen.Profile.route) {
-                    popUpTo(MobileScreen.Profile.route)
+                navController.navigate(route = MobileScreen.Account.route) {
+                    popUpTo(MobileScreen.Account.route)
                 }
             }
         }

@@ -12,6 +12,7 @@ object Features {
     const val GET_STARTED = ":android:features:getstarted"
     const val LANDING = ":android:features:landing"
     const val AUTHENTICATION = ":android:features:authentication"
+    const val ACCOUNT = ":android:features:account"
 }
 
 fun DependencyHandler.commonModule(){
@@ -22,4 +23,5 @@ fun DependencyHandler.features(){
     implementation(project(Features.GET_STARTED))
     implementation(project(Features.LANDING))
     implementation(project(Features.AUTHENTICATION))
+    implementation(project(Features.ACCOUNT))
 }

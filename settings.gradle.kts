@@ -27,6 +27,8 @@ include(":android:presentation")
 // ANDROID FEATURES
 include(":android:features:getstarted")
 include(":android:features:landing")
+include(":android:features:authentication")
+include(":android:features:account")
 
 
 // desktop
@@ -38,4 +40,4 @@ include(":web")
 // backend
 include(":backend")
 
-include(":android:features:authentication")
+
