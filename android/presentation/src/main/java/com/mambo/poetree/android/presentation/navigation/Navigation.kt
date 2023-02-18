@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mambo.poetree.android.authentication.AuthenticationScreen
 import com.mambo.poetree.android.bookmarks.BookmarkScreen
+import com.mambo.poetree.android.compose.ComposeScreen
 import com.mambo.poetree.android.explore.ExploreScreen
 import com.mambo.poetree.android.landing.LandingScreen
 import com.mambo.poetree.android.library.LibraryScreen
@@ -74,6 +75,9 @@ fun Navigation(
             }
             composable(route = MobileScreen.Library.route) {
                 LibraryScreen(navController = navController)
+            }
+            composable(route = MobileScreen.Compose.route){
+                ComposeScreen(navController = navController)
             }
         }
     }

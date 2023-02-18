@@ -4,6 +4,7 @@ import org.gradle.kotlin.dsl.project
 object Modules {
     const val common = ":common"
     const val android = ":android"
+    const val androidUi = ":android:ui"
     const val ios = ":ios"
     const val desktop = ":desktop"
 }
@@ -17,6 +18,7 @@ object Features {
     const val EXPLORE = ":android:features:explore"
     const val BOOKMARKS = ":android:features:bookmarks"
     const val LIBRARY = ":android:features:library"
+    const val COMPOSE = ":android:features:compose"
 }
 
 fun DependencyHandler.commonModule(){
@@ -32,4 +34,5 @@ fun DependencyHandler.features(){
     implementation(project(Features.EXPLORE))
     implementation(project(Features.BOOKMARKS))
     implementation(project(Features.LIBRARY))
+    implementation(project(Features.COMPOSE))
 }

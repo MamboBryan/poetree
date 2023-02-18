@@ -33,7 +33,7 @@ fun FeedScreen(
     val navigateToProfile = { navController.navigate(MobileScreen.Account.route) }
     val navigateToSettings = { navController.navigate(MobileScreen.Account.route) }
     val navigateToPoem = { navController.navigate(MobileScreen.Account.route) }
-    val navigateToCompose = { navController.navigate(MobileScreen.Account.route) }
+    val navigateToCompose = { navController.navigate(MobileScreen.Compose.route) }
 
     FeedScreenContent(
         navigateToProfile = navigateToProfile,
