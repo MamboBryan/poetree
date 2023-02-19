@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.android.presentation.MainViewModel
 import com.mambo.poetree.android.presentation.composables.LoadingDialog
-import com.mambo.poetree.android.presentation.composables.Navigation
+import com.mambo.poetree.android.presentation.navigation.Navigation
 import com.mambo.poetree.android.presentation.composables.PoetreeDialog
 
 @Composable

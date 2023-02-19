@@ -16,4 +16,5 @@ sealed class MobileScreen(val route: String) {
     object Bookmarks : MobileScreen(route = "bookmarks")
     object Library : MobileScreen(route = "library")
     object Compose : MobileScreen(route = "compose")
+    object Settings : MobileScreen(route = "settings")
 }

@@ -19,6 +19,7 @@ object Features {
     const val BOOKMARKS = ":android:features:bookmarks"
     const val LIBRARY = ":android:features:library"
     const val COMPOSE = ":android:features:compose"
+    const val SETTINGS = ":android:features:settings"
 }
 
 fun DependencyHandler.commonModule(){
@@ -35,4 +36,5 @@ fun DependencyHandler.features(){
     implementation(project(Features.BOOKMARKS))
     implementation(project(Features.LIBRARY))
     implementation(project(Features.COMPOSE))
+    implementation(project(Features.SETTINGS))
 }

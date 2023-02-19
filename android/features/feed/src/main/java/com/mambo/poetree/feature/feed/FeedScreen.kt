@@ -31,7 +31,7 @@ fun FeedScreen(
     // TODO: Fix navigation destinations
 
     val navigateToProfile = { navController.navigate(MobileScreen.Account.route) }
-    val navigateToSettings = { navController.navigate(MobileScreen.Account.route) }
+    val navigateToSettings = { navController.navigate(MobileScreen.Settings.route) }
     val navigateToPoem = { navController.navigate(MobileScreen.Account.route) }
     val navigateToCompose = { navController.navigate(MobileScreen.Compose.route) }
 

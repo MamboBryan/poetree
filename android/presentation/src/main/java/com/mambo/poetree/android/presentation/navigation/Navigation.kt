@@ -1,4 +1,4 @@
-package com.mambo.poetree.android.presentation.composables
+package com.mambo.poetree.android.presentation.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +18,7 @@ import com.mambo.poetree.android.explore.ExploreScreen
 import com.mambo.poetree.android.landing.LandingScreen
 import com.mambo.poetree.android.library.LibraryScreen
 import com.mambo.poetree.android.presentation.screens.home.BottomNavigationBar
+import com.mambo.poetree.android.settings.SettingsScreen
 import com.mambo.poetree.feature.account.AccountScreen
 import com.mambo.poetree.feature.feed.FeedScreen
 import com.mambo.poetree.features.getstarted.GetStartedScreen
@@ -52,7 +53,7 @@ fun Navigation(
         NavHost(
             modifier = Modifier.padding(it),
             navController = navController,
-            startDestination = MobileScreen.Feed.route
+            startDestination = startDestination
         ) {
             composable(route = MobileScreen.GetStarted.route) {
                 GetStartedScreen(navController = navController)
@@ -77,6 +78,9 @@ fun Navigation(
             }
             composable(route = MobileScreen.Library.route) {
                 LibraryScreen(navController = navController)
+            }
+            composable(route = MobileScreen.Settings.route) {
+                SettingsScreen(navController = navController)
             }
             composable(
                 route = MobileScreen.Compose.route.plus("?poemJson={poemJson}"),
