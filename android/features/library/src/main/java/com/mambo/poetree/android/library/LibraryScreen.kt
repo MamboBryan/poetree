@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mambo.poetree.helpers.MobileScreen
+import timber.log.Timber
 
 /**
  * @project Poetree
@@ -51,12 +52,18 @@ fun LibraryScreenContent(
     }) {
         LazyColumn(modifier = Modifier.padding(it)) {
             items(items = viewModel.drafts) { poem ->
+
+                Timber.i("POEM : \n${poem.asJson()}")
                 Card(
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
                         .clickable {
-                            navController.navigate(MobileScreen.Compose.route.plus("?poemJson=${poem.asJson()}"))
+                            val id = "id=${poem.id}"
+                            val type = "type=${poem.type.name}"
+                            val topic = "topic=${poem.topic?.id}"
+                            val args = "?$id&$type&$topic"
+                            navController.navigate(MobileScreen.Compose.route.plus(args))
                         },
                     colors = CardDefaults.cardColors()
                 ) {

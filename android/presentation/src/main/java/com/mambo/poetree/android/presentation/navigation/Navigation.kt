@@ -83,11 +83,21 @@ fun Navigation(
                 SettingsScreen(navController = navController)
             }
             composable(
-                route = MobileScreen.Compose.route.plus("?poemJson={poemJson}"),
-                arguments = listOf(navArgument("poemJson") {
-                    type = NavType.StringType
-                    nullable = true
-                })
+                route = MobileScreen.Compose.route.plus("?id={id}&type={type}&topic={topic}"),
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                    navArgument("type") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                    navArgument("topic") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                )
             ) {
                 ComposeScreen(navController = navController)
             }

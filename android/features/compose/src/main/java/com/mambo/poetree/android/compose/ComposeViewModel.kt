@@ -11,8 +11,8 @@ import com.mambo.poetree.AppMonitor.hideLoading
 import com.mambo.poetree.AppMonitor.showDialog
 import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.data.domain.Poem
-import com.mambo.poetree.data.domain.Poem.Companion.asPoem
 import com.mambo.poetree.data.domain.Topic
+import com.mambo.poetree.data.remote.CreatePoemRequest
 import com.mambo.poetree.data.remote.EditPoemRequest
 import com.mambo.poetree.data.repositories.PoemRepository
 import com.mambo.poetree.data.repositories.TopicsRepository
@@ -28,7 +28,9 @@ import kotlinx.coroutines.launch
  */
 class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val poemJson: String? = savedStateHandle["poemJson"]
+    private val poemId: String? = savedStateHandle["id"]
+    private val poemType: String? = savedStateHandle["type"]
+    private val topicId: String? = savedStateHandle["topic"]
 
     private val poemRepository = PoemRepository()
     private val topicRepository = TopicsRepository()
@@ -54,8 +56,9 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     init {
 
-        val updatePoem = poemJson.asPoem()
-        if (updatePoem != null) updatePoem(poem = updatePoem)
+        getPoem()
+
+        getTopic()
 
         viewModelScope.launch {
             val response = topicRepository.getTopics(page = 1)
@@ -63,6 +66,44 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 topics = response.data?.list?.map { it.toDomain() } ?: listOf()
             }
         }
+    }
+
+    private fun getPoem() {
+        if (poemId != null)
+            viewModelScope.launch {
+                when (Poem.Type.valueOf(poemType!!)) {
+                    Poem.Type.DRAFT -> getLocalPoem(id = poemId)
+                    else -> getRemotePoem(id = poemId)
+                }
+            }
+    }
+
+    private fun getLocalPoem(id: String) {
+        viewModelScope.launch {
+            val mPoem = poemRepository.getDraft(id = id)
+            if (mPoem != null) updatePoem(poem = mPoem)
+        }
+    }
+
+    private fun getRemotePoem(id: String) {
+        viewModelScope.launch {
+            val response = poemRepository.getPublished(poemId = id)
+            if (response.isSuccessful) {
+                val mPoem = response.data
+                mPoem?.let { updatePoem(poem = it) }
+            }
+        }
+    }
+
+    private fun getTopic() {
+        if (topicId != null)
+            viewModelScope.launch {
+                val response = topicRepository.get(topicId = topicId.toInt())
+                if (response.isSuccessful) {
+                    val mTopic = response.data?.toDomain()
+                    mTopic?.let { updateTopic(topic = it) }
+                }
+            }
     }
 
     private fun getIsButtonEnabled() = when (poem != null) {
@@ -96,6 +137,7 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     fun updateTopic(topic: Topic) {
         this.topic = topic
+        updateStates()
     }
 
     fun updateTitle(text: String) {
@@ -108,9 +150,9 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         updateStates()
     }
 
-    fun save(onSuccess: (Poem) -> Unit, onError: () -> Unit) {
+    fun save(onSuccess: (Poem) -> Unit) {
         when (poem == null) {
-            true -> createPoem(onSuccess, onError)
+            true -> createDraft(onSuccess)
             false -> {
                 val type = poem!!.type
 
@@ -164,11 +206,11 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         viewModelScope.launch {
             showLoading()
             val poem = poemRepository.updateDraft(
-                    id = poem!!.id,
-                    title = title,
-                    content = content.value.text,
-                    topic = topic
-                )
+                id = poem!!.id,
+                title = title,
+                content = content.value.text,
+                topic = topic
+            )
             hideLoading()
             when (poem == null) {
                 true -> {
@@ -195,11 +237,94 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         }
     }
 
-    fun publish() {}
+    fun publish(onSuccess: (Poem) -> Unit) {
+        viewModelScope.launch {
+            val request = CreatePoemRequest(
+                title = title,
+                content = content.value.text,
+                html = content.value.text,
+                topic = topic!!.id
+            )
+            showLoading()
+            val response = poemRepository.createPublished(request = request)
+            hideLoading()
+            when (response.isSuccessful) {
+                true -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.ERROR,
+                            title = "Success",
+                            description = response.message,
+                            positiveAction = { response.data?.let { onSuccess(it) } }
+                        )
+                    )
+                }
+                false -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.SUCCESS,
+                            title = "Failed",
+                            description = response.message,
+                            positiveAction = {}
+                        )
+                    )
+                }
+            }
 
-    fun delete() {}
+        }
+    }
 
-    private fun createPoem(onSuccess: (Poem) -> Unit, onError: () -> Unit) {
+    fun delete(onSuccess: () -> Unit) {
+        if (poem != null) {
+            val id = poem!!.id
+            when (poem!!.type) {
+                Poem.Type.DRAFT -> deleteDraft(id, onSuccess)
+                else -> deletePublishedPoem(id, onSuccess)
+            }
+        }
+    }
+
+    private fun deleteDraft(id: String, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            showLoading()
+            poemRepository.deleteDraft(id = id)
+            hideLoading()
+            onSuccess.invoke()
+        }
+    }
+
+    private fun deletePublishedPoem(id: String, onSuccess: () -> Unit) {
+        if (poemId != null)
+            viewModelScope.launch {
+                showLoading()
+                val response = poemRepository.deletePublished(poemId = id)
+                hideLoading()
+                when (response.isSuccessful) {
+                    true -> {
+                        showDialog(
+                            data = DialogData(
+                                type = DialogType.ERROR,
+                                title = "Success",
+                                description = response.message,
+                                positiveAction = { response.data?.let { onSuccess() } }
+                            )
+                        )
+                    }
+                    false -> {
+                        showDialog(
+                            data = DialogData(
+                                type = DialogType.SUCCESS,
+                                title = "Error",
+                                description = response.message,
+                                positiveAction = { }
+                            )
+                        )
+                    }
+                }
+            }
+    }
+
+    private fun createDraft(onSuccess: (Poem) -> Unit) {
         viewModelScope.launch {
             showLoading()
             val poem =

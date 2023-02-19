@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
@@ -44,7 +45,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ComposeScreenContent(
     navController: NavController,
-    viewModel: ComposeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: ComposeViewModel = viewModel()
 ) {
 
     val scope = rememberCoroutineScope()
@@ -154,7 +155,11 @@ fun ComposeScreenContent(
                                         description = "Are you sure you want to delete this poem?",
                                         positiveText = "yes",
                                         negativeText = "no",
-                                        positiveAction = { viewModel.delete() })
+                                        positiveAction = {
+                                            viewModel.delete {
+                                                navController.popBackStack()
+                                            }
+                                        })
                                 )
                             }) {
                                 Icon(
@@ -172,7 +177,12 @@ fun ComposeScreenContent(
                                         description = "Are you sure you want to publish this poem?",
                                         positiveText = "yes",
                                         negativeText = "no",
-                                        positiveAction = { viewModel.publish() })
+                                        positiveAction = {
+                                            viewModel.publish {
+
+                                            }
+                                        }
+                                    )
                                 )
                             }) {
                                 Icon(
@@ -193,10 +203,7 @@ fun ComposeScreenContent(
                         shape = RoundedCornerShape(10.dp),
                         onClick = {
                             if (viewModel.isButtonEnabled)
-                                viewModel.save(
-                                    onSuccess = { navController.popBackStack() },
-                                    onError = {}
-                                )
+                                viewModel.save { navController.popBackStack() }
                         },
                         backgroundColor = if (viewModel.isButtonEnabled) MaterialTheme.colors.secondary else Color.Gray
                     ) {
