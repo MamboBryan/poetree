@@ -19,8 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.mambo.poetree.helpers.MobileScreen
 
 /**
  * @project Poetree
@@ -53,15 +54,14 @@ fun LibraryScreenContent(
                 Card(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {
+                            navController.navigate(MobileScreen.Compose.route.plus("?poemJson=${poem.asJson()}"))
+                        },
                     colors = CardDefaults.cardColors()
                 ) {
                     Text(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .clickable {
-//                                navigator.navigate(ComposeScreenDestination)
-                            },
+                        modifier = Modifier.padding(16.dp),
                         text = poem.title.ifBlank { "Title" }
                     )
                 }

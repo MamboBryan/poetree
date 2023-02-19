@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.mambo.poetree.AppMonitor
+import com.mambo.poetree.AppMonitor.hideLoading
 import com.mambo.poetree.data.local.preferences.UserPreferences
 
 class MainViewModel : ViewModel() {
@@ -18,5 +19,9 @@ class MainViewModel : ViewModel() {
 
     val isLoading by mutableStateOf(preferences.isLoading)
     val dialogFlow by mutableStateOf(AppMonitor.dialog)
+
+    init {
+        hideLoading()
+    }
 
 }

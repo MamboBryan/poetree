@@ -31,7 +31,6 @@ import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
 import com.mambo.poetree.AppMonitor.showDialog
 import com.mambo.poetree.android.ui.*
-import com.mambo.poetree.data.domain.Poem
 import com.mambo.poetree.utils.DialogData
 import kotlinx.coroutines.launch
 
@@ -45,11 +44,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ComposeScreenContent(
     navController: NavController,
-    poem: Poem?,
     viewModel: ComposeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-
-    if (poem != null) viewModel.updatePoem(poem = poem)
 
     val scope = rememberCoroutineScope()
     val bringIntoViewRequester = BringIntoViewRequester()
@@ -124,7 +120,8 @@ fun ComposeScreenContent(
                             .padding(8.dp)
                             .clickable {
                                 viewModel.updateTopic(topic = topic)
-                                hideSheet() },
+                                hideSheet()
+                            },
                         backgroundColor = background
                     ) {
                         Text(
@@ -150,7 +147,7 @@ fun ComposeScreenContent(
                     },
                     actions = {
 
-                        if (poem != null)
+                        AnimatedVisibility(visible = viewModel.poem != null) {
                             IconButton(onClick = {
                                 showDialog(
                                     data = DialogData(title = "Deleting Poem",
@@ -165,8 +162,10 @@ fun ComposeScreenContent(
                                     contentDescription = "delete poem"
                                 )
                             }
+                        }
 
-                        if (viewModel.isValidPoem)
+                        AnimatedVisibility(visible = viewModel.isValidPoem) {
+
                             IconButton(onClick = {
                                 showDialog(
                                     data = DialogData(title = "Publish Poem",
@@ -181,6 +180,7 @@ fun ComposeScreenContent(
                                     contentDescription = "publish poem"
                                 )
                             }
+                        }
 
                     })
             },
@@ -223,7 +223,8 @@ fun ComposeScreenContent(
                     ) {
                         Text(
                             modifier = Modifier.padding(16.dp),
-                            text = (viewModel.topic?.name ?: "Topic").replaceFirstChar { it.uppercase() }
+                            text = (viewModel.topic?.name
+                                ?: "Topic").replaceFirstChar { it.uppercase() }
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(
@@ -287,7 +288,7 @@ fun ComposeScreenContent(
 
 @Composable
 fun ComposeScreen(navController: NavController) {
-    ComposeScreenContent(navController = navController, poem = null)
+    ComposeScreenContent(navController = navController)
 }
 
 

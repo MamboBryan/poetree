@@ -11,7 +11,9 @@ import com.mambo.poetree.AppMonitor.hideLoading
 import com.mambo.poetree.AppMonitor.showDialog
 import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.data.domain.Poem
+import com.mambo.poetree.data.domain.Poem.Companion.asPoem
 import com.mambo.poetree.data.domain.Topic
+import com.mambo.poetree.data.remote.EditPoemRequest
 import com.mambo.poetree.data.repositories.PoemRepository
 import com.mambo.poetree.data.repositories.TopicsRepository
 import com.mambo.poetree.utils.DialogData
@@ -26,10 +28,12 @@ import kotlinx.coroutines.launch
  */
 class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
+    private val poemJson: String? = savedStateHandle["poemJson"]
+
     private val poemRepository = PoemRepository()
     private val topicRepository = TopicsRepository()
 
-    private var poem by mutableStateOf<Poem?>(null)
+    var poem by mutableStateOf<Poem?>(null)
 
     var topics by mutableStateOf<List<Topic>>(emptyList())
 
@@ -49,6 +53,10 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         private set
 
     init {
+
+        val updatePoem = poemJson.asPoem()
+        if (updatePoem != null) updatePoem(poem = updatePoem)
+
         viewModelScope.launch {
             val response = topicRepository.getTopics(page = 1)
             if (response.isSuccessful) {
@@ -58,13 +66,19 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     }
 
     private fun getIsButtonEnabled() = when (poem != null) {
-        true -> (poem?.title != title) and (poem?.content != content.value.text) and (poem?.topic != topic)
+        true -> (isSameTitle() and isSameContent() and isSameTopic()).not()
         else -> title.isNotBlank() and content.value.text.isNotBlank()
     }
 
+    private fun isSameTopic() = poem?.topic == topic
+
+    private fun isSameContent() = poem?.content == content.value.text
+
+    private fun isSameTitle() = poem?.title == title
+
     private fun getValidPoemDetails() = when (poem != null) {
         true -> (poem?.title?.isNotBlank() == true) and (poem?.content?.isNotBlank() == true) and (poem?.topic != null)
-        else -> title.isNotBlank() and content.value.text.isNotBlank() and (topic != null)
+        false -> title.isNotBlank() and content.value.text.isNotBlank() and (topic != null)
     }
 
     private fun updateStates() {
@@ -72,7 +86,7 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         isValidPoem = getValidPoemDetails()
     }
 
-    fun updatePoem(poem: Poem) {
+    private fun updatePoem(poem: Poem) {
         this.poem = poem
         topic = poem.topic
         title = poem.title
@@ -87,19 +101,97 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     fun updateTitle(text: String) {
         title = text
         updateStates()
-
     }
 
     fun updateContent(value: RichTextValue) {
         content = value
         updateStates()
-
     }
 
     fun save(onSuccess: (Poem) -> Unit, onError: () -> Unit) {
         when (poem == null) {
             true -> createPoem(onSuccess, onError)
-            false -> updatePoem()
+            false -> {
+                val type = poem!!.type
+
+                if (type == Poem.Type.DRAFT)
+                    updateLocalPoem(onSuccess)
+                else
+                    updatePublishedPoem(onSuccess)
+            }
+        }
+    }
+
+    private fun updatePublishedPoem(onSuccess: (Poem) -> Unit) {
+
+        val request = EditPoemRequest(
+            poemId = poem!!.id,
+            title = title,
+            content = content.value.text,
+            html = null,
+            topic = topic?.id
+        )
+
+        viewModelScope.launch {
+            showLoading()
+            val response = poemRepository.updatePublished(request = request)
+            hideLoading()
+            when (response.isSuccessful) {
+                true -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.ERROR,
+                            title = "Update Error",
+                            description = response.message
+                        )
+                    )
+                }
+                false -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.SUCCESS,
+                            title = "Update Success",
+                            description = response.message,
+                            positiveAction = { response.data?.let { onSuccess(it) } }
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateLocalPoem(onSuccess: (Poem) -> Unit) {
+        viewModelScope.launch {
+            showLoading()
+            val poem = poemRepository.updateDraft(
+                    id = poem!!.id,
+                    title = title,
+                    content = content.value.text,
+                    topic = topic
+                )
+            hideLoading()
+            when (poem == null) {
+                true -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.ERROR,
+                            title = "Update Error",
+                            description = "Couldn't update poem"
+                        )
+                    )
+                }
+                false -> {
+                    showDialog(
+                        data = DialogData(
+                            type = DialogType.SUCCESS,
+                            title = "Update Success",
+                            description = "Updated poem successfully",
+                            positiveAction = { onSuccess(poem) }
+                        )
+                    )
+                }
+            }
+
         }
     }
 
@@ -137,7 +229,5 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
         }
     }
-
-    private fun updatePoem() {}
 
 }

@@ -6,9 +6,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mambo.poetree.android.authentication.AuthenticationScreen
 import com.mambo.poetree.android.bookmarks.BookmarkScreen
 import com.mambo.poetree.android.compose.ComposeScreen
@@ -76,7 +78,13 @@ fun Navigation(
             composable(route = MobileScreen.Library.route) {
                 LibraryScreen(navController = navController)
             }
-            composable(route = MobileScreen.Compose.route){
+            composable(
+                route = MobileScreen.Compose.route.plus("?poemJson={poemJson}"),
+                arguments = listOf(navArgument("poemJson") {
+                    type = NavType.StringType
+                    nullable = true
+                })
+            ) {
                 ComposeScreen(navController = navController)
             }
         }

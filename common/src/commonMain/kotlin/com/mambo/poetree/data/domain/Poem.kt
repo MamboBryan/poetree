@@ -28,7 +28,7 @@ data class Poem(
 ) {
 
     companion object {
-        fun String.asPoem() = Json.decodeFromString<Poem?>(this)
+        fun String?.asPoem() = this?.let { Json.decodeFromString<Poem?>(it) }
     }
 
     @Serializable
