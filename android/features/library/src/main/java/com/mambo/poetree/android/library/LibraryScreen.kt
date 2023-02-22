@@ -61,9 +61,8 @@ fun LibraryScreenContent(
                         .clickable {
                             val id = "id=${poem.id}"
                             val type = "type=${poem.type.name}"
-                            val topic = "topic=${poem.topic?.id}"
-                            val args = "?$id&$type&$topic"
-                            navController.navigate(MobileScreen.Compose.route.plus(args))
+                            val args = "?$id&$type"
+                            navController.navigate(MobileScreen.Poem.route.plus(args))
                         },
                     colors = CardDefaults.cardColors()
                 ) {

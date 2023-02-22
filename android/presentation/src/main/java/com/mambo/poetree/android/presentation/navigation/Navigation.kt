@@ -17,6 +17,7 @@ import com.mambo.poetree.android.compose.ComposeScreen
 import com.mambo.poetree.android.explore.ExploreScreen
 import com.mambo.poetree.android.landing.LandingScreen
 import com.mambo.poetree.android.library.LibraryScreen
+import com.mambo.poetree.android.poem.PoemScreen
 import com.mambo.poetree.android.presentation.screens.home.BottomNavigationBar
 import com.mambo.poetree.android.settings.SettingsScreen
 import com.mambo.poetree.feature.account.AccountScreen
@@ -100,6 +101,21 @@ fun Navigation(
                 )
             ) {
                 ComposeScreen(navController = navController)
+            }
+            composable(
+                route = MobileScreen.Poem.route.plus("?id={id}&type={type}"),
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                    navArgument("type") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                )
+            ) {
+                PoemScreen(navController = navController)
             }
         }
     }
