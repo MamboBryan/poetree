@@ -269,22 +269,27 @@ fun ComposeScreenContent(
                         )
                     }
 
-                    RichTextEditor(modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp)
-                        .padding(top = if (viewModel.content.value.text.isNotBlank()) 8.dp else 16.dp)
-                        .weight(1f)
-                        .onFocusEvent { event ->
-                            if (event.isFocused) {
-                                scope.launch { bringIntoViewRequester.bringIntoView() }
-                            }
-                        }, value = viewModel.content, onValueChange = { richText ->
-                        viewModel.updateContent(value = richText)
-                    }, textFieldStyle = defaultRichTextFieldStyle().copy(
-                        placeholder = "Art goes here...",
-                        textColor = MaterialTheme.colors.onBackground,
-                        placeholderColor = MaterialTheme.colors.onBackground,
-                    )
+                    RichTextEditor(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 16.dp)
+                            .padding(top = if (viewModel.content.value.text.isNotBlank()) 8.dp else 16.dp)
+                            .weight(1f)
+                            .onFocusEvent { event ->
+                                if (event.isFocused) {
+                                    scope.launch { bringIntoViewRequester.bringIntoView() }
+                                }
+                            },
+                        value = viewModel.content,
+                        onValueChange = { richText ->
+                            viewModel.updateContent(value = richText)
+                        },
+                        textFieldStyle = defaultRichTextFieldStyle()
+                            .copy(
+                                placeholder = "Art goes here...",
+                                textColor = MaterialTheme.colors.onBackground,
+                                placeholderColor = MaterialTheme.colors.onBackground,
+                            )
                     )
                 }
             }

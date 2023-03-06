@@ -10,11 +10,9 @@ import com.mambo.poetree.android.presentation.screens.MainScreen
 import com.mambo.poetree.android.presentation.theme.PoetreeTheme
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
         setContent {
             PoetreeTheme {
                 MainScreen()

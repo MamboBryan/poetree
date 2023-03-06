@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextField
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 fun ClearTextField(
     modifier: Modifier = Modifier,
     value: String = "",
+    singleLine: Boolean = true,
     maxLines : Int = 4,
     onValueChanged: (String) -> Unit = {},
     leadingIcon : (@Composable () -> Unit)? = null,
@@ -38,7 +39,7 @@ fun ClearTextField(
         backgroundColor = MaterialTheme.colors.background,
         cursorColor = MaterialTheme.colors.primary,
         disabledLabelColor = Color.Gray,
-        focusedIndicatorColor = MaterialTheme.colors.primary,
+        focusedIndicatorColor = MaterialTheme.colors.background,
         unfocusedIndicatorColor = Color.Transparent
     ),
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -46,7 +47,7 @@ fun ClearTextField(
         imeAction = ImeAction.Done
     )
 ) {
-    TextField(
+    OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         colors = colors,
         value = value,
@@ -55,7 +56,7 @@ fun ClearTextField(
         placeholder = placeholder,
         onValueChange = onValueChanged,
         shape = shape,
-        singleLine = true,
+        singleLine = singleLine,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         keyboardOptions = keyboardOptions
