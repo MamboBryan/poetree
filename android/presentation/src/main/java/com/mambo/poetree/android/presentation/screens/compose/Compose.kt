@@ -27,13 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
+import com.mambo.poetree.AppMonitor.showDialog
 import com.mambo.poetree.android.presentation.composables.BottomSheet
 import com.mambo.poetree.android.presentation.composables.ClearTextField
 import com.mambo.poetree.android.presentation.composables.TopBarIcon
 import com.mambo.poetree.android.presentation.utils.EmptyTextTooltip
 import com.mambo.poetree.android.presentation.utils.NoRippleTheme
 import com.mambo.poetree.android.presentation.utils.asColor
-import com.mambo.poetree.android.presentation.utils.showDialog
 import com.mambo.poetree.data.domain.Poem
 import com.mambo.poetree.utils.DialogData
 import com.ramcosta.composedestinations.annotation.Destination

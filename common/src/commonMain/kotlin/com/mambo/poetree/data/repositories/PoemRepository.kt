@@ -5,10 +5,7 @@ import com.mambo.poetree.data.domain.Topic
 import com.mambo.poetree.data.local.PoetreeDatabase
 import com.mambo.poetree.data.local.entity.DraftRealm
 import com.mambo.poetree.data.local.preferences.UserPreferences
-import com.mambo.poetree.data.remote.CreatePoemRequest
-import com.mambo.poetree.data.remote.EditPoemRequest
-import com.mambo.poetree.data.remote.PoemRequest
-import com.mambo.poetree.data.remote.PoemsApi
+import com.mambo.poetree.data.remote.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -44,30 +41,46 @@ class PoemRepository {
 
     }
 
-//    suspend fun updateDraft(poem: Drafted) {
-//        realm.write {
-//            val item = query<Drafted>(clazz = Drafted::class, "id == ${poem.id}").first().find()
-//            item?.apply {
-//                title = poem.title
-//                content = poem.content
-//                topic = poem.topic
-//            }
-//        }
-//    }
+    suspend fun updateDraft(id: String, title: String, content: String, topic: Topic?): Poem? {
 
-//    suspend fun getDraft(poem: Poem): Flow<ObjectChange<Drafted>> {
-//        return realm.write {
-//            query<Drafted>(clazz = Drafted::class, "id == ${poem.id}").find().first()
-//        }.asFlow()
-//    }
-//
-//    suspend fun deleteDraft(poem: Drafted) {
-//        realm.write {
-//            val item = query<Drafted>(clazz = Drafted::class, "id == ${poem.id}").find().first()
-//            delete(item)
-//        }
-//    }
-//
+        realm.write {
+
+            val item = query(clazz = DraftRealm::class, "id == $0", id)
+                .first()
+                .find()
+
+            item?.apply {
+                this.title = title
+                this.content = content
+                this.topic = Json.encodeToString(topic)
+            }
+
+
+        }
+
+        return realm.query(clazz = DraftRealm::class, "id == $0", id)
+            .first()
+            .find()
+            ?.toPoem()
+    }
+
+    suspend fun getDraft(id: String): Poem? {
+        return realm.query(clazz = DraftRealm::class, "id == $0", id)
+            .first()
+            .find()
+            ?.toPoem()
+    }
+
+    suspend fun deleteDraft(id: String) {
+        realm.write {
+            val item = query<DraftRealm>(clazz = DraftRealm::class, "id == $0", id)
+                .find()
+                .first()
+
+            delete(item)
+        }
+    }
+
 //    suspend fun deleteDrafts() {
 //        realm.write {
 //            val drafts = query(clazz = Drafted::class).find()
@@ -135,13 +148,35 @@ class PoemRepository {
      * REMOTE
      */
 
-    suspend fun createPublished(request: CreatePoemRequest) = poemsApi.createPoem(request)
+    suspend fun createPublished(request: CreatePoemRequest): NetworkResult<Poem> {
+        val response = poemsApi.createPoem(request)
+        return NetworkResult(
+            isSuccessful = response.isSuccessful,
+            message = response.message,
+            data = response.data?.toDomain()
+        )
+    }
 
-    suspend fun updatePublished(request: EditPoemRequest) = poemsApi.updatePoem(request)
+
+    suspend fun updatePublished(request: EditPoemRequest): NetworkResult<Poem> {
+        val response = poemsApi.updatePoem(request = request)
+        return NetworkResult(
+            isSuccessful = response.isSuccessful,
+            message = response.message,
+            data = response.data?.toDomain()
+        )
+    }
 
     suspend fun deletePublished(poemId: String) = poemsApi.deletePoem(poemId = poemId)
 
-    suspend fun getPublished(poemId: String) = poemsApi.getPoem(PoemRequest(poemId))
+    suspend fun getPublished(poemId: String): NetworkResult<Poem> {
+        val response = poemsApi.getPoem(PoemRequest(poemId = poemId))
+        return NetworkResult(
+            isSuccessful = response.isSuccessful,
+            message = response.message,
+            data = response.data?.toDomain()
+        )
+    }
 
     suspend fun markAsRead(poemId: String) = poemsApi.markPoemAsRead(poemId)
 

@@ -13,6 +13,7 @@ object JetpackCompose {
     val material by lazy { "androidx.compose.material:material:1.2.1" }
     val activity by lazy { "androidx.activity:activity-compose:1.5.1" }
     val icons by lazy { "androidx.compose.material:material-icons-extended:1.2.1" }
+    val navigation by lazy { "androidx.navigation:navigation-compose:2.5.3"}
 }
 
 object Accompanist{
@@ -32,6 +33,7 @@ fun DependencyHandler.jetpackCompose() {
     implementation(JetpackCompose.material)
     implementation(JetpackCompose.activity)
     implementation(JetpackCompose.icons)
+    implementation(JetpackCompose.navigation)
 }
 
 fun DependencyHandler.accompanist(){

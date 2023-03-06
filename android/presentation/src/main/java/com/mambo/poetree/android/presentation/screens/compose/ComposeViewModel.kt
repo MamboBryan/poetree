@@ -7,9 +7,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.darkrockstudios.richtexteditor.model.RichTextValue
-import com.mambo.poetree.android.presentation.utils.AppMonitor.hideLoading
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showDialog
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showLoading
+import com.mambo.poetree.AppMonitor.hideLoading
+import com.mambo.poetree.AppMonitor.showDialog
+import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.data.domain.Poem
 import com.mambo.poetree.data.domain.Topic
 import com.mambo.poetree.data.repositories.PoemRepository
@@ -26,16 +26,9 @@ import kotlinx.coroutines.launch
  */
 class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    /**
-     * GET NAVIGATION ARGUMENTS
-     */
-
-//    private val navArgs: ComposeScreenNavArgs = ComposeScreenDestination.argsFrom(savedStateHandle)
-
     private val poemRepository = PoemRepository()
     private val topicRepository = TopicsRepository()
 
-    //    private var poem by mutableStateOf<Poem?>(navArgs.poemJson?.asPoem())
     private var poem by mutableStateOf<Poem?>(null)
 
     var topics by mutableStateOf<List<Topic>>(emptyList())

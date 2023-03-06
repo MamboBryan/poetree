@@ -20,12 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mambo.poetree.android.presentation.MainViewModel
 import com.mambo.poetree.android.presentation.composables.LoadingDialog
+import com.mambo.poetree.android.presentation.navigation.Navigation
 import com.mambo.poetree.android.presentation.composables.PoetreeDialog
-import com.mambo.poetree.android.presentation.screens.destinations.AccountScreenDestination
-import com.mambo.poetree.android.presentation.screens.destinations.AuthScreenDestination
-import com.mambo.poetree.android.presentation.screens.destinations.HomeScreenDestination
-import com.mambo.poetree.android.presentation.screens.destinations.OnBoardingScreenDestination
-import com.ramcosta.composedestinations.DestinationsNavHost
 
 @Composable
 fun MainScreen(
@@ -39,20 +35,9 @@ fun MainScreen(
     val isLoading by mainViewModel.isLoading.collectAsState(initial = false)
     val dialog by mainViewModel.dialogFlow.collectAsState(initial = null)
 
-    val startRoute = when {
-        isOnBoarded.not() -> OnBoardingScreenDestination
-        isLoggedIn.not() -> AuthScreenDestination
-        isSetUp.not() -> AccountScreenDestination
-        else -> HomeScreenDestination
-    }
+    AnimatedVisibility(visible = isLoading) { LoadingDialog() }
 
-    AnimatedVisibility(visible = isLoading) {
-        LoadingDialog()
-    }
-
-    AnimatedVisibility(visible = dialog != null) {
-        dialog?.let { PoetreeDialog(it) }
-    }
+    AnimatedVisibility(visible = dialog != null) { dialog?.let { PoetreeDialog(it) } }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -85,10 +70,7 @@ fun MainScreen(
                 }
             }
 
-            DestinationsNavHost(
-                navGraph = NavGraphs.root,
-                startRoute = startRoute
-            )
+            Navigation(isOnBoarded = isOnBoarded, isLoggedIn = isLoggedIn, isSetup = isSetUp)
 
         }
     }

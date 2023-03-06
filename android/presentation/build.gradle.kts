@@ -56,7 +56,8 @@ kotlin {
 
 dependencies {
 
-    implementation(project(Modules.common))
+    commonModule()
+    features()
 
     implementation(Libraries.core)
     implementation(Libraries.kotlin)

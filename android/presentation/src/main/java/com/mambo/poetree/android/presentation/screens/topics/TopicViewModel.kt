@@ -7,9 +7,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mambo.poetree.android.presentation.utils.AppMonitor.hideLoading
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showDialog
-import com.mambo.poetree.android.presentation.utils.AppMonitor.showLoading
+import com.mambo.poetree.AppMonitor.hideLoading
+import com.mambo.poetree.AppMonitor.showDialog
+import com.mambo.poetree.AppMonitor.showLoading
 import com.mambo.poetree.data.domain.Topic
 import com.mambo.poetree.data.remote.TopicRequest
 import com.mambo.poetree.data.repositories.TopicsRepository

@@ -45,7 +45,7 @@ class PoemsApi {
          */
 
         private val BASE_URL = when (true) {
-            true -> "http://192.168.88.253:8080/v1/" // change here
+            true -> "http://192.168.1.11:8080/v1/" // change here
             false -> "https://mambo-poetree.herokuapp.com/v1/"
         }
 
@@ -418,26 +418,6 @@ class PoemsApi {
         val url = Endpoints.COMMENT.url.plus("/unlike")
         val response = client.delete(url) {
             setBody(mapOf("commentId" to commentId))
-        }
-        response.body()
-    }
-
-    /**
-     * IMAGE
-     */
-
-    suspend fun uploadImage(form: MultiPartFormDataContent) = safeApiCall<String> {
-        val url = "https://us-central1-poetree-254.cloudfunctions.net/uploadProfile"
-        val response = client.post(url){
-            setBody(form)
-        }
-        response.body()
-    }
-
-    suspend fun deleteImage(userId: String) = safeApiCall<Boolean> {
-        val url = "https://us-central1-poetree-254.cloudfunctions.net/deleteProfile"
-        val response = client.post(url){
-            setBody(Pair("userId", userId))
         }
         response.body()
     }
