@@ -27,9 +27,6 @@ import com.mambo.poetree.helpers.MobileScreen
 fun FeedScreen(
     navController: NavController
 ) {
-
-    // TODO: Fix navigation destinations
-
     val navigateToProfile = { navController.navigate(MobileScreen.Account.route) }
     val navigateToSettings = { navController.navigate(MobileScreen.Settings.route) }
     val navigateToPoem = { navController.navigate(MobileScreen.Account.route) }
