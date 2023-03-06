@@ -40,8 +40,6 @@ fun ExploreScreenContent(
     viewModel: ExploreViewModel = viewModel()
 ) {
 
-    // TODO: Fix navigation destination
-
     Scaffold(topBar = {
         TopAppBar(
             contentColor = MaterialTheme.colorScheme.onSurface,
