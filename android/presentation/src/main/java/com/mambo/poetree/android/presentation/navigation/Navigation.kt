@@ -18,12 +18,11 @@ import com.mambo.poetree.android.explore.ExploreScreen
 import com.mambo.poetree.android.landing.LandingScreen
 import com.mambo.poetree.android.library.LibraryScreen
 import com.mambo.poetree.android.poem.PoemScreen
-import com.mambo.poetree.android.presentation.screens.home.BottomNavigationBar
 import com.mambo.poetree.android.settings.SettingsScreen
+import com.mambo.poetree.android.ui.navigation.MobileScreen
 import com.mambo.poetree.feature.account.AccountScreen
 import com.mambo.poetree.feature.feed.FeedScreen
 import com.mambo.poetree.features.getstarted.GetStartedScreen
-import com.mambo.poetree.helpers.MobileScreen
 
 /**
  * @project Poetree
@@ -38,16 +37,13 @@ fun Navigation(
     isOnBoarded: Boolean,
     isSetup: Boolean
 ) {
-
     val startDestination = when {
         isOnBoarded.not() -> MobileScreen.GetStarted.route
         isLoggedIn.not() -> MobileScreen.Landing.route
         isSetup.not() -> MobileScreen.Account.route
         else -> MobileScreen.Feed.route
     }
-
     val navController = rememberNavController()
-
     Scaffold(bottomBar = {
         BottomNavigationBar(navController = navController)
     }) {
@@ -119,7 +115,6 @@ fun Navigation(
             }
         }
     }
-
 }
 
 @Preview

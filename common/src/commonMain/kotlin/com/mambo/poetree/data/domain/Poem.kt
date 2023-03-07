@@ -32,7 +32,7 @@ data class Poem(
 
     fun isPublishable() = isDraft() and (topic != null) and (content.isNotBlank())
 
-    private fun isDraft() = type == Type.DRAFT
+    fun isDraft() = type == Type.DRAFT
 
     fun isMyPoem(userId: String) = user?.id == userId
 

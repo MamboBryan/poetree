@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.*
 import com.mambo.poetree.PoetreeApp
 import com.mambo.poetree.data.local.preferences.UserPreferences
-import com.mambo.poetree.helpers.MobileScreen
+import com.mambo.poetree.android.ui.navigation.MobileScreen
 import kotlinx.coroutines.launch
 
 /**

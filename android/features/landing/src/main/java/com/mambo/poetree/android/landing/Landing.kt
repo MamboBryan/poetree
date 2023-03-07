@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mambo.poetree.PoetreeApp
-import com.mambo.poetree.helpers.MobileScreen
+import com.mambo.poetree.android.ui.navigation.MobileScreen
 
 /**
  * @project Poetree

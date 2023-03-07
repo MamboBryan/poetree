@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    id("com.google.devtools.ksp")
     kotlin("android")
 }
 
@@ -43,21 +42,12 @@ android {
     }
 }
 
-kotlin {
-    sourceSets {
-        debug {
-            kotlin.srcDir("build/generated/ksp/debug/kotlin")
-        }
-        release {
-            kotlin.srcDir("build/generated/ksp/release/kotlin")
-        }
-    }
-}
-
 dependencies {
 
     commonModule()
     features()
+
+    implementation(project(":android:ui"))
 
     implementation(Libraries.core)
     implementation(Libraries.kotlin)
@@ -65,24 +55,10 @@ dependencies {
     implementation(Libraries.splashScreen)
     implementation(Libraries.materialDesign)
     implementation(Libraries.material3Design)
-
     implementation(Libraries.timber)
     
     jetpackCompose()
 
     accompanist()
-
-    // compose destinations
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.4.2-beta")
-    implementation("io.github.raamcosta.compose-destinations:core:1.4.2-beta")
-
-    // compose rich text
-    implementation ("com.darkrockstudios:richtexteditor:1.4.1")
-
-    // compose rich text v2
-    implementation ("com.halilibo.compose-richtext:richtext-ui-material:0.16.0")
-
-    // compose navigation
-    implementation("androidx.navigation:navigation-compose:2.5.3")
 
 }

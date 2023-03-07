@@ -31,7 +31,7 @@ import com.darkrockstudios.richtexteditor.model.Style
 import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
 import com.mambo.poetree.android.ui.CommentField
-import com.mambo.poetree.android.ui.navigateToCompose
+import com.mambo.poetree.android.ui.navigation.navigateToCompose
 
 /**
  * @project Poetree
@@ -165,38 +165,41 @@ private fun PoemScreenContent(
                             )
                         }
                     }
-                    if(isEditable.not())
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(top = 16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Top
-                    ) {
-                        Stat(icon = Icons.Outlined.DoneAll)
-                        Stat(icon = Icons.Outlined.ModeComment)
-                        Stat(icon = Icons.Rounded.BookmarkBorder)
-                        Stat(icon = Icons.Rounded.FavoriteBorder)
-                        Image(
-                            painter = painterResource(R.drawable.jedi),
-                            contentDescription = "avatar",
-                            contentScale = ContentScale.Crop,
+                    if (isEditable.not())
+                        Column(
                             modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                                .padding(top = 16.dp)
-                                .size(32.dp)
-                                .clip(CircleShape)
+                                .fillMaxHeight()
+                                .padding(top = 16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                            Stat(icon = Icons.Outlined.DoneAll)
+                            Stat(icon = Icons.Outlined.ModeComment)
+                            Stat(icon = Icons.Rounded.BookmarkBorder)
+                            Stat(icon = Icons.Rounded.FavoriteBorder)
+                            Image(
+                                painter = painterResource(R.drawable.jedi),
+                                contentDescription = "avatar",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .padding(top = 16.dp)
+                                    .size(32.dp)
+                                    .clip(CircleShape)
 
-                        )
-                    }
+                            )
+                        }
                 }
 
             }
-            CommentField(
-                value = comment,
-                onValueChanged = { viewModel.updateComment(it) },
-                isButtonEnabled = comment.isBlank().not(),
-            )
+            poem?.let {
+                if (it.isDraft().not())
+                    CommentField(
+                        value = comment,
+                        onValueChanged = { viewModel.updateComment(it) },
+                        isButtonEnabled = comment.isBlank().not(),
+                    )
+            }
         }
     }
 }

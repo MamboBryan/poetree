@@ -1,13 +1,19 @@
-package com.mambo.poetree.android.presentation.theme
+package com.mambo.poetree.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
+/**
+ * @project Poetree
+ * @author mambobryan
+ * @email mambobryan@gmail.com
+ * Tue 07 Mar 2023
+ */
 
 /**
  * APP THEME COLORS
  */
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
-
+//F5F5F5
 val gray50 = Color(0xFFFAFAFA)
 val gray100 = Color(0xFFF5F5F5)
 val gray200 = Color(0xFFEEEEEE)
@@ -55,7 +61,7 @@ val SecondaryDark = secondary300
 val OnSecondary = white
 val OnSecondaryDark = black
 
-val Background = gray200
+val Background = gray100
 val OnBackground = gray900
 val Surface = white
 val OnSurface = black

@@ -1,4 +1,4 @@
-package com.mambo.poetree.android.presentation.screens
+package com.mambo.poetree.android.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mambo.poetree.android.presentation.MainViewModel
 import com.mambo.poetree.android.presentation.composables.LoadingDialog
 import com.mambo.poetree.android.presentation.navigation.Navigation
 import com.mambo.poetree.android.presentation.composables.PoetreeDialog

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.mambo.poetree.helpers.MobileScreen
+import com.mambo.poetree.android.ui.navigation.MobileScreen
 import com.mambo.poetree.utils.isValidEmail
 import com.mambo.poetree.utils.isValidPassword
 

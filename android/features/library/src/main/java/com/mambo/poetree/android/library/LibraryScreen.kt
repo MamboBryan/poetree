@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
@@ -21,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.mambo.poetree.helpers.MobileScreen
+import com.mambo.poetree.android.ui.navigation.navigateToPoem
 
 /**
  * @project Poetree
@@ -42,6 +39,8 @@ fun LibraryScreenContent(
 ) {
     Scaffold(topBar = {
         TopAppBar(
+            backgroundColor = MaterialTheme.colors.surface,
+            contentColor = MaterialTheme.colors.onSurface,
             title = { Text(text = "Library") },
             actions = {
                 IconButton(onClick = { /*TODO*/ }) {
@@ -56,10 +55,7 @@ fun LibraryScreenContent(
                         .padding(16.dp)
                         .fillMaxWidth()
                         .clickable {
-                            val id = "id=${poem.id}"
-                            val type = "type=${poem.type.name}"
-                            val args = "?$id&$type"
-                            navController.navigate(MobileScreen.Poem.route.plus(args))
+                            navController.navigateToPoem(poem = poem)
                         },
                     colors = CardDefaults.cardColors()
                 ) {

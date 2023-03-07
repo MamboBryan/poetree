@@ -1,4 +1,4 @@
-package com.mambo.poetree.android.presentation.theme
+package com.mambo.poetree.android.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -8,6 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+/**
+ * @project Poetree
+ * @author mambobryan
+ * @email mambobryan@gmail.com
+ * Tue 07 Mar 2023
+ */
 private val DarkColorPalette = darkColors(
     primary = PrimaryDark,
     onPrimary = OnPrimaryDark,
