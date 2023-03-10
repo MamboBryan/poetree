@@ -16,7 +16,8 @@ fun NavController.navigateToPoem(poem: Poem) {
     this.navigate(MobileScreen.Poem.route.plus(args))
 }
 fun NavController.navigateToCompose(poemId: String, poemType: String, topicId: Int?) {
-    this.navigate(MobileScreen.Compose.route.plus("?id=$poemId&type=$poemType&topic=$topicId")){
+    val topic = topicId ?: ""
+    this.navigate(MobileScreen.Compose.route.plus("?id=$poemId&type=$poemType&topic=$topic")){
         popUpTo(MobileScreen.Poem.route){ inclusive = false }
     }
 }

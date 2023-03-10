@@ -45,7 +45,7 @@ class PoemsApi {
          */
 
         private val BASE_URL = when (true) {
-            true -> "http://192.168.1.11:8080/v1/" // change here
+            true -> "http://192.168.100.252:8080/v1/" // change here
             false -> "https://mambo-poetree.herokuapp.com/v1/"
         }
 

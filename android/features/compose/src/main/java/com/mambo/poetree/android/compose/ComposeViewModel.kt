@@ -96,12 +96,14 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     }
 
     private fun getTopic() {
-        if (topicId != null)
+        if (topicId.isNullOrBlank().not())
             viewModelScope.launch {
-                val response = topicRepository.get(topicId = topicId.toInt())
-                if (response.isSuccessful) {
-                    val mTopic = response.data?.toDomain()
-                    mTopic?.let { updateTopic(topic = it) }
+                topicId?.let {
+                    val response = topicRepository.get(topicId = it.toInt())
+                    if (response.isSuccessful) {
+                        val mTopic = response.data?.toDomain()
+                        mTopic?.let { topic -> updateTopic(topic = topic) }
+                    }
                 }
             }
     }

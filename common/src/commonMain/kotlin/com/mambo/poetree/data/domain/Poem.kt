@@ -36,6 +36,14 @@ data class Poem(
 
     fun isMyPoem(userId: String) = user?.id == userId
 
+    fun getTopicTitle() = (topic?.name ?: "topicless")
+        .split(" ")
+        .joinToString(" ") {
+            it.replaceFirstChar { char -> char.uppercase() }
+        }
+
+    fun getTimeElapsed() = "2 days ago"
+
 }
 
 
