@@ -9,12 +9,16 @@ import com.mambo.poetree.data.domain.Poem
  * @email mambobryan@gmail.com
  * Sun 05 Mar 2023
  */
+
+// POEM
 fun NavController.navigateToPoem(poem: Poem) {
     val id = "id=${poem.id}"
     val type = "type=${poem.type.name}"
     val args = "?$id&$type"
     this.navigate(MobileScreen.Poem.route.plus(args))
 }
+
+// COMPOSE
 fun NavController.navigateToCompose(poemId: String, poemType: String, topicId: Int?) {
     val topic = topicId ?: ""
     this.navigate(MobileScreen.Compose.route.plus("?id=$poemId&type=$poemType&topic=$topic")){

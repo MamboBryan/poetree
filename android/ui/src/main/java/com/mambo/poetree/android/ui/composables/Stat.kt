@@ -53,7 +53,7 @@ fun VerticalStat(
                 contentDescription = "icon"
             )
         }
-        Text(modifier = Modifier.padding(bottom = 16.dp), text = count.toString())
+        Text(modifier = Modifier.padding(bottom = 8.dp), text = count.toString())
     }
 }
 

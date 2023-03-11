@@ -1,5 +1,7 @@
 package com.mambo.poetree.data.domain
 
+import com.mambo.poetree.utils.prettyCount
+import com.mambo.poetree.utils.titleCase
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -28,6 +30,20 @@ data class Poem(
         REMOTE, BOOKMARK, DRAFT
     }
 
+    val displayTopic: String
+        get() = topic?.name.titleCase(default = "topicless")
+
+    val displayUser : String
+        get() = user?.name ?: "Me"
+
+    val displayDate : String
+        get() = "2 days ago"
+
+    val displayReads : String = reads.prettyCount()
+    val displayLikes : String = likes.prettyCount()
+    val displayBookmarks : String = bookmarks.prettyCount()
+    val displayComments : String = comments.prettyCount()
+
     fun isEditable(userId: String) = if (isDraft()) true else isMyPoem(userId = userId)
 
     fun isPublishable() = isDraft() and (topic != null) and (content.isNotBlank())
@@ -35,14 +51,6 @@ data class Poem(
     fun isDraft() = type == Type.DRAFT
 
     fun isMyPoem(userId: String) = user?.id == userId
-
-    fun getTopicTitle() = (topic?.name ?: "topicless")
-        .split(" ")
-        .joinToString(" ") {
-            it.replaceFirstChar { char -> char.uppercase() }
-        }
-
-    fun getTimeElapsed() = "2 days ago"
 
 }
 

@@ -70,7 +70,7 @@ fun Poem.getUi(block: () -> Unit) {
                 verticalArrangement = Arrangement.Bottom
             ) {
 
-                Text(text = "${getTopicTitle()}  •  ${getTimeElapsed()}")
+                Text(text = "$displayTopic  •  $displayDate")
                 Text(
                     modifier = Modifier.padding(vertical = 8.dp),
                     text = title,

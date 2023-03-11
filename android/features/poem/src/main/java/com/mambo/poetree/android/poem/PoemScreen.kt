@@ -1,6 +1,7 @@
 package com.mambo.poetree.android.poem
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -31,7 +32,9 @@ import com.darkrockstudios.richtexteditor.model.Style
 import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
 import com.mambo.poetree.android.ui.CommentField
+import com.mambo.poetree.android.ui.composables.VerticalStat
 import com.mambo.poetree.android.ui.navigation.navigateToCompose
+import com.mambo.poetree.data.domain.Poem
 
 /**
  * @project Poetree
@@ -54,6 +57,16 @@ private fun PoemScreenContent(
     var expanded by remember { mutableStateOf(false) }
 
     fun navigateToCompose() {
+        poem?.let {
+            navController.navigateToCompose(
+                poemId = it.id,
+                poemType = it.type.name,
+                topicId = it.topic?.id
+            )
+        }
+    }
+
+    fun navigateToUser() {
         poem?.let {
             navController.navigateToCompose(
                 poemId = it.id,
@@ -133,17 +146,13 @@ private fun PoemScreenContent(
 
                         poem?.let {
 
-                            val topic = (it.topic?.name
-                                ?: "topicless").replaceFirstChar { char -> char.uppercase() }
-                            val timeAgo = "2 hours ago"
-//                            val timeAgo = it.createdAt
-                            val user = it.user?.name ?: "Me"
-                            val value =
-                                RichTextValue.fromString(it.content).insertStyle(Style.Italic)
+                            val value = RichTextValue
+                                .fromString(it.content)
+                                .insertStyle(Style.Italic)
 
                             Text(
                                 modifier = Modifier.padding(top = 16.dp),
-                                text = "$topic  •  $timeAgo"
+                                text = "${it.displayTopic}  •  ${it.displayDate}  •  ${it.displayReads} reads"
                             )
                             Text(
                                 modifier = Modifier.padding(vertical = 16.dp),
@@ -151,7 +160,7 @@ private fun PoemScreenContent(
                                 fontSize = TextUnit(24f, TextUnitType.Sp),
                                 fontWeight = FontWeight.Bold
                             )
-                            Text(text = "By $user")
+                            Text(text = "By ${it.displayUser}")
                             RichTextEditor(
                                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                                 readOnly = true,
@@ -165,7 +174,7 @@ private fun PoemScreenContent(
                             )
                         }
                     }
-                    if (isEditable.not())
+                    if (poem != null && poem?.type != Poem.Type.DRAFT) {
                         Column(
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -173,22 +182,31 @@ private fun PoemScreenContent(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Top
                         ) {
-                            Stat(icon = Icons.Outlined.DoneAll)
-                            Stat(icon = Icons.Outlined.ModeComment)
-                            Stat(icon = Icons.Rounded.BookmarkBorder)
-                            Stat(icon = Icons.Rounded.FavoriteBorder)
-                            Image(
-                                painter = painterResource(R.drawable.jedi),
-                                contentDescription = "avatar",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .padding(horizontal = 8.dp)
-                                    .padding(top = 16.dp)
-                                    .size(32.dp)
-                                    .clip(CircleShape)
-
+                            VerticalStat(
+                                icon = Icons.Outlined.ModeComment,
+                                count = poem?.comments ?: 0L
                             )
+                            VerticalStat(
+                                icon = Icons.Rounded.BookmarkBorder,
+                                count = poem?.bookmarks ?: 0L
+                            )
+                            VerticalStat(
+                                icon = Icons.Rounded.FavoriteBorder,
+                                count = poem?.likes ?: 0L
+                            )
+                            if (isEditable.not())
+                                Image(
+                                    painter = painterResource(R.drawable.jedi),
+                                    contentDescription = "avatar",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp)
+                                        .size(32.dp)
+                                        .clip(CircleShape)
+                                        .clickable { navigateToUser() }
+                                )
                         }
+                    }
                 }
 
             }
