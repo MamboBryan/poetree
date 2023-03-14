@@ -45,8 +45,8 @@ fun Poem.getUi(block: () -> Unit) {
     ) {
 
         val icon = when (type) {
-            Poem.Type.REMOTE -> Icons.Rounded.FavoriteBorder
-            Poem.Type.BOOKMARK -> Icons.Rounded.BookmarkBorder
+            Poem.Type.REMOTE -> Icons.Rounded.Favorite
+            Poem.Type.BOOKMARK -> Icons.Rounded.Bookmark
             Poem.Type.DRAFT -> Icons.Rounded.Brush
         }
 
@@ -57,7 +57,7 @@ fun Poem.getUi(block: () -> Unit) {
                     .height(150.dp)
                     .align(Alignment.TopEnd)
                     .rotate(if (type == Poem.Type.DRAFT) 0f else 45f)
-                    .alpha(0.2f)
+                    .alpha(0.05f)
                     .blur(5.dp),
                 imageVector = icon,
                 contentDescription = "icon"
@@ -83,19 +83,19 @@ fun Poem.getUi(block: () -> Unit) {
                 if (type == Poem.Type.REMOTE) {
                     Row(modifier = Modifier.fillMaxWidth()) {
                         HorizontalStat(
-                            icon = if (bookmarked) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+                            icon = Icons.Rounded.Favorite,
                             count = likes
                         )
                         HorizontalStat(
-                            icon = if (commented) Icons.Rounded.ChatBubble else Icons.Rounded.ChatBubbleOutline,
+                            icon = Icons.Rounded.ChatBubble,
                             count = comments
                         )
                         HorizontalStat(
-                            icon = if (bookmarked) Icons.Rounded.Bookmark else Icons.Rounded.BookmarkBorder,
+                            icon = Icons.Rounded.Bookmark,
                             count = bookmarks
                         )
                         HorizontalStat(
-                            icon = if (read) Icons.Rounded.CheckCircle else Icons.Rounded.CheckCircleOutline,
+                            icon = Icons.Rounded.CheckCircle,
                             count = reads
                         )
                     }

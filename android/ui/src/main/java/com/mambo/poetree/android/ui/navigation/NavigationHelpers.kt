@@ -22,7 +22,7 @@ fun NavController.navigateToPoem(poem: Poem) {
 fun NavController.navigateToCompose(poem: Poem? = null) {
     if (poem != null) {
         val id = "id=${poem.id}"
-        val title = "type=${poem.title}"
+        val title = "type=${poem.type}"
         val topic = "topic=${poem.topic?.id ?: ""}"
         val route = MobileScreen.Compose.route
             .plus("?")
@@ -55,7 +55,7 @@ private fun NavController.navigateToUser() {
 }
 
 fun NavController.navigateToUser(userId: String) {
-    this.navigate(MobileScreen.User.route.plus("?id={$userId}"))
+    this.navigate(MobileScreen.User.route.plus("?id=$userId"))
 }
 
 // COMMENTS

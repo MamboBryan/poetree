@@ -34,6 +34,7 @@ fun CommentField(
 
     Surface(
         elevation = 8.dp,
+        color = MaterialTheme.colors.surface
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

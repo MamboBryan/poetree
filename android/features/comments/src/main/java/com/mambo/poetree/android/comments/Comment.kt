@@ -1,9 +1,7 @@
 package com.mambo.poetree.android.comments
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -49,7 +47,7 @@ fun Comment(
 
     Row(modifier = modifier.padding(vertical = 8.dp)) {
         UserImage(
-            modifier = Modifier,
+            modifier = Modifier.width(24.dp).height(24.dp),
             onClick = ::navigateToUser
         )
         Column(

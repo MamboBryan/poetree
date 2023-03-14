@@ -69,13 +69,16 @@ class ComposeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     }
 
     private fun getPoem() {
-        if (poemId != null)
-            viewModelScope.launch {
-                when (Poem.Type.valueOf(poemType!!)) {
-                    Poem.Type.DRAFT -> getLocalPoem(id = poemId)
-                    else -> getRemotePoem(id = poemId)
+        if (poemId != null) {
+            val type = poemType?.let { Poem.Type.valueOf(it) }
+            if (type != null)
+                viewModelScope.launch {
+                    when (type) {
+                        Poem.Type.DRAFT -> getLocalPoem(id = poemId)
+                        else -> getRemotePoem(id = poemId)
+                    }
                 }
-            }
+        }
     }
 
     private fun getLocalPoem(id: String) {

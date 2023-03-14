@@ -3,6 +3,7 @@ package com.mambo.poetree.android.ui.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -25,7 +26,7 @@ fun HorizontalStat(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     count: Long,
-    color: Color = Color.Gray,
+    color: Color = MaterialTheme.colors.onSurface,
 ) {
     Row(
         modifier = modifier,

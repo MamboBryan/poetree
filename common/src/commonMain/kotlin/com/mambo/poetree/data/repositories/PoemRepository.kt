@@ -6,6 +6,7 @@ import com.mambo.poetree.data.local.PoetreeDatabase
 import com.mambo.poetree.data.local.entity.DraftRealm
 import com.mambo.poetree.data.local.preferences.UserPreferences
 import com.mambo.poetree.data.remote.*
+import com.mambo.poetree.data.remote.dto.PoemDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -192,9 +193,9 @@ class PoemRepository {
         poemsApi.searchPoems(topicId = topicId, query = query, page = page)
 
     // TODO: change getting current logged in user poems to paged data and flow
-    suspend fun getMyPoems() {
+    suspend fun getMyPoems(): NetworkResult<PagedResult<PoemDto>> {
         val id = UserPreferences().getUserData()?.id ?: ""
-        poemsApi.getUserPoems(userId = id, page = 1)
+        return poemsApi.getUserPoems(userId = id, page = 1)
     }
 
     // TODO: update getting user poems to paged data and flow

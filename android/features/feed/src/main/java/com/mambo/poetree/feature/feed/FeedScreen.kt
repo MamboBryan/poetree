@@ -1,25 +1,25 @@
 package com.mambo.poetree.feature.feed
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mambo.poetree.PoetreeApp
-import com.mambo.poetree.android.ui.composables.UserImage
 import com.mambo.poetree.android.ui.composables.getUi
 import com.mambo.poetree.android.ui.navigation.MobileScreen
 import com.mambo.poetree.android.ui.navigation.navigateToPoem
@@ -50,6 +50,7 @@ fun FeedScreen(
 }
 
 
+@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun FeedScreenContent(
     navigateToProfile: () -> Unit,
@@ -63,14 +64,24 @@ fun FeedScreenContent(
 
     Scaffold(topBar = {
         TopAppBar(backgroundColor = MaterialTheme.colors.surface) {
-            UserImage(onClick = navigateToProfile)
-            Row(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
-                Text(text = PoetreeApp().name())
-            }
-            IconButton(
-                onClick = navigateToSettings
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp)
             ) {
-                Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = "settings")
+                Text(
+                    text = PoetreeApp().name(),
+                    color = MaterialTheme.colors.onSurface,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            IconButton(onClick = navigateToProfile) {
+                Icon(imageVector = Icons.Rounded.AccountCircle, contentDescription = "account")
+            }
+
+            IconButton(onClick = navigateToSettings) {
+                Icon(imageVector = Icons.Rounded.Tune, contentDescription = "settings")
             }
         }
     }, floatingActionButton = {

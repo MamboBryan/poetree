@@ -1,10 +1,7 @@
 package com.mambo.poetree.android.poem
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,10 +10,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +26,7 @@ import com.darkrockstudios.richtexteditor.model.Style
 import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
 import com.mambo.poetree.android.ui.CommentField
+import com.mambo.poetree.android.ui.composables.UserImage
 import com.mambo.poetree.android.ui.composables.VerticalStat
 import com.mambo.poetree.android.ui.navigation.navigateToComments
 import com.mambo.poetree.android.ui.navigation.navigateToCompose
@@ -164,32 +159,28 @@ private fun PoemScreenContent(
                                 verticalArrangement = Arrangement.Top
                             ) {
                                 VerticalStat(
-                                    icon = Icons.Outlined.ModeComment,
+                                    icon = Icons.Rounded.ModeComment,
                                     count = poem?.comments ?: 0L
                                 ) {
                                     navController.navigateToComments(poem = it)
                                 }
                                 VerticalStat(
-                                    icon = Icons.Rounded.BookmarkBorder,
+                                    icon = Icons.Rounded.Bookmark,
                                     count = poem?.bookmarks ?: 0L
                                 )
                                 VerticalStat(
-                                    icon = Icons.Rounded.FavoriteBorder,
+                                    icon = Icons.Rounded.Favorite,
                                     count = poem?.likes ?: 0L
                                 )
                                 if (isEditable.not())
-                                    Image(
-                                        painter = painterResource(R.drawable.jedi),
-                                        contentDescription = "avatar",
-                                        contentScale = ContentScale.Crop,
+                                    UserImage(
                                         modifier = Modifier
-                                            .padding(horizontal = 16.dp)
-                                            .size(32.dp)
-                                            .clip(CircleShape)
-                                            .clickable {
-                                                navController.navigateToUser(poem = it)
-                                            }
-                                    )
+                                            .padding(top = 8.dp)
+                                            .width(32.dp)
+                                            .height(32.dp)
+                                    ) {
+                                        navController.navigateToUser(poem = it)
+                                    }
                             }
                         }
                     }
