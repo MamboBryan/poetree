@@ -1,7 +1,6 @@
 package com.mambo.poetree.android.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,48 +32,50 @@ fun CommentField(
     onClick : () -> Unit = {}
 ) {
 
-    Row(
-        modifier = Modifier
-            .background(MaterialTheme.colors.surface)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom
+    Surface(
+        elevation = 8.dp,
     ) {
-        ClearTextField(
-            singleLine = false,
-            value = value,
-            onValueChanged = onValueChanged,
-            modifier = Modifier.weight(1f),
-            placeholder = { Text("Type comment ...") },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                backgroundColor = MaterialTheme.colors.surface,
-                focusedBorderColor = MaterialTheme.colors.surface,
-                unfocusedBorderColor = MaterialTheme.colors.surface
-            ),
-            trailingIcon = {
-                AnimatedVisibility(visible = isProgressVisible) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .width(24.dp)
-                            .height(24.dp)
-                    )
-                }
-
-                AnimatedVisibility(visible = isProgressVisible.not()) {
-                    IconButton(
-                        modifier = Modifier,
-                        enabled = isButtonEnabled,
-                        onClick = onClick
-                    ) {
-                        Icon(
-                            tint = if (isButtonEnabled) MaterialTheme.colors.primary else Color.Gray,
-                            imageVector = Icons.Rounded.Send,
-                            contentDescription = "send"
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Bottom,
+            ) {
+            ClearTextField(
+                singleLine = false,
+                value = value,
+                onValueChanged = onValueChanged,
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Type comment ...") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    backgroundColor = MaterialTheme.colors.surface,
+                    focusedBorderColor = MaterialTheme.colors.surface,
+                    unfocusedBorderColor = MaterialTheme.colors.surface
+                ),
+                trailingIcon = {
+                    AnimatedVisibility(visible = isProgressVisible) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(24.dp)
+                                .height(24.dp)
                         )
                     }
-                }
 
-            }
-        )
+                    AnimatedVisibility(visible = isProgressVisible.not()) {
+                        IconButton(
+                            modifier = Modifier,
+                            enabled = isButtonEnabled,
+                            onClick = onClick
+                        ) {
+                            Icon(
+                                tint = if (isButtonEnabled) MaterialTheme.colors.primary else Color.Gray,
+                                imageVector = Icons.Rounded.Send,
+                                contentDescription = "send"
+                            )
+                        }
+                    }
+
+                }
+            )
+        }
     }
 
 }

@@ -23,6 +23,7 @@ import com.mambo.poetree.android.ui.composables.UserImage
 import com.mambo.poetree.android.ui.composables.getUi
 import com.mambo.poetree.android.ui.navigation.MobileScreen
 import com.mambo.poetree.android.ui.navigation.navigateToPoem
+import com.mambo.poetree.android.ui.navigation.navigateToUser
 import com.mambo.poetree.data.domain.Poem
 
 /**
@@ -35,15 +36,17 @@ import com.mambo.poetree.data.domain.Poem
 fun FeedScreen(
     navController: NavController
 ) {
-    val navigateToProfile = { navController.navigate(MobileScreen.Account.route) }
+    val navigateToProfile = { navController.navigateToUser() }
     val navigateToSettings = { navController.navigate(MobileScreen.Settings.route) }
     val navigateToPoem = { poem: Poem -> navController.navigateToPoem(poem = poem) }
     val navigateToCompose = { navController.navigate(MobileScreen.Compose.route) }
 
-    FeedScreenContent(navigateToProfile = navigateToProfile,
+    FeedScreenContent(
+        navigateToProfile = navigateToProfile,
         navigateToSettings = navigateToSettings,
         navigateToPoem = navigateToPoem,
-        navigateToCompose = { navigateToCompose.invoke() })
+        navigateToCompose = { navigateToCompose.invoke() }
+    )
 }
 
 

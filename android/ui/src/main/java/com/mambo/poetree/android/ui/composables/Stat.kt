@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,7 +21,12 @@ import androidx.compose.ui.unit.dp
  * Thu 09 Mar 2023
  */
 @Composable
-fun HorizontalStat(modifier: Modifier = Modifier, icon: ImageVector, count: Long) {
+fun HorizontalStat(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    count: Long,
+    color: Color = Color.Gray,
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -30,9 +36,14 @@ fun HorizontalStat(modifier: Modifier = Modifier, icon: ImageVector, count: Long
                 .width(12.dp)
                 .height(12.dp),
             imageVector = icon,
-            contentDescription = "icon"
+            contentDescription = "icon",
+            tint = color
         )
-        Text(modifier = Modifier.padding(start = 8.dp, end = 16.dp), text = count.toString())
+        Text(
+            modifier = Modifier.padding(start = 8.dp, end = 16.dp),
+            text = count.toString(),
+            color = color
+        )
     }
 }
 

@@ -21,6 +21,8 @@ object Features {
     const val COMPOSE = ":android:features:compose"
     const val SETTINGS = ":android:features:settings"
     const val POEM = ":android:features:poem"
+    const val USER = ":android:features:user"
+    const val COMMENTS = ":android:features:comments"
 }
 
 fun DependencyHandler.commonModule(){
@@ -39,4 +41,6 @@ fun DependencyHandler.features(){
     implementation(project(Features.COMPOSE))
     implementation(project(Features.SETTINGS))
     implementation(project(Features.POEM))
+    implementation(project(Features.USER))
+    implementation(project(Features.COMMENTS))
 }

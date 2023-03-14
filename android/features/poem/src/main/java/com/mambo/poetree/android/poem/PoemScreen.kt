@@ -33,7 +33,9 @@ import com.darkrockstudios.richtexteditor.ui.RichTextEditor
 import com.darkrockstudios.richtexteditor.ui.defaultRichTextFieldStyle
 import com.mambo.poetree.android.ui.CommentField
 import com.mambo.poetree.android.ui.composables.VerticalStat
+import com.mambo.poetree.android.ui.navigation.navigateToComments
 import com.mambo.poetree.android.ui.navigation.navigateToCompose
+import com.mambo.poetree.android.ui.navigation.navigateToUser
 import com.mambo.poetree.data.domain.Poem
 
 /**
@@ -55,26 +57,6 @@ private fun PoemScreenContent(
     val isPublishable by viewModel.isPublishable.collectAsState(initial = false)
 
     var expanded by remember { mutableStateOf(false) }
-
-    fun navigateToCompose() {
-        poem?.let {
-            navController.navigateToCompose(
-                poemId = it.id,
-                poemType = it.type.name,
-                topicId = it.topic?.id
-            )
-        }
-    }
-
-    fun navigateToUser() {
-        poem?.let {
-            navController.navigateToCompose(
-                poemId = it.id,
-                poemType = it.type.name,
-                topicId = it.topic?.id
-            )
-        }
-    }
 
     Scaffold(topBar = {
         TopAppBar(
@@ -101,7 +83,7 @@ private fun PoemScreenContent(
                     DropdownMenuItem(
                         onClick = {
                             expanded = false
-                            navigateToCompose()
+                            navController.navigateToCompose(poem = poem)
                         }
                     ) {
                         Icon(
@@ -137,14 +119,13 @@ private fun PoemScreenContent(
             ) {
 
                 Row {
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .weight(1f)
-                            .verticalScroll(state = rememberScrollState())
-                    ) {
-
-                        poem?.let {
+                    poem?.let {
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .weight(1f)
+                                .verticalScroll(state = rememberScrollState())
+                        ) {
 
                             val value = RichTextValue
                                 .fromString(it.content)
@@ -173,38 +154,43 @@ private fun PoemScreenContent(
                                 )
                             )
                         }
-                    }
-                    if (poem != null && poem?.type != Poem.Type.DRAFT) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .padding(top = 16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            VerticalStat(
-                                icon = Icons.Outlined.ModeComment,
-                                count = poem?.comments ?: 0L
-                            )
-                            VerticalStat(
-                                icon = Icons.Rounded.BookmarkBorder,
-                                count = poem?.bookmarks ?: 0L
-                            )
-                            VerticalStat(
-                                icon = Icons.Rounded.FavoriteBorder,
-                                count = poem?.likes ?: 0L
-                            )
-                            if (isEditable.not())
-                                Image(
-                                    painter = painterResource(R.drawable.jedi),
-                                    contentDescription = "avatar",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp)
-                                        .size(32.dp)
-                                        .clip(CircleShape)
-                                        .clickable { navigateToUser() }
+
+                        if (it.type != Poem.Type.DRAFT) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .padding(top = 16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Top
+                            ) {
+                                VerticalStat(
+                                    icon = Icons.Outlined.ModeComment,
+                                    count = poem?.comments ?: 0L
+                                ) {
+                                    navController.navigateToComments(poem = it)
+                                }
+                                VerticalStat(
+                                    icon = Icons.Rounded.BookmarkBorder,
+                                    count = poem?.bookmarks ?: 0L
                                 )
+                                VerticalStat(
+                                    icon = Icons.Rounded.FavoriteBorder,
+                                    count = poem?.likes ?: 0L
+                                )
+                                if (isEditable.not())
+                                    Image(
+                                        painter = painterResource(R.drawable.jedi),
+                                        contentDescription = "avatar",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .padding(horizontal = 16.dp)
+                                            .size(32.dp)
+                                            .clip(CircleShape)
+                                            .clickable {
+                                                navController.navigateToUser(poem = it)
+                                            }
+                                    )
+                            }
                         }
                     }
                 }
@@ -214,7 +200,7 @@ private fun PoemScreenContent(
                 if (it.isDraft().not())
                     CommentField(
                         value = comment,
-                        onValueChanged = { viewModel.updateComment(it) },
+                        onValueChanged = { change -> viewModel.updateComment(change) },
                         isButtonEnabled = comment.isBlank().not(),
                     )
             }

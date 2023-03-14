@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mambo.poetree.android.authentication.AuthenticationScreen
 import com.mambo.poetree.android.bookmarks.BookmarkScreen
+import com.mambo.poetree.android.comments.CommentsScreen
 import com.mambo.poetree.android.compose.ComposeScreen
 import com.mambo.poetree.android.explore.ExploreScreen
 import com.mambo.poetree.android.landing.LandingScreen
@@ -20,6 +21,7 @@ import com.mambo.poetree.android.library.LibraryScreen
 import com.mambo.poetree.android.poem.PoemScreen
 import com.mambo.poetree.android.settings.SettingsScreen
 import com.mambo.poetree.android.ui.navigation.MobileScreen
+import com.mambo.poetree.android.user.UserScreen
 import com.mambo.poetree.feature.account.AccountScreen
 import com.mambo.poetree.feature.feed.FeedScreen
 import com.mambo.poetree.features.getstarted.GetStartedScreen
@@ -112,6 +114,33 @@ fun Navigation(
                 )
             ) {
                 PoemScreen(navController = navController)
+            }
+            composable(
+                route = MobileScreen.Comments.route.plus("?id={id}&title={title}&count={count}"),
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.StringType
+                    },
+                    navArgument("title") {
+                        type = NavType.StringType
+                    },
+                    navArgument("count") {
+                        type = NavType.LongType
+                    },
+                )
+            ) {
+                CommentsScreen(navController = navController)
+            }
+            composable(
+                route = MobileScreen.User.route.plus("?id={id}"),
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                )
+            ) {
+                UserScreen(navController = navController)
             }
         }
     }
