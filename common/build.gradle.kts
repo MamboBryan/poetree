@@ -54,6 +54,8 @@ kotlin {
                 implementation(Multiplatform.napier)
                 implementation(Multiplatform.realm)
 
+                implementation("com.bizyback.poetree:business:0.0.1")
+
             }
         }
         val commonTest by getting {
